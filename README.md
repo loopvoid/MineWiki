@@ -1,2 +1,2 @@
-# MineWiki
+# minewiki
 personal wiki note page
