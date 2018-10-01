@@ -407,15 +407,41 @@ Error message and password prompt
 
 <li>壁纸/图片/素材/GIF/色彩管理</li>
 
+<li>层次遍历--非递归</li>
+
 <li>代码块</li>
+
+<li>带权路径长度</li>
+
+<li>二叉排序树的插入</li>
+
+<li>二叉排序树的查找</li>
+
+<li>二叉排序树的构造</li>
+
+<li>二叉树</li>
+
+<li>二叉树指定结点的层次</li>
 
 <li>块引用</li>
 
+<li>前中后序递归遍历</li>
+
+<li>前中序非递归遍历</li>
+
+<li>删除二叉树叶子节点</li>
+
+<li>树的结构体</li>
+
 <li>图片格式转换</li>
+
+<li>线索二叉树的构造</li>
 
 <li>正则表达式30分钟入门教程</li>
 
 <li>知识库主页</li>
+
+<li>最大深度、最小深度</li>
 
 <li>CJ</li>
 
@@ -13736,19 +13762,19 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///E:/Wiki/minewiki/index.html&quot;
+            &quot;text&quot;: &quot;https://loopvoid.github.io/minewiki/&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
-            &quot;text&quot;: &quot;&quot;
+            &quot;text&quot;: &quot;loopvoid.github.io&quot;
         },
         &quot;$:/info/url/hostname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/hostname&quot;,
-            &quot;text&quot;: &quot;&quot;
+            &quot;text&quot;: &quot;loopvoid.github.io&quot;
         },
         &quot;$:/info/url/protocol&quot;: {
             &quot;title&quot;: &quot;$:/info/url/protocol&quot;,
-            &quot;text&quot;: &quot;file:&quot;
+            &quot;text&quot;: &quot;https:&quot;
         },
         &quot;$:/info/url/port&quot;: {
             &quot;title&quot;: &quot;$:/info/url/port&quot;,
@@ -13756,7 +13782,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/E:/Wiki/minewiki/index.html&quot;
+            &quot;text&quot;: &quot;/minewiki/&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -13764,7 +13790,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/origin&quot;: {
             &quot;title&quot;: &quot;$:/info/url/origin&quot;,
-            &quot;text&quot;: &quot;file://&quot;
+            &quot;text&quot;: &quot;https://loopvoid.github.io&quot;
         },
         &quot;$:/info/browser/screen/width&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/width&quot;,
@@ -14435,7 +14461,7 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" modified="20180819070452184" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20180930160728949" modifier="CJ" title="$:/temp/search">
+<div created="20180819074107419" creator="CJ" modified="20181001092102188" modifier="CJ" title="$:/temp/search">
 <pre></pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
@@ -14575,6 +14601,24 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 ## **色彩管理**
 * [RGB对照表](http://tool.oschina.net/commons?type=3)</pre>
 </div>
+<div created="20181001094338904" creator="CJ" modified="20181001095044943" modifier="CJ" tags="二叉树" title="层次遍历--非递归">
+<pre>
+```
+void level_order(BTree *T){
+	InitQueue(Q);
+	BNode *p=T;
+	EnQueue(Q,p);
+	if(T==NULL) return;
+	while(!IsEmpty(Q)){
+		DeQueue(Q,p);
+		visit(p);
+		if(p-&gt;lchild!=NULL) EnQueue(Q,p-&gt;lchild);
+		if(p-&gt;rchild!=NULL) EnQueue(Q,p-&gt;rchild);
+	}
+}
+```
+</pre>
+</div>
 <div created="20180930160406325" creator="CJ" modified="20180930160644215" modifier="CJ" tags="WikiText" title="代码块" type="text/vnd.tiddlywiki">
 <pre>三重反引号 &lt;code&gt;&amp;#96;&amp;#96;&amp;#96;&lt;/code&gt; 标记代码块 ({{$:/core/images/mono-block}}):
 
@@ -14590,6 +14634,138 @@ This will be monospaced
 This will be monospaced
 ```
 </pre>
+</div>
+<div created="20181001100031109" creator="CJ" modified="20181001100037909" modifier="CJ" tags="二叉树" title="带权路径长度">
+<pre>
+```
+int get_wpl(BTree *T){
+	return wpl(T,0);
+}
+int wpl(BTree *T,int deep){
+	static int wpl_val;
+	if(T==NULL) return 0;
+	if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL)
+		wpl_val += deep * T-&gt;weight;
+	if(T-&gt;lchild!=NULL) wpl(T-&gt;lchild,deep+1);
+	if(T-&gt;rchild!=NULL) wpl(T-&gt;rchild,deep+1);
+	return wpl_val;
+}
+```</pre>
+</div>
+<div created="20181001101153708" creator="CJ" modified="20181001101200291" modifier="CJ" tags="二叉树" title="二叉排序树的插入">
+<pre>
+```
+int bstree_insert(BSTree *T,ElemType key){
+	if(T==NULL){
+		T-&gt;lchild=T-&gt;rchild=NULL;
+		T-&gt;data = key;
+		return 1;
+	}
+	if(T-&gt;data == key) return 0;
+	if(T-&gt;data &gt; key) bstree_insert(T-&gt;lchild,key);
+	if(T-&gt;data &lt; key) bstree_insert(T-&gt;rchild,key);
+}
+```</pre>
+</div>
+<div created="20181001100855755" creator="CJ" modified="20181001100900924" modifier="CJ" tags="二叉树" title="二叉排序树的查找">
+<pre>
+```
+BSTNode *bstree_search(BSTree *T,ElemType key){
+	BSTNode *p = NULL;
+	if(T==NULL) return NULL;
+	while(T!=NULL&amp;&amp;T-&gt;data!=key){
+		p = T;
+		if(T-&gt;data &gt; key) T=T-&gt;lchild;
+		else T=T-&gt;rchild;
+	}
+	return p;
+}
+```</pre>
+</div>
+<div created="20181001101334754" creator="CJ" modified="20181001101341179" modifier="CJ" tags="二叉树" title="二叉排序树的构造">
+<pre>
+```
+int create_bstree(BSTree &amp;T, ElemType str[], int n){
+	for (int i = 0; i &lt; n; i++)
+		bstree_insert(T,str[i]);
+}
+```</pre>
+</div>
+<div created="20181001091426171" creator="CJ" modified="20181001101908434" modifier="CJ" tags="二叉树" title="二叉树" type="text/vnd.tiddlywiki">
+<pre>* 0.[[树的结构体]]
+* 1.[[前中后序递归遍历]]
+* 2.[[前中序非递归遍历]]
+* 3.[[层次遍历--非递归]]
+* 4.[[最大深度、最小深度]]
+* 5.[[二叉树指定结点的层次]]
+* 6.[[删除二叉树叶子节点]]
+* 7.[[带权路径长度]]
+* 8.[[线索二叉树的构造]]
+* 9.[[二叉排序树的查找]]
+* 10.[[二叉排序树的插入]]
+* 11.[[二叉排序树的构造]]
+
+
+---
+
+''前中序非递归遍历''
+
+{{前中序非递归遍历}}
+
+''层次遍历--非递归''
+
+{{层次遍历--非递归}}
+
+''最大深度、最小深度''
+
+{{最大深度、最小深度}}
+
+''二叉树指定结点的层次''
+
+{{二叉树指定结点的层次}}
+
+''删除二叉树叶子节点''
+
+{{删除二叉树叶子节点}}
+
+''带权路径长度''
+
+{{带权路径长度}}
+
+''线索二叉树的构造''
+
+{{线索二叉树的构造}}
+
+''二叉排序树的查找''
+
+{{二叉排序树的查找}}
+
+''二叉排序树的插入''
+
+{{二叉排序树的插入}}
+
+''二叉排序树的构造''
+
+{{二叉排序树的构造}}
+
+
+
+
+</pre>
+</div>
+<div created="20181001095355283" creator="CJ" modified="20181001095857462" modifier="CJ" tags="二叉树" title="二叉树指定结点的层次">
+<pre>
+```
+int node_level(BTree *T,BNode *p){
+	static int level;
+	if(T==NULL) return 0;
+	if(T==p) return 1;
+	level = node_level(T-&gt;lchild,p);
+	if(level&gt;0) return level+1;
+	level = node_level(T-&gt;rchild,p);
+	if(level&gt;0) return level+1;
+}
+```</pre>
 </div>
 <div created="20180930154308937" creator="CJ" modified="20180930160147118" modifier="CJ" tags="WikiText" title="块引用" type="text/vnd.tiddlywiki">
 <pre>在TiddlyWiki5中有两种方法可以生成HTML块引用，一种用于__跨多行__引用内容，另一种用于__单行__内容。
@@ -14718,9 +14894,98 @@ A dramatic quote
 
 </pre>
 </div>
+<div created="20181001091900530" creator="CJ" modified="20181001094519152" modifier="CJ" tags="二叉树" title="前中后序递归遍历">
+<pre>
+
+```
+void order_rc(BTree *T){
+    if(T!=NULL){
+        visit(T);//前序遍历
+        order_rc(T-&gt;lchild);
+        //visit(T);//中序遍历
+        order_rc(T-&gt;rchild);
+        //visit(T);//后序遍历
+    }
+}
+```
+
+</pre>
+</div>
+<div created="20181001093644130" creator="CJ" modified="20181001094531240" modifier="CJ" tags="二叉树" title="前中序非递归遍历" type="text/vnd.tiddlywiki">
+<pre>
+```
+void order_no_rc(BTree *T){
+	InitStack(S);
+	BNode *p = T;
+	if(T==NULL) return;
+	while(p||!IsEmpty(S)){
+		if(p){
+			Push(S,p);
+			visit(p);//前序遍历
+			p=p-&gt;lchild;
+		}
+		else{
+			Pop(S,p);
+			//visit(p);//中序遍历
+			p=p-&gt;rchild;
+		}
+	}
+}
+```
+</pre>
+</div>
+<div created="20181001095648662" creator="CJ" modified="20181001095658997" modifier="CJ" tags="二叉树" title="删除二叉树叶子节点">
+<pre>
+```
+void delete_leaves(BTree &amp;T){
+	if(T==NULL) return;
+	BTree p = T;
+	if(p-&gt;lchild==NULL&amp;&amp;p-&gt;rchild==NULL) free(p);
+	delete_leaves(T-&gt;lchild);
+	delete_leaves(T-&gt;rchild);
+}
+```</pre>
+</div>
+<div created="20181001094432703" creator="CJ" modified="20181001094453905" modifier="CJ" tags="二叉树" title="树的结构体" type="text/vnd.tiddlywiki">
+<pre>
+```
+typedef struct BNode
+{
+	int data;
+	struct BNode *lchild,*rchild;
+}BNode, *BTree;
+```
+</pre>
+</div>
 <div created="20180819124755738" creator="CJ" modified="20180819124836681" modifier="CJ" title="图片格式转换" type="text/x-markdown">
 <pre>## **图片格式转换**
 * [Jinaconvert](https://jinaconvert.com/)</pre>
+</div>
+<div created="20181001100459731" creator="CJ" modified="20181001100504060" modifier="CJ" tags="二叉树" title="线索二叉树的构造">
+<pre>
+```
+void create_thread_tree(ThreadTree &amp;T){
+	ThreadTree *pre = NULL;
+	in_thread(T,pre);
+	pre-&gt;rchild = NULL;
+	pre-&gt;rtag = 1;
+}
+void in_thread(ThreadTree *p,ThreadTree *pre){
+	if(p!=NULL){
+		in_thread(p-&gt;lchild,pre);
+		if(p-&gt;lchild==NULL){
+			p-&gt;lchild = pre;
+			p-&gt;ltag = 1;
+		}
+		if(pre!=NULL&amp;&amp;pre-&gt;rchild==NULL){
+			pre-&gt;rchild = p;
+			pre-&gt;rtag = 1;
+		}
+		pre = p;
+		in_thread(p-&gt;rchild,pre);
+	}
+}
+```</pre>
 </div>
 <div created="20180819081531717" creator="CJ" modified="20180819082454210" modifier="CJ" title="正则表达式30分钟入门教程" type="text/vnd.tiddlywiki">
 <pre>&lt;!-- saved from url=(0039)https://www.jb51.net/tools/zhengze.html --&gt;
@@ -15672,7 +15937,7 @@ var cpro_id = &quot;u460561&quot;;
 &lt;a href=&quot;https://www.jb51.net/tools/zhengze.html#&quot; title=&quot;点击展开&quot;&gt;&lt;i&gt;&amp;nbsp;&lt;/i&gt;图片相关信息&lt;/a&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;expres-host&quot; class=&quot;&quot;&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt; --&gt;</pre>
 </div>
-<div created="20180819072600938" creator="CJ" modified="20181001090633807" modifier="CJ" title="知识库主页" type="text/vnd.tiddlywiki">
+<div created="20180819072600938" creator="CJ" modified="20181001093343850" modifier="CJ" title="知识库主页" type="text/vnd.tiddlywiki">
 <pre>[[TiddlyWiki]] 笔记
 
 [[MarkDown]] 笔记
@@ -15680,18 +15945,42 @@ var cpro_id = &quot;u460561&quot;;
 [[正则表达式30分钟入门教程]] 
 
 ---
-!! ''设计''
+! ''计算机''
+ * [[二叉树]]
+---
+! ''设计''
 * [[壁纸/图片/素材/GIF/色彩管理]]
 * [[图片格式转换]]
 * [[icon]]
 ---
-!!''安卓''  [img[https://www.easyicon.net/api/resizeApi.php?id=507628&amp;size=16]] 
+! ''安卓''  [img[https://www.easyicon.net/api/resizeApi.php?id=507628&amp;size=16]] 
 
  * [[安卓反编译工具]]
 
 ---
-!!''ToDo'' [img[https://www.easyicon.net/api/resizeApi.php?id=3888&amp;size=16]] 
+! ''ToDo'' [img[https://www.easyicon.net/api/resizeApi.php?id=3888&amp;size=16]] 
 
+</pre>
+</div>
+<div created="20181001095057514" creator="CJ" modified="20181001095106527" modifier="CJ" tags="二叉树" title="最大深度、最小深度">
+<pre>
+```
+int max_depth(BTree *T){
+	if(T==NULL) return 0;
+	if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL) return 1;
+	int ldepth = max_depth(T-&gt;lchild)+1;
+	int rdepth = max_depth(T-&gt;rchild)+1;
+	return ldepth&gt;rdepth?ldepth:rdepth;
+}
+int min_depth(BTree *T){
+	if(T==NULL) return 0;
+	if(T-&gt;lchild==NULL) return min_depth(T-&gt;rchild)+1;
+	if(T-&gt;rchild==NULL) return min_depth(T-&gt;lchild)+1;
+	int ldepth = min_depth(T-&gt;lchild)+1;
+	int rdepth = min_depth(T-&gt;rchild)+1;
+	return ldepth&lt;rdepth?ldepth:rdepth;
+}
+```
 </pre>
 </div>
 <div created="20180819073523499" creator="CJ" modified="20180819074045929" modifier="CJ" title="CJ" type="text/x-markdown">
