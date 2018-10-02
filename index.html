@@ -425,13 +425,25 @@ Error message and password prompt
 
 <li>块引用</li>
 
+<li>邻接表转换为邻接矩阵表示</li>
+
+<li>判断无向图G是否为树</li>
+
 <li>前中后序递归遍历</li>
 
 <li>前中序非递归遍历</li>
 
 <li>删除二叉树叶子节点</li>
 
+<li>输出i到j的所有简单路径</li>
+
 <li>树的结构体</li>
+
+<li>拓补排序(判断图是否有环)</li>
+
+<li>图</li>
+
+<li>图的结构体</li>
 
 <li>图片格式转换</li>
 
@@ -443,7 +455,21 @@ Error message and password prompt
 
 <li>最大深度、最小深度</li>
 
+<li>BFS</li>
+
+<li>BFS判断是否有i到j的路径</li>
+
+<li>BFS求最短路径</li>
+
 <li>CJ</li>
+
+<li>DFS-递归</li>
+
+<li>DFS-非递归</li>
+
+<li>DFS判断是否有i到j的路径</li>
+
+<li>DFS实现拓补排序</li>
 
 <li>Excel提取数据大全</li>
 
@@ -13746,7 +13772,7 @@ Error message and password prompt
 <div created="20180819072223515" creator="c" modified="20180819072424192" modifier="CJ " title="$:/status/UserName">
 <pre>CJ</pre>
 </div>
-<div list="知识库主页" title="$:/StoryList">
+<div list="图" title="$:/StoryList">
 <pre></pre>
 </div>
 <div plugin-type="info" title="$:/temp/info-plugin" type="application/json">
@@ -14602,8 +14628,7 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 * [RGB对照表](http://tool.oschina.net/commons?type=3)</pre>
 </div>
 <div created="20181001094338904" creator="CJ" modified="20181001095044943" modifier="CJ" tags="二叉树" title="层次遍历--非递归">
-<pre>
-```
+<pre>```
 void level_order(BTree *T){
 	InitQueue(Q);
 	BNode *p=T;
@@ -14636,8 +14661,7 @@ This will be monospaced
 </pre>
 </div>
 <div created="20181001100031109" creator="CJ" modified="20181001100037909" modifier="CJ" tags="二叉树" title="带权路径长度">
-<pre>
-```
+<pre>```
 int get_wpl(BTree *T){
 	return wpl(T,0);
 }
@@ -14653,8 +14677,7 @@ int wpl(BTree *T,int deep){
 ```</pre>
 </div>
 <div created="20181001101153708" creator="CJ" modified="20181001101200291" modifier="CJ" tags="二叉树" title="二叉排序树的插入">
-<pre>
-```
+<pre>```
 int bstree_insert(BSTree *T,ElemType key){
 	if(T==NULL){
 		T-&gt;lchild=T-&gt;rchild=NULL;
@@ -14668,8 +14691,7 @@ int bstree_insert(BSTree *T,ElemType key){
 ```</pre>
 </div>
 <div created="20181001100855755" creator="CJ" modified="20181001100900924" modifier="CJ" tags="二叉树" title="二叉排序树的查找">
-<pre>
-```
+<pre>```
 BSTNode *bstree_search(BSTree *T,ElemType key){
 	BSTNode *p = NULL;
 	if(T==NULL) return NULL;
@@ -14683,8 +14705,7 @@ BSTNode *bstree_search(BSTree *T,ElemType key){
 ```</pre>
 </div>
 <div created="20181001101334754" creator="CJ" modified="20181001101341179" modifier="CJ" tags="二叉树" title="二叉排序树的构造">
-<pre>
-```
+<pre>```
 int create_bstree(BSTree &amp;T, ElemType str[], int n){
 	for (int i = 0; i &lt; n; i++)
 		bstree_insert(T,str[i]);
@@ -14754,8 +14775,7 @@ int create_bstree(BSTree &amp;T, ElemType str[], int n){
 </pre>
 </div>
 <div created="20181001095355283" creator="CJ" modified="20181001095857462" modifier="CJ" tags="二叉树" title="二叉树指定结点的层次">
-<pre>
-```
+<pre>```
 int node_level(BTree *T,BNode *p){
 	static int level;
 	if(T==NULL) return 0;
@@ -14894,9 +14914,55 @@ A dramatic quote
 
 </pre>
 </div>
+<div created="20181002032106338" creator="CJ" modified="20181002032338386" modifier="CJ" tags="图 数据结构" title="邻接表转换为邻接矩阵表示">
+<pre>
+```
+void conver(ALGraph *G,int arcs[M][N]){
+   for(int i = 0;i &lt; M;i++){
+        p = G-&gt;adjlist[i].first;
+        while(p!=NULL){
+            arcs[i][p-&gt;adjvex] = 1;
+            p=p-&gt;next;
+        }
+    } 
+}
+```</pre>
+</div>
+<div created="20181002031329282" creator="CJ" modified="20181002032045306" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
+<pre>无向图G为一棵树的条件：
+ 
+
+* G必须是无回路的连通图
+
+* 有n-1条边的连通图
+
+```
+bool is_tree_or_not(ALGrah *G){
+    int vex_num = 0,edge_num = 0;
+    int visited[MAX_VEX_NUM];
+    for(int i = 0;i&lt;MAX_VEX_NUM;i++){
+        visited[i] = false;
+    }
+    dfs(G,0,vex_num,edge_num,visited);
+    if(vex_num==G-&gt;vex_num &amp;&amp; edge_num = 2*(G-&gt;edge_num-1))
+        return true;
+    else return false;
+}
+
+void dfs(ALGraph *G,int i,int vex_num,int edge_num,int visited[]){
+    vex_num++;
+    visited[i] = 1;
+    for(Edge* w=G-&gt;adjlist[i].first;w;w=w-&gt;next){
+        edge_num++;
+        if(!visited[w-&gt;adjvex]){
+            dfs(G,w-&gt;adjvex,vex_num,edge_num,visited)
+        }
+    }
+}
+```</pre>
+</div>
 <div created="20181001091900530" creator="CJ" modified="20181001094519152" modifier="CJ" tags="二叉树" title="前中后序递归遍历">
 <pre>
-
 ```
 void order_rc(BTree *T){
     if(T!=NULL){
@@ -14912,8 +14978,7 @@ void order_rc(BTree *T){
 </pre>
 </div>
 <div created="20181001093644130" creator="CJ" modified="20181001094531240" modifier="CJ" tags="二叉树" title="前中序非递归遍历" type="text/vnd.tiddlywiki">
-<pre>
-```
+<pre>```
 void order_no_rc(BTree *T){
 	InitStack(S);
 	BNode *p = T;
@@ -14935,8 +15000,7 @@ void order_no_rc(BTree *T){
 </pre>
 </div>
 <div created="20181001095648662" creator="CJ" modified="20181001095658997" modifier="CJ" tags="二叉树" title="删除二叉树叶子节点">
-<pre>
-```
+<pre>```
 void delete_leaves(BTree &amp;T){
 	if(T==NULL) return;
 	BTree p = T;
@@ -14946,9 +15010,25 @@ void delete_leaves(BTree &amp;T){
 }
 ```</pre>
 </div>
-<div created="20181001094432703" creator="CJ" modified="20181001094453905" modifier="CJ" tags="二叉树" title="树的结构体" type="text/vnd.tiddlywiki">
+<div created="20181002035008124" creator="CJ" modified="20181002035339844" modifier="CJ" tags="图 数据结构" title="输出i到j的所有简单路径">
 <pre>
 ```
+int path[MAX_VEX_NUM] = {-1};
+int distance = -1;
+void find_path(ALGraph *G,int i,int j,int path[],int distance){
+    distance++;
+    path[distance] = i;
+    if(i==j) print(path[]);
+    for(Edge*w=G-&gt;adjlist[i]w;w=w-&gt;next){
+        if(!visited[w-&gt;adjvex])
+            find_path(G,w-&gt;adjvex,j,path,distance);
+    }
+    visited[i] = 0;
+}
+```</pre>
+</div>
+<div created="20181001094432703" creator="CJ" modified="20181001094453905" modifier="CJ" tags="二叉树" title="树的结构体" type="text/vnd.tiddlywiki">
+<pre>```
 typedef struct BNode
 {
 	int data;
@@ -14957,13 +15037,138 @@ typedef struct BNode
 ```
 </pre>
 </div>
+<div created="20181002035350396" creator="CJ" modified="20181002040612338" modifier="CJ" tags="图 数据结构" title="拓补排序(判断图是否有环)">
+<pre>
+```
+bool toplogical_sort(ALGraph *G){
+    InitStack(S);
+    for(int i=0;i&lt;G-&gt;vex_num;i++){
+        if(in_degree[i]==0)
+            Push(S,G-&gt;adjlist[i]);
+    }
+    int count = 0;
+    while(!IsEmpty(S)){
+        Vertex temp;
+        Pop(S,temp);
+        result_array[++count] = temp.data;
+        for(Edge*w=temp.first;w;w=w-&gt;next){
+            if(!(--in_degree[w-&gt;adjvex]))
+                Push(S,G-&gt;adjjlist[w-&gt;adjvex]);
+        }
+    }
+    if(count &lt; G-&gt;vex_num) return false;
+    else{
+        print(result_array[]);
+        return true;
+    }
+}
+```</pre>
+</div>
+<div created="20181002023444150" creator="CJ" modified="20181002024313440" modifier="CJ" tags="数据结构 图" title="图">
+<pre>0.[[图的结构体]]
+
+1.[[DFS-递归]]
+
+2.[[DFS-非递归]]
+
+3.[[BFS]]
+
+4.[[判断无向图G是否为树]]
+
+5.[[邻接表转换为邻接矩阵表示]]
+
+6.[[BFS求最短路径]]
+
+7.[[DFS判断是否有i到j的路径]]
+
+8.[[BFS判断是否有i到j的路径]]
+
+9.[[输出i到j的所有简单路径]]
+
+10.[[拓补排序(判断图是否有环)]]
+
+11.[[DFS实现拓补排序]]
+
+---
+图的结构体
+
+{{图的结构体}}
+
+DFS-递归
+
+{{DFS-递归}}
+
+DFS-非递归
+
+{{DFS-非递归}}
+
+BFS
+
+{{BFS}}
+
+判断无向图G是否为树
+
+{{判断无向图G是否为树}}
+
+邻接表转换为邻接矩阵表示
+
+{{邻接表转换为邻接矩阵表示}}
+
+BFS求最短路径
+
+{{BFS求最短路径}}
+
+DFS判断是否有i到j的路径
+
+{{DFS判断是否有i到j的路径}}
+
+BFS判断是否有i到j的路径
+
+{{BFS判断是否有i到j的路径}}
+
+输出i到j的所有简单路径
+
+{{输出i到j的所有简单路径}}
+
+拓补排序(判断图是否有环)
+
+{{拓补排序(判断图是否有环)}}
+
+DFS实现拓补排序
+
+{{DFS实现拓补排序}}
+</pre>
+</div>
+<div created="20181002024336113" creator="CJ" modified="20181002024918352" modifier="CJ" tags="数据结构 图" title="图的结构体">
+<pre>
+```
+#define ElemType int
+#define MAX_VEX_NUM 5
+typedef struct _Edge
+{
+	int adjvex;
+	struct _Edge* next;
+}Edge;
+typedef struct _Vertex
+{
+	ElemType data;
+	Edge* first;
+}Vertex, AdjList[MAX_VEX_NUM];
+typedef struct
+{
+	AdjList adjlist;
+	int vex_num, edge_num;
+}ALGraph;
+
+bool visited[MAX_VEX_NUM] = {false};
+```</pre>
+</div>
 <div created="20180819124755738" creator="CJ" modified="20180819124836681" modifier="CJ" title="图片格式转换" type="text/x-markdown">
 <pre>## **图片格式转换**
 * [Jinaconvert](https://jinaconvert.com/)</pre>
 </div>
 <div created="20181001100459731" creator="CJ" modified="20181001100504060" modifier="CJ" tags="二叉树" title="线索二叉树的构造">
-<pre>
-```
+<pre>```
 void create_thread_tree(ThreadTree &amp;T){
 	ThreadTree *pre = NULL;
 	in_thread(T,pre);
@@ -15937,7 +16142,7 @@ var cpro_id = &quot;u460561&quot;;
 &lt;a href=&quot;https://www.jb51.net/tools/zhengze.html#&quot; title=&quot;点击展开&quot;&gt;&lt;i&gt;&amp;nbsp;&lt;/i&gt;图片相关信息&lt;/a&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;expres-host&quot; class=&quot;&quot;&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt; --&gt;</pre>
 </div>
-<div created="20180819072600938" creator="CJ" modified="20181001093343850" modifier="CJ" title="知识库主页" type="text/vnd.tiddlywiki">
+<div created="20180819072600938" creator="CJ" modified="20181002023437021" modifier="CJ" title="知识库主页" type="text/vnd.tiddlywiki">
 <pre>[[TiddlyWiki]] 笔记
 
 [[MarkDown]] 笔记
@@ -15947,6 +16152,7 @@ var cpro_id = &quot;u460561&quot;;
 ---
 ! ''计算机''
  * [[二叉树]]
+ * [[图]]
 ---
 ! ''设计''
 * [[壁纸/图片/素材/GIF/色彩管理]]
@@ -15963,8 +16169,7 @@ var cpro_id = &quot;u460561&quot;;
 </pre>
 </div>
 <div created="20181001095057514" creator="CJ" modified="20181001095106527" modifier="CJ" tags="二叉树" title="最大深度、最小深度">
-<pre>
-```
+<pre>```
 int max_depth(BTree *T){
 	if(T==NULL) return 0;
 	if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL) return 1;
@@ -15983,6 +16188,76 @@ int min_depth(BTree *T){
 ```
 </pre>
 </div>
+<div created="20181002031149028" creator="CJ" modified="20181002031302053" modifier="CJ" tags="图 数据结构" title="BFS">
+<pre>
+```
+void bfs_traverse(ALGraph *G){
+	for (int i = 0; i &lt; G.vertexNum; ++i)
+	{
+		if(!visited[i])
+			BFS(G,i);
+	}
+}
+
+void bfs(ALGraph *G,int i){
+	InitQueue(Q);
+	visit(G-&gt;adjlist[i]);
+	visited[i]=1;
+	EnQueue(Q,G-&gt;adjlist[i]);
+	while(!IsEmpty(Q)){
+		Vertex temp;
+		DeQueue(S,temp);
+		for(Edge* w=temp.first;w;w=w-&gt;next){
+			if(!visited[w-&gt;adjvex]){
+				visit(G-&gt;adjlist[w-&gt;adjvex]);
+				visited[w-&gt;adjvex]=1;
+				EnQueue(Q,G-&gt;adjlist[w-&gt;adjvex]);
+			}
+		}
+	}
+}
+```</pre>
+</div>
+<div created="20181002034224390" creator="CJ" modified="20181002034252670" modifier="CJ" tags="图 数据结构" title="BFS判断是否有i到j的路径">
+<pre>
+```
+bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
+	if(i==j) return 1;
+	InitQueue(Q);
+	EnQueue(Q,G-&gt;adjlist[i]);
+	while(!IsEmpty(Q)){
+		Vertex temp;
+		DeQueue(Q,temp);
+		for(Edge* w=temp.first;w;w=w-&gt;next){
+			if(w-&gt;adjvex == j) return 1;
+			if(!visited[w-&gt;adjvex])
+				EnQueue(Q,G-&gt;adjlist[w-&gt;adjvex]);
+		}
+	}
+}
+```</pre>
+</div>
+<div created="20181002032745321" creator="CJ" modified="20181002032751506" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
+<pre>
+```
+int distances[MAX_VEX_NUM] = {100};
+void bfs_min_distance(ALGraph *G,int i){
+	InitQueue(Q);
+	distances[i] = 0;
+	visited[i] = 1;
+	EnQueue(Q,G-&gt;adjlist[i]);
+	while(!IsEmpty(Q)){
+		Vertex temp;
+		DeQueue(Q,temp);
+		for(Edge* w=tem.first;w;w=w-&gt;next){
+			distances[w-&gt;adjvex] = distances[i]+1;
+			visited[w-&gt;adjvex] = 1;
+			EnQueue(S,G-&gt;adjlist[w-&gt;adjvex]);
+		}
+	}
+}
+```</pre>
+</div>
 <div created="20180819073523499" creator="CJ" modified="20180819074045929" modifier="CJ" title="CJ" type="text/x-markdown">
 <pre># 川杰
 
@@ -15991,6 +16266,105 @@ int min_depth(BTree *T){
 - [Blog](https://loopvoid.github.io)
 
 - [GitHub](https://github.com/loopvoid)</pre>
+</div>
+<div created="20181002025546110" creator="CJ" modified="20181002030505390" modifier="CJ" tags="数据结构 图" title="DFS-递归">
+<pre>
+```
+void dfs_traverse(ALGraph *G){
+    for(int i=0;i&lt;G-&gt;vex_num;i++){
+        visited[i] = false;
+    }
+    for(int i=0;i&lt;G-&gt;vex_num;i++){
+        if(!visited[i]){    
+            dfs(G,i);
+        }
+    }
+}
+
+
+void dfs(AlGraph *G,int i){
+    visit(G-&gt;adjlist[i]);
+    visited[i] = true;
+    for(Edge* w=G-&gt;adjlist[i].first;w;w=w-&gt;next){
+        if(!visited[w-&gt;adjvex]){
+            dfs(G,w-&gt;adjvex);
+        }
+    }
+}
+```</pre>
+</div>
+<div created="20181002030612164" creator="CJ" modified="20181002030625789" modifier="CJ" tags="图 数据结构" title="DFS-非递归">
+<pre>
+```
+void dfs_norc_traverse(ALGraph *G){
+	for (int i = 0; i &lt; G-&gt;vex_num; i++)
+	{
+		if(!visited[i]){
+			dfs_norc(G,i);
+		}
+	}
+}
+void dfs_norc(ALGraph *G, int i){
+	InitStack(S);
+	visit(G-&gt;adjlist[i]);
+	visited[i] = true;
+	Push(S,G-&gt;adjlist[i]);
+	while(!IsEmpty(S)){
+		Vertex temp;
+		Pop(S,temp);
+		for(Edge* w=temp.first;w;w=w-&gt;next){
+			if(!visited[w-&gt;adjvex]){
+				visit(G-&gt;adjlist[w-&gt;adjvex]);
+				visited[w-&gt;adjvex] = true;
+				Push(S,G-&gt;adjlist[w-&gt;adjvex]);
+			}
+		}
+	}
+}
+```</pre>
+</div>
+<div created="20181002032814434" creator="CJ" modified="20181002033821735" modifier="CJ" tags="图 数据结构" title="DFS判断是否有i到j的路径">
+<pre>
+```
+bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
+    if(i==j) return 1;
+    else{
+        visited[i] = 1;
+        for(Edge* w=G-&gt;adjlist[i];w;w=w-&gt;next){
+            if(!visited[w-&gt;adjvex] &amp;&amp; exist_path_form_i_to_j(G,w-&gt;adjvex,i)){
+                return 1;
+            }
+        }
+    }
+    else return 0;
+}
+```</pre>
+</div>
+<div created="20181002040638002" creator="CJ" modified="20181002041143122" modifier="CJ" tags="图 数据结构" title="DFS实现拓补排序">
+<pre>
+```
+//u是v的祖先，则v的DFS调用结束时间先于u的DFS调用结束时间，从而设置时间标记，对各个节点记时。
+//若v的结束时间大于u的结束时间，则v是u的祖先。
+//若u,v没有关系，则u,v拓补关系任意。
+//最后按结束时间从大到小输出，就是一个拓补序列。
+
+
+bool visited[MAX_VEX_NUM] = {false};
+int finish_time[MAX_VEX_NUM];
+int time = 0;
+
+void dfs(ALGraph *G,int i){
+    visit(G-&gt;adjlist[i]);
+    visited[i] = true;
+    Edge*w = G-&gt;adjlist[i].first;
+    for(;w;w=w-&gt;next){
+        if(!visited[w-&gt;adjvex]) dfs(G,w-&gt;adjvex);
+    }
+    time+=1;
+    finish_time[w-&gt;adjvex] = time;
+}
+
+```</pre>
 </div>
 <div created="20180914155137263" creator="CJ" modified="20180914160841899" modifier="CJ" tags="" title="Excel提取数据大全" type="text/x-markdown">
 <pre>## **提取出生日期**
