@@ -407,6 +407,8 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla/options/sidebarlayout</li>
 
+<li>2路归并排序</li>
+
 <li>安卓反编译工具</li>
 
 <li>壁纸/图片/素材/GIF/色彩管理</li>
@@ -418,6 +420,10 @@ Error message and password prompt
 <li>代码块</li>
 
 <li>带权路径长度</li>
+
+<li>堆插入</li>
+
+<li>堆排序</li>
 
 <li>二叉排序树的插入</li>
 
@@ -431,13 +437,21 @@ Error message and password prompt
 
 <li>各排序算法性质表</li>
 
+<li>简单选择排序</li>
+
 <li>块引用</li>
 
+<li>快速排序</li>
+
 <li>邻接表转换为邻接矩阵表示</li>
+
+<li>冒泡排序</li>
 
 <li>排序</li>
 
 <li>判断无向图G是否为树</li>
+
+<li>判断序列是否构成最小堆</li>
 
 <li>前中后序递归遍历</li>
 
@@ -456,6 +470,8 @@ Error message and password prompt
 <li>图的结构体</li>
 
 <li>图片格式转换</li>
+
+<li>希尔排序</li>
 
 <li>线索二叉树的构造</li>
 
@@ -13747,8 +13763,8 @@ Error message and password prompt
 <div created="20180819070314909" modified="20180819072133302" title="$:/SiteTitle">
 <pre>知识库</pre>
 </div>
-<div created="20180819083821199" creator="CJ" modified="20180819091120794" modifier="CJ" title="$:/state/encrypt">
-<pre></pre>
+<div created="20180819083821199" creator="CJ" modified="20181004083137680" modifier="CJ" title="$:/state/encrypt">
+<pre>判断序列是否构成最小堆</pre>
 </div>
 <div created="20180819072953519" creator="CJ" modified="20180819072955564" modifier="CJ" title="$:/state/Link/--1376396693/search">
 <pre></pre>
@@ -13811,19 +13827,19 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;file:///C:/Users/ben/Desktop/tiddlywiki%20(1).html&quot;
+            &quot;text&quot;: &quot;https://loopvoid.github.io/minewiki/&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
-            &quot;text&quot;: &quot;&quot;
+            &quot;text&quot;: &quot;loopvoid.github.io&quot;
         },
         &quot;$:/info/url/hostname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/hostname&quot;,
-            &quot;text&quot;: &quot;&quot;
+            &quot;text&quot;: &quot;loopvoid.github.io&quot;
         },
         &quot;$:/info/url/protocol&quot;: {
             &quot;title&quot;: &quot;$:/info/url/protocol&quot;,
-            &quot;text&quot;: &quot;file:&quot;
+            &quot;text&quot;: &quot;https:&quot;
         },
         &quot;$:/info/url/port&quot;: {
             &quot;title&quot;: &quot;$:/info/url/port&quot;,
@@ -13831,7 +13847,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/C:/Users/ben/Desktop/tiddlywiki%20(1).html&quot;
+            &quot;text&quot;: &quot;/minewiki/&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -13839,7 +13855,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/origin&quot;: {
             &quot;title&quot;: &quot;$:/info/url/origin&quot;,
-            &quot;text&quot;: &quot;file://&quot;
+            &quot;text&quot;: &quot;https://loopvoid.github.io&quot;
         },
         &quot;$:/info/browser/screen/width&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/width&quot;,
@@ -14628,6 +14644,34 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070355752" modified="20180819070355752" title="$:/themes/tiddlywiki/vanilla/options/sidebarlayout">
 <pre>fluid-fixed</pre>
 </div>
+<div created="20181004083148440" creator="CJ" modified="20181004083726647" modifier="CJ" tags="数据结构 排序" title="2路归并排序">
+<pre>
+`设两段有序表存放在A[low...mid]和A[mid+1...high]上。
+merge的功能为把A的前后两段归并为一个有序表。`
+
+```cpp
+ElemType *B = (ElemType*)malloc((n+1)*sizeof(ElemType));
+void merge(ElemType A[], int low, int mid, int high){
+    for(int k = low;k&lt;=high;k++)//先将A中所有元素复制到B中
+        B[k] = A[k];
+    for(int i = low,int j = mid+1,int k =i;i&lt;=mid&amp;&amp;j&lt;=high;k++){
+        if(B[i]&lt;B[j]) A[k] = B[i++];
+        else A[k] = B[j++];
+    }
+    while(i&lt;=mid) A[k++] = B[i++];//表左侧未检测完，直接复制
+    while(j&lt;=high)A[k++] = B[j++];//表右侧未检测完，直接复制
+}
+
+void merge_sort(ElemType A[], int low,int high){
+    if(low&lt;high){
+        int mid = (low+high)/2;//从中间划分为两个子序列
+        merge_sort(A,low,mid);//左侧子序列递归排序
+        merge_sort(A,mid+1,high);//右侧子序列递归排序
+        meirge(A,low,mid,high);//归并
+    }
+}
+```</pre>
+</div>
 <div created="20180829120728340" creator="CJ" modified="20180829120819514" modifier="CJ" tags="" title="安卓反编译工具" type="text/x-markdown">
 <pre> * [反编译工具](https://down.52pojie.cn/Tools/Android_Tools/)</pre>
 </div>
@@ -14801,6 +14845,54 @@ int wpl(BTree *T,int deep){
 }
 ```</pre>
 </div>
+<div created="20181004082426513" creator="CJ" modified="20181004082653561" modifier="CJ" tags="堆 数据结构" title="堆插入">
+<pre>
+```cpp
+void adjust_up(ElemType A[],int k){
+    int temp = A[k];
+    int i = k/2;
+    while(i&gt;0&amp;&amp;A[i]&lt;temp){
+        A[k] = A[i];
+        k = i;
+        i=k/2;
+    }
+    A[k] = temp;
+}
+```</pre>
+</div>
+<div created="20181004081721748" creator="CJ" modified="20181004082413082" modifier="CJ" tags="数据结构 排序" title="堆排序">
+<pre>
+```cpp
+void adjust_down(ElemType A[], int k, int n){
+    int temp = A[k];
+    for(int i = 2*k;i&lt;n;i*=2){
+        i+=1;
+        if(i&lt;n&amp;&amp;A[i]&lt;A[i+1]) i++;
+        if(temp&gt;A[i]) break;
+        else{
+            A[k]=A[i];
+            k=i;
+        }
+        A[k] = temp;
+    }
+}
+
+void build_max_heap(ElemType A[],int n){
+    for(int i = 0;i&lt;n;i++)
+        adjust_down(A,i,n);
+}
+
+void heap_sort(ElemType A[],int n){
+    build_max_heap(A,n);
+    for(int i = n-1;i&gt;=0;i--){
+        cout &lt;&lt; A[0] &lt;&lt; &quot; &quot;;
+        A[0] = -1;
+        swap(A[i],A[0]);
+        adjust_down(A,0,n-1);
+    }
+}
+```</pre>
+</div>
 <div created="20181001101153708" creator="CJ" modified="20181004045613348" modifier="CJ" tags="二叉树" title="二叉排序树的插入">
 <pre>```cpp
 int bstree_insert(BSTree *T,ElemType key){
@@ -14930,6 +15022,19 @@ int node_level(BTree *T,BNode *p){
 |基数排序| 基数排序 | O(d(n+r)) | O(d(n+r)) | O(d(n+r)) | O(r) | 是 |
 | ''排序算法性质表'' |c</pre>
 </div>
+<div created="20181004075532990" creator="CJ" modified="20181004080401125" modifier="CJ" tags="数据结构 排序" title="简单选择排序">
+<pre>
+```cpp
+void sample_select_sort(ElemType A[],int n){
+    for(int i = 0;i&lt;n;i++){
+        int min = i;
+        for(int j=0;j&lt;n;j++)
+            if(A[j]&lt;A[min]) min = j;
+        if(min != i) swap(A[i],A[min]);
+    }
+}
+```</pre>
+</div>
 <div created="20180930154308937" creator="CJ" modified="20180930160147118" modifier="CJ" tags="WikiText" title="块引用" type="text/vnd.tiddlywiki">
 <pre>在TiddlyWiki5中有两种方法可以生成HTML块引用，一种用于__跨多行__引用内容，另一种用于__单行__内容。
 
@@ -15057,6 +15162,29 @@ A dramatic quote
 
 </pre>
 </div>
+<div created="20181004074551271" creator="CJ" modified="20181004075521823" modifier="CJ" tags="数据结构 排序" title="快速排序">
+<pre>
+```cpp
+int partion(ElemType A[], int low,int high){
+	ElemType pivot = A[low];
+	while(low&lt;high){
+		while(low&lt;high&amp;&amp;A[high]&gt;=pivot) --high;//在右边找到比pivot小的
+		A[low] = A[high];//并放到左边
+		while(low&lt;high&amp;&amp;A[low]&lt;=pivot) ++low;//在左边找到比pivot大的
+		A[high] = A[low];//并且放到右边
+	}
+	A[low] = pivot;
+	return low;
+}
+void quick_sort(ElemType A[],int low,int high){
+	if(low&lt;high){
+		int pivotpos = partion(A,low,high);
+		quick_sort(A,low,pivotpos-1);
+		quick_sort(A,pivotpos+1, high);
+	}
+}
+```</pre>
+</div>
 <div created="20181002032106338" creator="CJ" modified="20181002032338386" modifier="CJ" tags="图 数据结构" title="邻接表转换为邻接矩阵表示">
 <pre>```
 void conver(ALGraph *G,int arcs[M][N]){
@@ -15070,7 +15198,21 @@ void conver(ALGraph *G,int arcs[M][N]){
 }
 ```</pre>
 </div>
-<div created="20181003143007946" creator="CJ" modified="20181003143433256" modifier="CJ" tags="排序 数据结构" title="排序">
+<div created="20181004074406665" creator="CJ" modified="20181004074541512" modifier="CJ" tags="数据结构 排序" title="冒泡排序">
+<pre>
+```cpp
+void bubble_sort(ElemType A[],int n){
+	for (int i = 0; i &lt; n; ++i)
+	{
+		for(int j = n-1;j&gt;=i;j--){
+			if(A[j-1]&gt;A[j])
+				swap(A[j-1],A[j]);
+		}
+	}
+}
+```</pre>
+</div>
+<div created="20181003143007946" creator="CJ" modified="20181004083820735" modifier="CJ" tags="排序 数据结构" title="排序">
 <pre>!! 插入排序
 * 1.[[直接插入排序]] 稳定 O(n^2) 顺序存储+链式存储
 
@@ -15090,9 +15232,10 @@ void conver(ALGraph *G,int arcs[M][N]){
 
 * 8.[[堆插入]] (向上调整)
 
-9.[[判断序列是否构成最小堆]]
+ * 9.[[判断序列是否构成最小堆]]
 
-10.[[2路归并排序]] 稳定 每趟O(n) 共log2n趟，O(nlog2n)
+!! 归并排序
+ * 10.[[2路归并排序]] 稳定 每趟O(n) 共log2n趟，O(nlog2n)
 
 ---
 
@@ -15167,6 +15310,23 @@ void dfs(ALGraph *G,int i,int vex_num,int edge_num,int visited[]){
             dfs(G,w-&gt;adjvex,vex_num,edge_num,visited)
         }
     }
+}
+```</pre>
+</div>
+<div created="20181004082725793" creator="CJ" modified="20181004083136177" modifier="CJ" tags="数据结构 堆" title="判断序列是否构成最小堆">
+<pre>
+```cpp
+bool is_min_heap(ElemType A[],int n){
+    if(n%2==0){//n为偶数，有一个单分支节点
+        if(A[n/2]&gt;A[n]) return flase;//判断单分支节点
+        for(int i = n/2-1;i&gt;=1;i--)
+            if(A[i]&gt;A[2*i]||A[i]&gt;A[2*i+1]) return false;
+    }
+    else{//n为奇数没有单分支节点
+        for(int i =n/2;i&gt;=1;i--)
+            if(A[i]&gt;A[2*i]||A[i]&gt;A[2*i+1]) return false;
+    }
+    return true;
 }
 ```</pre>
 </div>
@@ -15372,6 +15532,22 @@ bool visited[MAX_VEX_NUM] = {false};
 <pre>## **图片格式转换**
 * [Jinaconvert](https://jinaconvert.com/)</pre>
 </div>
+<div created="20181004070006960" creator="CJ" modified="20181004073012612" modifier="CJ" tags="数据结构 排序" title="希尔排序">
+<pre>
+```cpp
+void shell_sort(ElemType A[],int n){
+    for(int d=n/2; d&gt;=1; d=d/2){
+        for(int i = d; i&lt;n; i++){
+            int j = 0;
+            ElemType temp = A[i];
+            for(j=i-d; j&gt;=0&amp;&amp;A[j]&gt;temp; j-=d)
+                A[j+d] = A[j];
+            A[j+d] = temp;
+        }
+    }
+}
+```</pre>
+</div>
 <div created="20181001100459731" creator="CJ" modified="20181004045707636" modifier="CJ" tags="二叉树" title="线索二叉树的构造">
 <pre>```cpp
 void create_thread_tree(ThreadTree &amp;T){
@@ -15397,13 +15573,13 @@ void in_thread(ThreadTree *p,ThreadTree *pre){
 }
 ```</pre>
 </div>
-<div created="20181003150550378" creator="CJ" modified="20181003152338320" modifier="CJ" tags="排序 数据结构" title="折半插入排序">
+<div created="20181003150550378" creator="CJ" modified="20181004072446299" modifier="CJ" tags="排序 数据结构" title="折半插入排序">
 <pre>`通过折半查找的方式找到插入点，然后统一移动，最后再插入即可`
 
-```
+```cpp
 void half_insert_sort(ElemType A[],int n){
 	int low,mid,high;
-	for (int i = i; i &lt; n; ++i)
+	for (int i = 1; i &lt; n; ++i)
 	{
 		low = 0;high = i-1;
 		ElemType temp = A[i];
@@ -15412,7 +15588,7 @@ void half_insert_sort(ElemType A[],int n){
 			temp &lt; A[mid]?high=mid-1:low=mid+1;
 		}
 		int j = 0;
-		for(j=i-1;j&gt;=0&amp;&amp;temp &lt; A[j];j--)
+		for(j=i-1;j&gt;=low&amp;&amp;temp &lt; A[j];j--)
 			A[j+1] = A[j];
 		A[j+1] = temp;
 	}
@@ -16398,8 +16574,8 @@ var cpro_id = &quot;u460561&quot;;
 
 </pre>
 </div>
-<div created="20181003143440688" creator="CJ" modified="20181003151408242" modifier="CJ" tags="排序 数据结构" title="直接插入排序">
-<pre>```
+<div created="20181003143440688" creator="CJ" modified="20181004065826387" modifier="CJ" tags="排序 数据结构" title="直接插入排序">
+<pre>```cpp
 void direct_insert_sort(ElemType A[], int n){
     for(int i = 1; i&lt;n; i++){
         ElemType temp = A[i];
