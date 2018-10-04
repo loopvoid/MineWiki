@@ -44,7 +44,7 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE." />
 <link id="faviconLink" rel="shortcut icon" href="favicon.ico">
-<title>知识库 — Knowledge Base – TiddlyWiki</title>
+<title>mineWiki — knowledge base & note</title>
 <!--~~ This is a Tiddlywiki file. The points of interest in the file are marked with this pattern ~~--><!--~~ Raw markup ~~-->
 
 
@@ -137,11 +137,17 @@ Error message and password prompt
 
 <li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/close-all</li>
 
+<li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/full-screen</li>
+
 <li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/home</li>
 
 <li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/more-page-actions</li>
 
+<li>$:/config/PageControlButtons/Visibility/$:/plugins/tiddlywiki/markdown/new-markdown-button</li>
+
 <li>$:/config/Performance/Instrumentation</li>
+
+<li>$:/config/Toolbar/Text</li>
 
 <li>$:/core</li>
 
@@ -405,6 +411,22 @@ Error message and password prompt
 
 <li>$:/themes/tiddlywiki/vanilla</li>
 
+<li>$:/themes/tiddlywiki/vanilla/metrics/bodyfontsize</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/bodylineheight</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/fontsize</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/storyleft</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/storyright</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/storytop</li>
+
+<li>$:/themes/tiddlywiki/vanilla/metrics/storywidth</li>
+
 <li>$:/themes/tiddlywiki/vanilla/options/sidebarlayout</li>
 
 <li>2路归并排序</li>
@@ -481,8 +503,6 @@ Error message and password prompt
 
 <li>正则表达式30分钟入门教程</li>
 
-<li>知识库主页</li>
-
 <li>直接插入排序</li>
 
 <li>最大深度、最小深度</li>
@@ -509,6 +529,8 @@ Error message and password prompt
 
 <li>Git</li>
 
+<li>Home</li>
+
 <li>icon</li>
 
 <li>MarkDown</li>
@@ -520,8 +542,6 @@ Error message and password prompt
 <li>Sublime Text</li>
 
 <li>TiddlyWiki</li>
-
-<li>ToDo</li>
 
 <li>WikiText</li>
 
@@ -543,13 +563,22 @@ Error message and password prompt
 <div created="20180819070341128" creator="CJ" modified="20180819075046968" modifier="CJ" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/close-all">
 <pre>hide</pre>
 </div>
+<div created="20181004123235757" creator="CJ" modified="20181004123235757" modifier="CJ" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/full-screen">
+<pre>show</pre>
+</div>
 <div created="20180819070342624" modified="20180819070342624" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/home">
 <pre>show</pre>
 </div>
 <div created="20180819070344881" modified="20180819070344881" title="$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/more-page-actions">
 <pre>show</pre>
 </div>
+<div created="20181004123213733" creator="CJ" modified="20181004123213733" modifier="CJ" title="$:/config/PageControlButtons/Visibility/$:/plugins/tiddlywiki/markdown/new-markdown-button">
+<pre>hide</pre>
+</div>
 <div created="20180819074954921" creator="CJ" modified="20180819074955544" modifier="CJ" title="$:/config/Performance/Instrumentation">
+<pre>no</pre>
+</div>
+<div created="20181004123135822" creator="CJ" modified="20181004123144566" modifier="CJ" title="$:/config/Toolbar/Text">
 <pre>no</pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="" description="TiddlyWiki5 core" list="readme" plugin-priority="0" plugin-type="plugin" title="$:/core" type="application/json" version="5.1.17">
@@ -9086,8 +9115,8 @@ Error message and password prompt
     }
 }</pre>
 </div>
-<div created="20180819070323016" creator="CJ" modified="20180819075240215" modifier="CJ" title="$:/DefaultTiddlers">
-<pre>[[知识库主页]]</pre>
+<div created="20180819070323016" creator="CJ" modified="20181004122552293" modifier="CJ" title="$:/DefaultTiddlers">
+<pre>[[Home]]</pre>
 </div>
 <div status="complete" title="$:/Import">
 <pre>下列条目已被导入：
@@ -13759,11 +13788,11 @@ Error message and password prompt
     }
 }</pre>
 </div>
-<div created="20180819070318742" modified="20180819072215972" title="$:/SiteSubtitle">
-<pre>Knowledge Base -- TiddlyWiki</pre>
+<div created="20180819070318742" creator="CJ" modified="20181004123352300" modifier="CJ" title="$:/SiteSubtitle">
+<pre>knowledge base &amp; note</pre>
 </div>
-<div created="20180819070314909" modified="20180819072133302" title="$:/SiteTitle">
-<pre>知识库</pre>
+<div created="20180819070314909" creator="CJ" modified="20181004123317345" modifier="CJ" title="$:/SiteTitle">
+<pre>mineWiki</pre>
 </div>
 <div created="20180819083821199" creator="CJ" modified="20181004083137680" modifier="CJ" title="$:/state/encrypt">
 <pre>判断序列是否构成最小堆</pre>
@@ -13777,31 +13806,31 @@ Error message and password prompt
 <div created="20180819071145263" modified="20180819071146063" title="$:/state/sidebar">
 <pre>yes</pre>
 </div>
-<div created="20180819070332144" creator="CJ" modified="20180819124914297" modifier="CJ" title="$:/state/tab--1963855381">
+<div created="20180819070332144" creator="CJ" modified="20181004123302581" modifier="CJ" title="$:/state/tab--1963855381">
 <pre>$:/themes/tiddlywiki/vanilla/themetweaks</pre>
 </div>
-<div created="20180819070329576" creator="CJ" modified="20180819124857209" modifier="CJ" title="$:/state/tab--2112689675">
-<pre>$:/core/ui/ControlPanel/Advanced</pre>
+<div created="20180819070329576" creator="CJ" modified="20181004122734310" modifier="CJ" title="$:/state/tab--2112689675">
+<pre>$:/core/ui/ControlPanel/Basics</pre>
 </div>
 <div created="20180819071148454" creator="CJ" modified="20181004042205274" modifier="CJ" title="$:/state/tab--868624678">
 <pre>$:/core/ui/MoreSideBar/Plugins/Theme</pre>
 </div>
-<div created="20180819072303740" creator="CJ" modified="20180819124904905" modifier="CJ" title="$:/state/tab--959111941">
+<div created="20180819072303740" creator="CJ" modified="20181004122728718" modifier="CJ" title="$:/state/tab--959111941">
 <pre>$:/core/ui/ControlPanel/TiddlerFields</pre>
 </div>
 <div created="20180819070425840" modified="20180819070429264" title="$:/state/tab-1342078386">
 <pre>$:/core/ui/ControlPanel/Plugins/Add/Plugins</pre>
 </div>
-<div created="20180819070330888" creator="CJ" modified="20180819124933922" modifier="CJ" title="$:/state/tab-1749438307">
-<pre>$:/core/ui/ControlPanel/Settings</pre>
+<div created="20180819070330888" creator="CJ" modified="20181004123308246" modifier="CJ" title="$:/state/tab-1749438307">
+<pre>$:/core/ui/ControlPanel/Info</pre>
 </div>
-<div created="20180819070410656" creator="CJ" modified="20181004043555591" modifier="CJ" title="$:/state/tab/moresidebar-401116514">
-<pre>$:/core/ui/MoreSideBar/All</pre>
+<div created="20180819070410656" creator="CJ" modified="20181004122618951" modifier="CJ" title="$:/state/tab/moresidebar-401116514">
+<pre>$:/core/ui/MoreSideBar/Orphans</pre>
 </div>
-<div created="20180819070408744" creator="CJ" modified="20181004045713827" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
+<div created="20180819070408744" creator="CJ" modified="20181004122642911" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
 <pre>$:/core/ui/SideBar/Open</pre>
 </div>
-<div created="20180819070337784" creator="CJ" modified="20180819075107240" modifier="CJ" title="$:/state/tabs/controlpanel/toolbars-1345989671">
+<div created="20180819070337784" creator="CJ" modified="20181004123258093" modifier="CJ" title="$:/state/tabs/controlpanel/toolbars-1345989671">
 <pre>$:/core/ui/ControlPanel/Toolbars/EditToolbar</pre>
 </div>
 <div created="20181004042152754" creator="CJ" modified="20181004042154130" modifier="CJ" title="$:/state/tree/$:/config/">
@@ -13810,7 +13839,7 @@ Error message and password prompt
 <div created="20180819072223515" creator="c" modified="20180819072424192" modifier="CJ " title="$:/status/UserName">
 <pre>CJ</pre>
 </div>
-<div list="知识库主页 图" title="$:/StoryList">
+<div list="Home" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20181004042705122" creator="CJ" modified="20181004042705122" modifier="CJ" title="$:/temp/HidePluginWarning">
@@ -14528,7 +14557,7 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" modified="20180819070452184" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20181003135534551" modifier="CJ" title="$:/temp/search">
+<div created="20180819074107419" creator="CJ" modified="20181004122516839" modifier="CJ" title="$:/temp/search">
 <pre></pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
@@ -14643,12 +14672,35 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
     }
 }</pre>
 </div>
-<div created="20180819070355752" modified="20180819070355752" title="$:/themes/tiddlywiki/vanilla/options/sidebarlayout">
+<div created="20181004122810160" creator="CJ" modified="20181004122819513" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/bodyfontsize">
+<pre>16px</pre>
+</div>
+<div created="20181004122830393" creator="CJ" modified="20181004122837651" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/bodylineheight">
+<pre>20px</pre>
+</div>
+<div created="20181004122749856" creator="CJ" modified="20181004122801093" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/fontsize">
+<pre>14px</pre>
+</div>
+<div created="20181004122935673" creator="CJ" modified="20181004122944875" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth">
+<pre>350px</pre>
+</div>
+<div created="20181004122852172" creator="CJ" modified="20181004123108266" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/storyleft">
+<pre>60px</pre>
+</div>
+<div created="20181004122916113" creator="CJ" modified="20181004122918786" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/storyright">
+<pre>770px</pre>
+</div>
+<div created="20181004122859341" creator="CJ" modified="20181004123052516" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/storytop">
+<pre>5px</pre>
+</div>
+<div created="20181004122922999" creator="CJ" modified="20181004122925676" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/metrics/storywidth">
+<pre>770px</pre>
+</div>
+<div created="20180819070355752" creator="CJ" modified="20181004123031460" modifier="CJ" title="$:/themes/tiddlywiki/vanilla/options/sidebarlayout">
 <pre>fluid-fixed</pre>
 </div>
 <div created="20181004083148440" creator="CJ" modified="20181004083726647" modifier="CJ" tags="数据结构 排序" title="2路归并排序">
-<pre>
-`设两段有序表存放在A[low...mid]和A[mid+1...high]上。
+<pre>`设两段有序表存放在A[low...mid]和A[mid+1...high]上。
 merge的功能为把A的前后两段归并为一个有序表。`
 
 ```cpp
@@ -14848,8 +14900,7 @@ int wpl(BTree *T,int deep){
 ```</pre>
 </div>
 <div created="20181004082426513" creator="CJ" modified="20181004082653561" modifier="CJ" tags="堆 数据结构" title="堆插入">
-<pre>
-```cpp
+<pre>```cpp
 void adjust_up(ElemType A[],int k){
     int temp = A[k];
     int i = k/2;
@@ -14863,8 +14914,7 @@ void adjust_up(ElemType A[],int k){
 ```</pre>
 </div>
 <div created="20181004081721748" creator="CJ" modified="20181004082413082" modifier="CJ" tags="数据结构 排序" title="堆排序">
-<pre>
-```cpp
+<pre>```cpp
 void adjust_down(ElemType A[], int k, int n){
     int temp = A[k];
     for(int i = 2*k;i&lt;n;i*=2){
@@ -15025,8 +15075,7 @@ int node_level(BTree *T,BNode *p){
 | ''排序算法性质表'' |c</pre>
 </div>
 <div created="20181004075532990" creator="CJ" modified="20181004080401125" modifier="CJ" tags="数据结构 排序" title="简单选择排序">
-<pre>
-```cpp
+<pre>```cpp
 void sample_select_sort(ElemType A[],int n){
     for(int i = 0;i&lt;n;i++){
         int min = i;
@@ -15165,8 +15214,7 @@ A dramatic quote
 </pre>
 </div>
 <div created="20181004074551271" creator="CJ" modified="20181004075521823" modifier="CJ" tags="数据结构 排序" title="快速排序">
-<pre>
-```cpp
+<pre>```cpp
 int partion(ElemType A[], int low,int high){
 	ElemType pivot = A[low];
 	while(low&lt;high){
@@ -15201,8 +15249,7 @@ void conver(ALGraph *G,int arcs[M][N]){
 ```</pre>
 </div>
 <div created="20181004074406665" creator="CJ" modified="20181004074541512" modifier="CJ" tags="数据结构 排序" title="冒泡排序">
-<pre>
-```cpp
+<pre>```cpp
 void bubble_sort(ElemType A[],int n){
 	for (int i = 0; i &lt; n; ++i)
 	{
@@ -15316,8 +15363,7 @@ void dfs(ALGraph *G,int i,int vex_num,int edge_num,int visited[]){
 ```</pre>
 </div>
 <div created="20181004082725793" creator="CJ" modified="20181004083136177" modifier="CJ" tags="数据结构 堆" title="判断序列是否构成最小堆">
-<pre>
-```cpp
+<pre>```cpp
 bool is_min_heap(ElemType A[],int n){
     if(n%2==0){//n为偶数，有一个单分支节点
         if(A[n/2]&gt;A[n]) return flase;//判断单分支节点
@@ -15514,8 +15560,7 @@ DFS实现拓补排序
 </pre>
 </div>
 <div created="20181004090901410" creator="CJ" modified="20181004091408482" modifier="CJ" tags="数据结构 图" title="图的创建">
-<pre>
-```cpp
+<pre>```cpp
 void create_graph(ALGraph *G){
 	cin &gt;&gt; G-&gt;vex_num &gt;&gt; G-&gt;edge_num;
 
@@ -15570,8 +15615,7 @@ bool visited[MAX_VEX_NUM] = {false};
 * [Jinaconvert](https://jinaconvert.com/)</pre>
 </div>
 <div created="20181004070006960" creator="CJ" modified="20181004073012612" modifier="CJ" tags="数据结构 排序" title="希尔排序">
-<pre>
-```cpp
+<pre>```cpp
 void shell_sort(ElemType A[],int n){
     for(int d=n/2; d&gt;=1; d=d/2){
         for(int i = d; i&lt;n; i++){
@@ -16582,35 +16626,6 @@ var cpro_id = &quot;u460561&quot;;
 &lt;a href=&quot;https://www.jb51.net/tools/zhengze.html#&quot; title=&quot;点击展开&quot;&gt;&lt;i&gt;&amp;nbsp;&lt;/i&gt;图片相关信息&lt;/a&gt;
 &lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;expres-host&quot; class=&quot;&quot;&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt; --&gt;</pre>
 </div>
-<div created="20180819072600938" creator="CJ" modified="20181004043551776" modifier="CJ" title="知识库主页" type="text/vnd.tiddlywiki">
-<pre>[[TiddlyWiki]]
-
-[[MarkDown]] 笔记
-
-[[正则表达式30分钟入门教程]] 
-
----
-! ''计算机''
- * [[二叉树]]
- * [[图]]
- * [[排序]]
-
- * [[各排序算法性质表]]
----
-! ''设计''
-* [[壁纸/图片/素材/GIF/色彩管理]]
-* [[图片格式转换]]
-* [[icon]]
----
-! ''安卓''  [img[https://www.easyicon.net/api/resizeApi.php?id=507628&amp;size=16]] 
-
- * [[安卓反编译工具]]
-
----
-! ''ToDo'' [img[https://www.easyicon.net/api/resizeApi.php?id=3888&amp;size=16]] 
-
-</pre>
-</div>
 <div created="20181003143440688" creator="CJ" modified="20181004065826387" modifier="CJ" tags="排序 数据结构" title="直接插入排序">
 <pre>```cpp
 void direct_insert_sort(ElemType A[], int n){
@@ -16889,6 +16904,38 @@ void dfs(ALGraph *G,int i){
 <div created="20181001084912071" creator="CJ" modified="20181001085205322" modifier="CJ" tags="" title="Git" type="text/vnd.tiddlywiki">
 <pre> * [[Git - 简易指南|http://www.bootcss.com/p/git-guide/]]</pre>
 </div>
+<div created="20180819072600938" creator="CJ" modified="20181004122641176" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
+<pre>[[TiddlyWiki]]
+
+[[MarkDown]] 笔记
+
+[[正则表达式30分钟入门教程]] 
+
+---
+! ''CS''
+ * [[二叉树]]
+ * [[图]]
+ * [[排序]]
+
+ * [[各排序算法性质表]]
+---
+! ''Design''
+* [[壁纸/图片/素材/GIF/色彩管理]]
+* [[图片格式转换]]
+* [[icon]]
+---
+! ''Android''  [img[https://www.easyicon.net/api/resizeApi.php?id=507628&amp;size=16]] 
+
+ * [[安卓反编译工具]]
+
+---
+
+! ToDo [img[https://www.easyicon.net/api/resizeApi.php?id=3888&amp;size=16]] 
+
+[ ] bak数据导入mysql (https://zhidao.baidu.com/question/627879933834226324.html)
+
+</pre>
+</div>
 <div created="20180829122615843" creator="CJ" modified="20180829122822564" modifier="CJ" tags="" title="icon" type="text/x-markdown">
 <pre> * ![img](https://www.easyicon.net/api/resizeApi.php?id=501578&amp;size=16) [Easyicon](https://www.easyicon.net)</pre>
 </div>
@@ -17048,11 +17095,6 @@ sublime text 2
 * http://www.tiddlytools.com/
 * http://tiddlyvault.tiddlyspot.com/
 </pre>
-</div>
-<div created="20180821163049896" creator="CJ" modified="20180821163117544" modifier="CJ" tags="" title="ToDo" type="text/x-markdown">
-<pre>bak 导入 mysql
-
-https://zhidao.baidu.com/question/627879933834226324.html</pre>
 </div>
 <div created="20180930154032002" creator="CJ" modified="20181003135503551" modifier="CJ" tags="" title="WikiText">
 <pre>WikiText语法的以下元素内置于核心：
