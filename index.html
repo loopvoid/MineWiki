@@ -467,6 +467,8 @@ Error message and password prompt
 
 <li>图</li>
 
+<li>图的创建</li>
+
 <li>图的结构体</li>
 
 <li>图片格式转换</li>
@@ -13808,7 +13810,7 @@ Error message and password prompt
 <div created="20180819072223515" creator="c" modified="20180819072424192" modifier="CJ " title="$:/status/UserName">
 <pre>CJ</pre>
 </div>
-<div list="知识库主页" title="$:/StoryList">
+<div list="知识库主页 图" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20181004042705122" creator="CJ" modified="20181004042705122" modifier="CJ" title="$:/temp/HidePluginWarning">
@@ -15185,8 +15187,8 @@ void quick_sort(ElemType A[],int low,int high){
 }
 ```</pre>
 </div>
-<div created="20181002032106338" creator="CJ" modified="20181002032338386" modifier="CJ" tags="图 数据结构" title="邻接表转换为邻接矩阵表示">
-<pre>```
+<div created="20181002032106338" creator="CJ" modified="20181004090244506" modifier="CJ" tags="图 数据结构" title="邻接表转换为邻接矩阵表示">
+<pre>```cpp
 void conver(ALGraph *G,int arcs[M][N]){
    for(int i = 0;i &lt; M;i++){
         p = G-&gt;adjlist[i].first;
@@ -15280,7 +15282,7 @@ void bubble_sort(ElemType A[],int n){
 {{2路归并排序}}
 </pre>
 </div>
-<div created="20181002031329282" creator="CJ" modified="20181002032045306" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
+<div created="20181002031329282" creator="CJ" modified="20181004090252325" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
 <pre>无向图G为一棵树的条件：
  
 
@@ -15288,7 +15290,7 @@ void bubble_sort(ElemType A[],int n){
 
 * 有n-1条边的连通图
 
-```
+```cpp
 bool is_tree_or_not(ALGrah *G){
     int vex_num = 0,edge_num = 0;
     int visited[MAX_VEX_NUM];
@@ -15378,8 +15380,8 @@ void delete_leaves(BTree &amp;T){
 }
 ```</pre>
 </div>
-<div created="20181002035008124" creator="CJ" modified="20181002035339844" modifier="CJ" tags="图 数据结构" title="输出i到j的所有简单路径">
-<pre>```
+<div created="20181002035008124" creator="CJ" modified="20181004090301490" modifier="CJ" tags="图 数据结构" title="输出i到j的所有简单路径">
+<pre>```cpp
 int path[MAX_VEX_NUM] = {-1};
 int distance = -1;
 void find_path(ALGraph *G,int i,int j,int path[],int distance){
@@ -15404,8 +15406,8 @@ typedef struct BNode
 ```
 </pre>
 </div>
-<div created="20181002035350396" creator="CJ" modified="20181002040612338" modifier="CJ" tags="图 数据结构" title="拓补排序(判断图是否有环)">
-<pre>```
+<div created="20181002035350396" creator="CJ" modified="20181004090308291" modifier="CJ" tags="图 数据结构" title="拓补排序(判断图是否有环)">
+<pre>```cpp
 bool toplogical_sort(ALGraph *G){
     InitStack(S);
     for(int i=0;i&lt;G-&gt;vex_num;i++){
@@ -15430,35 +15432,41 @@ bool toplogical_sort(ALGraph *G){
 }
 ```</pre>
 </div>
-<div created="20181002023444150" creator="CJ" modified="20181002024313440" modifier="CJ" tags="数据结构 图" title="图">
-<pre>0.[[图的结构体]]
+<div created="20181002023444150" creator="CJ" modified="20181004090854777" modifier="CJ" tags="数据结构 图" title="图">
+<pre># [[图的结构体]]
 
-1.[[DFS-递归]]
+# [[图的创建]]
 
-2.[[DFS-非递归]]
+# [[DFS-递归]]
 
-3.[[BFS]]
+# [[DFS-非递归]]
 
-4.[[判断无向图G是否为树]]
+# [[BFS]]
 
-5.[[邻接表转换为邻接矩阵表示]]
+# [[判断无向图G是否为树]]
 
-6.[[BFS求最短路径]]
+# [[邻接表转换为邻接矩阵表示]]
 
-7.[[DFS判断是否有i到j的路径]]
+# [[BFS求最短路径]]
 
-8.[[BFS判断是否有i到j的路径]]
+# [[DFS判断是否有i到j的路径]]
 
-9.[[输出i到j的所有简单路径]]
+# [[BFS判断是否有i到j的路径]]
 
-10.[[拓补排序(判断图是否有环)]]
+# [[输出i到j的所有简单路径]]
 
-11.[[DFS实现拓补排序]]
+# [[拓补排序(判断图是否有环)]]
+
+# [[DFS实现拓补排序]]
 
 ---
 图的结构体
 
 {{图的结构体}}
+
+图的创建
+
+{{图的创建}}
 
 DFS-递归
 
@@ -15505,8 +15513,37 @@ DFS实现拓补排序
 {{DFS实现拓补排序}}
 </pre>
 </div>
-<div created="20181002024336113" creator="CJ" modified="20181002024918352" modifier="CJ" tags="数据结构 图" title="图的结构体">
-<pre>```
+<div created="20181004090901410" creator="CJ" modified="20181004091408482" modifier="CJ" tags="数据结构 图" title="图的创建">
+<pre>
+```cpp
+void create_graph(ALGraph *G){
+	cin &gt;&gt; G-&gt;vex_num &gt;&gt; G-&gt;edge_num;
+
+	for (int i = 0; i &lt; G-&gt;vex_num; i++)
+	{
+		cin &gt;&gt; &amp;G-&gt;adjlist[i].data;
+		G-&gt;adjlist[i].first = NULL;
+	}
+	for (int i = 0; i &lt; G-&gt;edge_num; i++)
+	{
+		int m,n;
+		cin &gt;&gt; m &gt;&gt; n;
+
+		Edge* edge = new Edge;
+		edge-&gt;adjvex = n;
+		edge-&gt;next = G-&gt;adjlist[m].first;
+		G-&gt;adjlist[m].first = edge;
+
+		Edge* edge2 = new Edge;
+		edge2-&gt;adjvex = m;
+		edge2-&gt;next = G-&gt;adjlist[n].first;
+		G-&gt;adjlist[n].first = edge2;
+	}
+}
+```</pre>
+</div>
+<div created="20181002024336113" creator="CJ" modified="20181004090234347" modifier="CJ" tags="数据结构 图" title="图的结构体">
+<pre>```cpp
 #define ElemType int
 #define MAX_VEX_NUM 5
 typedef struct _Edge
@@ -16616,8 +16653,8 @@ int min_depth(BTree *T){
 ```
 </pre>
 </div>
-<div created="20181002031149028" creator="CJ" modified="20181002031302053" modifier="CJ" tags="图 数据结构" title="BFS">
-<pre>```
+<div created="20181002031149028" creator="CJ" modified="20181004090337579" modifier="CJ" tags="图 数据结构" title="BFS">
+<pre>```cpp
 void bfs_traverse(ALGraph *G){
 	for (int i = 0; i &lt; G.vertexNum; ++i)
 	{
@@ -16645,8 +16682,8 @@ void bfs(ALGraph *G,int i){
 }
 ```</pre>
 </div>
-<div created="20181002034224390" creator="CJ" modified="20181002034252670" modifier="CJ" tags="图 数据结构" title="BFS判断是否有i到j的路径">
-<pre>```
+<div created="20181002034224390" creator="CJ" modified="20181004090343779" modifier="CJ" tags="图 数据结构" title="BFS判断是否有i到j的路径">
+<pre>```cpp
 bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
 	if(i==j) return 1;
 	InitQueue(Q);
@@ -16663,8 +16700,8 @@ bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
 }
 ```</pre>
 </div>
-<div created="20181002032745321" creator="CJ" modified="20181002032751506" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
-<pre>```
+<div created="20181002032745321" creator="CJ" modified="20181004090353451" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
+<pre>```cpp
 int distances[MAX_VEX_NUM] = {100};
 void bfs_min_distance(ALGraph *G,int i){
 	InitQueue(Q);
@@ -16699,8 +16736,8 @@ void bfs_min_distance(ALGraph *G,int i){
 
 - [GitHub](https://github.com/loopvoid)</pre>
 </div>
-<div created="20181002025546110" creator="CJ" modified="20181002030505390" modifier="CJ" tags="数据结构 图" title="DFS-递归">
-<pre>```
+<div created="20181002025546110" creator="CJ" modified="20181004090400067" modifier="CJ" tags="数据结构 图" title="DFS-递归">
+<pre>```cpp
 void dfs_traverse(ALGraph *G){
     for(int i=0;i&lt;G-&gt;vex_num;i++){
         visited[i] = false;
@@ -16724,8 +16761,8 @@ void dfs(AlGraph *G,int i){
 }
 ```</pre>
 </div>
-<div created="20181002030612164" creator="CJ" modified="20181002030625789" modifier="CJ" tags="图 数据结构" title="DFS-非递归">
-<pre>```
+<div created="20181002030612164" creator="CJ" modified="20181004090440163" modifier="CJ" tags="图 数据结构" title="DFS-非递归">
+<pre>```cpp
 void dfs_norc_traverse(ALGraph *G){
 	for (int i = 0; i &lt; G-&gt;vex_num; i++)
 	{
@@ -16753,8 +16790,8 @@ void dfs_norc(ALGraph *G, int i){
 }
 ```</pre>
 </div>
-<div created="20181002032814434" creator="CJ" modified="20181002033821735" modifier="CJ" tags="图 数据结构" title="DFS判断是否有i到j的路径">
-<pre>```
+<div created="20181002032814434" creator="CJ" modified="20181004090446626" modifier="CJ" tags="图 数据结构" title="DFS判断是否有i到j的路径">
+<pre>```cpp
 bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
     if(i==j) return 1;
     else{
@@ -16769,8 +16806,8 @@ bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
 }
 ```</pre>
 </div>
-<div created="20181002040638002" creator="CJ" modified="20181002041143122" modifier="CJ" tags="图 数据结构" title="DFS实现拓补排序">
-<pre>```
+<div created="20181002040638002" creator="CJ" modified="20181004090504355" modifier="CJ" tags="图 数据结构" title="DFS实现拓补排序">
+<pre>```cpp
 //u是v的祖先，则v的DFS调用结束时间先于u的DFS调用结束时间，从而设置时间标记，对各个节点记时。
 //若v的结束时间大于u的结束时间，则v是u的祖先。
 //若u,v没有关系，则u,v拓补关系任意。
