@@ -453,7 +453,11 @@ Error message and password prompt
 
 <li>代码块</li>
 
-<li>带权路径长度</li>
+<li>带权路径长度递归</li>
+
+<li>带权路径长度非递归</li>
+
+<li>递归求二叉树最大深度(高度)、最小深度(高度)</li>
 
 <li>堆插入</li>
 
@@ -467,7 +471,13 @@ Error message and password prompt
 
 <li>二叉树</li>
 
-<li>二叉树指定结点的层次</li>
+<li>二叉树逆向层次遍历</li>
+
+<li>二叉树指定结点的层次递归</li>
+
+<li>二叉树指定结点的层次非递归</li>
+
+<li>非递归求二叉树最大深度(高度)、最小深度(高度)</li>
 
 <li>各排序算法性质表</li>
 
@@ -488,6 +498,8 @@ Error message and password prompt
 <li>判断无向图G是否为树</li>
 
 <li>判断序列是否构成最小堆</li>
+
+<li>判断一棵树是否为完全二叉树</li>
 
 <li>前中后序递归遍历</li>
 
@@ -522,8 +534,6 @@ Error message and password prompt
 <li>正则表达式30分钟入门教程</li>
 
 <li>直接插入排序</li>
-
-<li>最大深度、最小深度</li>
 
 <li>BFS</li>
 
@@ -14935,7 +14945,7 @@ This will be monospaced
 ```
 </pre>
 </div>
-<div created="20181001100031109" creator="CJ" modified="20181004045606019" modifier="CJ" tags="二叉树" title="带权路径长度">
+<div created="20181001100031109" creator="CJ" modified="20181008074223237" modifier="CJ" tags="数据结构 二叉树" title="带权路径长度递归">
 <pre>```cpp
 int get_wpl(BTree *T){
 	return wpl(T,0);
@@ -14950,6 +14960,52 @@ int wpl(BTree *T,int deep){
 	return wpl_val;
 }
 ```</pre>
+</div>
+<div created="20181008074216909" creator="CJ" modified="20181008081104159" modifier="CJ" tags="二叉树 数据结构" title="带权路径长度非递归">
+<pre>非递归求带权路径长度思想：使用队列进行层次遍历，当每层中有叶节点的时候，用层次乘以其权值，最后返回wpl。
+
+```cpp
+int wpl_norc(BTree *T){
+	if(T==NULL) return 0;
+	InitQueue(Q);
+	EnQueue(Q,T);
+	int height = 0;
+	int wpl = 0;
+	while(!IsEmpty(Q)){
+		height++;
+		int curent_level_node_nums = Q.size();
+		int cnt = 0;
+		while(cnt &lt; curent_level_node_nums){
+			cnt++;
+			if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL)
+				wpl += height * T-&gt;data;
+			if(T-&gt;lchild) EnQueue(Q,T-&gt;lchild);
+			if(T-&gt;rchild) EnQueue(Q,T-&gt;rchild);
+		}	
+	}
+	return wpl;
+}
+```</pre>
+</div>
+<div created="20181001095057514" creator="CJ" modified="20181008054232219" modifier="CJ" tags="二叉树" title="递归求二叉树最大深度(高度)、最小深度(高度)">
+<pre>```cpp
+int max_depth(BTree *T){
+	if(T==NULL) return 0;
+	if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL) return 1;
+	int ldepth = max_depth(T-&gt;lchild)+1;
+	int rdepth = max_depth(T-&gt;rchild)+1;
+	return ldepth&gt;rdepth?ldepth:rdepth;
+}
+int min_depth(BTree *T){
+	if(T==NULL) return 0;
+	if(T-&gt;lchild==NULL) return min_depth(T-&gt;rchild)+1;
+	if(T-&gt;rchild==NULL) return min_depth(T-&gt;lchild)+1;
+	int ldepth = min_depth(T-&gt;lchild)+1;
+	int rdepth = min_depth(T-&gt;rchild)+1;
+	return ldepth&lt;rdepth?ldepth:rdepth;
+}
+```
+</pre>
 </div>
 <div created="20181004082426513" creator="CJ" modified="20181004082653561" modifier="CJ" tags="堆 数据结构" title="堆插入">
 <pre>```cpp
@@ -15033,73 +15089,129 @@ int create_bstree(BSTree &amp;T, ElemType str[], int n){
 }
 ```</pre>
 </div>
-<div created="20181001091426171" creator="CJ" modified="20181004045448189" modifier="CJ" tags="二叉树" title="二叉树" type="text/vnd.tiddlywiki">
-<pre>* 0.[[树的结构体]]
-* 1.[[前中后序递归遍历]]
-* 2.[[前中序非递归遍历]]
-* 3.[[层次遍历--非递归]]
-* 4.[[最大深度、最小深度]]
-* 5.[[二叉树指定结点的层次]]
-* 6.[[删除二叉树叶子节点]]
-* 7.[[带权路径长度]]
-* 8.[[线索二叉树的构造]]
-* 9.[[二叉排序树的查找]]
-* 10.[[二叉排序树的插入]]
-* 11.[[二叉排序树的构造]]
-
+<div created="20181001091426171" creator="CJ" modified="20181008074208509" modifier="CJ" tags="二叉树" title="二叉树" type="text/vnd.tiddlywiki">
+<pre># [[树的结构体]]
+# [[前中后序递归遍历]]
+# [[前中序非递归遍历]]
+# [[层次遍历--非递归]]
+# [[递归求二叉树最大深度(高度)、最小深度(高度)]]
+# [[非递归求二叉树最大深度(高度)、最小深度(高度)]]
+# [[二叉树指定结点的层次递归]]
+# [[二叉树指定结点的层次非递归]]
+# [[删除二叉树叶子节点]]
+# [[带权路径长度递归]]
+# [[带权路径长度非递归]]
+# [[线索二叉树的构造]]
+# [[二叉排序树的查找]]
+# [[二叉排序树的插入]]
+# [[二叉排序树的构造]]
+# [[判断一棵树是否为完全二叉树]]
+# [[二叉树逆向层次遍历]]
 
 ---
 
 ''树的结构体''
 
 {{树的结构体}}
+---
 
 ''前中序非递归遍历''
 
 {{前中序非递归遍历}}
+---
 
 ''层次遍历--非递归''
 
 {{层次遍历--非递归}}
+---
 
-''最大深度、最小深度''
+''递归求二叉树最大深度(高度)、最小深度(高度)''
 
-{{最大深度、最小深度}}
+{{递归求二叉树最大深度(高度)、最小深度(高度)}}
+---
 
-''二叉树指定结点的层次''
+''非递归求二叉树最大深度(高度)、最小深度(高度)''
 
-{{二叉树指定结点的层次}}
+{{非递归求二叉树最大深度(高度)、最小深度(高度)}}
+---
+
+''二叉树指定结点的层次递归''
+
+{{二叉树指定结点的层次递归}}
+---
+
+''二叉树指定结点的层次非递归''
+
+{{二叉树指定结点的层次非递归}}
+---
 
 ''删除二叉树叶子节点''
 
 {{删除二叉树叶子节点}}
+---
 
-''带权路径长度''
+''带权路径长度递归''
 
-{{带权路径长度}}
+{{带权路径长度递归}}
+---
+
+''带权路径长度非递归''
+
+{{带权路径长度非递归}}
+---
 
 ''线索二叉树的构造''
 
 {{线索二叉树的构造}}
+---
 
 ''二叉排序树的查找''
 
 {{二叉排序树的查找}}
+---
 
 ''二叉排序树的插入''
 
 {{二叉排序树的插入}}
+---
 
 ''二叉排序树的构造''
 
 {{二叉排序树的构造}}
+---
 
+''判断一棵树是否为完全二叉树''
 
+{{判断一棵树是否为完全二叉树}}
+---
 
+''二叉树逆向层次遍历''
+
+{{二叉树逆向层次遍历}}
 
 </pre>
 </div>
-<div created="20181001095355283" creator="CJ" modified="20181004045541205" modifier="CJ" tags="二叉树" title="二叉树指定结点的层次">
+<div created="20181008064655230" creator="CJ" modified="20181008065209126" modifier="CJ" tags="数据结构 二叉树" title="二叉树逆向层次遍历">
+<pre>思想：正向层次遍历结果插入一个栈，然后输出栈，即是逆向层次遍历结果。
+
+```cpp
+void reverse_level_order(BTree *T){
+    if(T==NULL) return;
+    InitQueue(Q);
+    InitStack(S);
+    Q.push(T);
+    while(!IsEmpty(Q)){
+        BTNode* p = Q.front();
+        Q.pop();
+        S.push(p);
+        if(p-&gt;lchild) Q.push(p-&gt;lchild);
+        if(p-&gt;rchild) Q.push(p-&gt;rchild);
+    }
+    cout &lt;&lt; S &lt;&lt; endl;
+}
+```</pre>
+</div>
+<div created="20181001095355283" creator="CJ" modified="20181008071247106" modifier="CJ" tags="二叉树" title="二叉树指定结点的层次递归">
 <pre>```cpp
 int node_level(BTree *T,BNode *p){
 	static int level;
@@ -15109,6 +15221,84 @@ int node_level(BTree *T,BNode *p){
 	if(level&gt;0) return level+1;
 	level = node_level(T-&gt;rchild,p);
 	if(level&gt;0) return level+1;
+}
+```</pre>
+</div>
+<div created="20181008071405729" creator="CJ" modified="20181008071512273" modifier="CJ" tags="数据结构 二叉树" title="二叉树指定结点的层次非递归">
+<pre>采用队列实现层次遍历，当某层中有指定节点则返回层次。
+若层次遍历结束没有指定节点，返回-1.
+
+```cpp
+int node_level_norc(BTree *T,BTNode *p){
+	if(T==NULL) return 0;
+	if(T==p) return 1;
+	int height = 0;
+	InitQueue(Q);
+	EnQueue(Q,T);
+	while(!IsEmpty(Q)){
+		height++;
+		int curent_level_node_nums = Q.size();
+		int cnt = 0;
+		while(cnt&lt;curent_level_node_nums){
+			cnt++;
+			BTNode *temp;
+			DeQueue(Q,temp);
+			if(temp == p) return height;
+			if(temp-&gt;lchild)EnQueue(temp-&gt;lchild);
+			if(temp-&gt;rchild)EnQueue(temp-&gt;rchild);
+		}
+	}
+	return -1;
+}
+```</pre>
+</div>
+<div created="20181008054416473" creator="CJ" modified="20181008055841783" modifier="CJ" tags="数据结构 二叉树" title="非递归求二叉树最大深度(高度)、最小深度(高度)">
+<pre>利用层次遍历非递归求二叉树高度主要的思想是：''一层一层地出队列'' — 在我们每次访问完毕一层时，这时队列中存储的刚好是下一层的所有元素。所以在下一次循环开始时，首先记录该层的元素个数，一次性访问完这一层的所有元素。
+
+```cpp
+int max_depth_with_level_traverse(BTree *T)
+{
+    if(T==NULL) return 0;
+    int height = 0;// 初始化树的高度为0
+    InitQueue(Q);
+    EnQueue(T);
+    while(!IsEmpty(Q)){
+        height++;
+        int curent_level_node_nums = Q.size();// 记录当前层元素个数
+        int cnt = 0;
+        while(cnt&lt;curent_level_node_nums){
+            BTreeNode *p;
+            DeQueue(Q,p);
+            cnt++;
+            if(p-&gt;lchild) EnQueue(Q,p-&gt;lchild);
+            if(p-&gt;rchild) EnQueue(Q,p-&gt;rchild);
+        }
+    }
+    return height;
+}
+```
+
+求二叉树的最小高度，与最大高度类似，不同之处在于层次遍历时，如果在该层遇到有叶子节点则立即返回，在进行层次遍历时需要进行叶子节点的判断。
+
+```cpp
+int min_depth_with_level_traverse(BTree *T){
+    if(T==NULL) return 0;
+    InitQueue(Q);
+    EnQueue(Q,T);
+    int height = 0;
+    while(!IsEmpty(Q)){
+        height++;
+        int curent_level_node_nums = Q.size();
+        int cnt = 0;
+        while(cnt++&lt;curent_level_node_nums){
+            BTNode* p;
+            DeQueue(Q,p);
+            if(!p-&gt;lchild&amp;&amp;!p-&gt;rchild) return height;
+            if(p-&gt;lchild) EnQueue(Q,p-&gt;lchild);
+            if(p-&gt;rchild) EnQueue(Q,p-&gt;rchild);
+        }
+    }
+    return height;
 }
 ```</pre>
 </div>
@@ -15428,6 +15618,43 @@ bool is_min_heap(ElemType A[],int n){
     else{//n为奇数没有单分支节点
         for(int i =n/2;i&gt;=1;i--)
             if(A[i]&gt;A[2*i]||A[i]&gt;A[2*i+1]) return false;
+    }
+    return true;
+}
+```</pre>
+</div>
+<div created="20181008060708925" creator="CJ" modified="20181008062941385" modifier="CJ" tags="数据结构 二叉树" title="判断一棵树是否为完全二叉树">
+<pre>判断一棵树是否是完全二叉树的思路 
+
+* 如果树为空，则直接返回错 
+* 如果树不为空：层序遍历二叉树 
+** 如果一个结点左右孩子都不为空，则pop该节点，将其左右孩子入队列； 
+** 如果遇到一个结点，左孩为空，右孩不为空，则该树一定不是完全二叉树； 
+** 如果遇到一个结点，左孩不为空，右孩子为空；或者左右孩子都为空；则该节点之后的队列中的结点都*为叶子节点；该树才是完全二叉树，否则就不是完全二叉树；
+
+```cpp
+bool is_complete_tree(BTree *T){
+    //如果树为空，则直接返回错
+    if(T==NULL) return false;
+    //如果树不为空：层序遍历二叉树
+    InitQueue(Q);
+    Q.push(T);
+    while(!IsEmpty(Q)){
+        BTNode *p = Q.front();
+        if(p-&gt;lchild&amp;&amp;p-&gt;rchild){
+            Q.pop();
+            Q.push(p-&gt;lchild);
+            Q.push(p-&gt;rchild);
+        }
+        if(p-&gt;lchild==NULL&amp;&amp;p-&gt;rchild) return false;
+        if((p-&gt;lchild!=NULL&amp;&amp;p-&gt;lchild==NULL)||(p-&gt;lchild==NULL&amp;&amp;p-&gt;rchild==NULL)){
+            Q.pop();
+            while(!IsEmpty(Q)){
+                p=Q.front();
+                if(p-&gt;lchild==NULL&amp;&amp;p-&gt;rchild==NULL) Q.pop();
+                else return false;
+            }
+        }
     }
     return true;
 }
@@ -16807,26 +17034,6 @@ void direct_insert_sort(ElemType A[],int n){
     }
 }
 ```</pre>
-</div>
-<div created="20181001095057514" creator="CJ" modified="20181004045530189" modifier="CJ" tags="二叉树" title="最大深度、最小深度">
-<pre>```cpp
-int max_depth(BTree *T){
-	if(T==NULL) return 0;
-	if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL) return 1;
-	int ldepth = max_depth(T-&gt;lchild)+1;
-	int rdepth = max_depth(T-&gt;rchild)+1;
-	return ldepth&gt;rdepth?ldepth:rdepth;
-}
-int min_depth(BTree *T){
-	if(T==NULL) return 0;
-	if(T-&gt;lchild==NULL) return min_depth(T-&gt;rchild)+1;
-	if(T-&gt;rchild==NULL) return min_depth(T-&gt;lchild)+1;
-	int ldepth = min_depth(T-&gt;lchild)+1;
-	int rdepth = min_depth(T-&gt;rchild)+1;
-	return ldepth&lt;rdepth?ldepth:rdepth;
-}
-```
-</pre>
 </div>
 <div created="20181002031149028" creator="CJ" modified="20181004090337579" modifier="CJ" tags="图 数据结构" title="BFS">
 <pre>```cpp
