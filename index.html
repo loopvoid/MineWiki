@@ -15007,10 +15007,10 @@ int min_depth(BTree *T){
 ```
 </pre>
 </div>
-<div created="20181004082426513" creator="CJ" modified="20181004082653561" modifier="CJ" tags="堆 数据结构" title="堆插入">
+<div created="20181004082426513" creator="CJ" modified="20181009075745023" modifier="CJ" tags="堆 数据结构" title="堆插入">
 <pre>```cpp
 void adjust_up(ElemType A[],int k){
-    int temp = A[k];
+    ElemType temp = A[k];
     int i = k/2;
     while(i&gt;0&amp;&amp;A[i]&lt;temp){
         A[k] = A[i];
@@ -15021,10 +15021,10 @@ void adjust_up(ElemType A[],int k){
 }
 ```</pre>
 </div>
-<div created="20181004081721748" creator="CJ" modified="20181004082413082" modifier="CJ" tags="数据结构 排序" title="堆排序">
+<div created="20181004081721748" creator="CJ" modified="20181009075735359" modifier="CJ" tags="数据结构 排序" title="堆排序">
 <pre>```cpp
 void adjust_down(ElemType A[], int k, int n){
-    int temp = A[k];
+    ElemType temp = A[k];
     for(int i = 2*k;i&lt;n;i*=2){
         i+=1;
         if(i&lt;n&amp;&amp;A[i]&lt;A[i+1]) i++;
@@ -15802,7 +15802,7 @@ typedef struct BNode
 ```
 </pre>
 </div>
-<div created="20181002035350396" creator="CJ" modified="20181004090308291" modifier="CJ" tags="图 数据结构" title="拓补排序(判断图是否有环)">
+<div created="20181002035350396" creator="CJ" modified="20181009072528604" modifier="CJ" tags="图 数据结构" title="拓补排序(判断图是否有环)">
 <pre>```cpp
 bool toplogical_sort(ALGraph *G){
     InitStack(S);
@@ -15817,7 +15817,7 @@ bool toplogical_sort(ALGraph *G){
         result_array[++count] = temp.data;
         for(Edge*w=temp.first;w;w=w-&gt;next){
             if(!(--in_degree[w-&gt;adjvex]))
-                Push(S,G-&gt;adjjlist[w-&gt;adjvex]);
+                Push(S,G-&gt;adjlist[w-&gt;adjvex]);
         }
     }
     if(count &lt; G-&gt;vex_num) return false;
@@ -17082,7 +17082,7 @@ bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
 }
 ```</pre>
 </div>
-<div created="20181002032745321" creator="CJ" modified="20181004090353451" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
+<div created="20181002032745321" creator="CJ" modified="20181009071639454" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
 <pre>```cpp
 int distances[MAX_VEX_NUM] = {100};
 void bfs_min_distance(ALGraph *G,int i){
@@ -17096,7 +17096,7 @@ void bfs_min_distance(ALGraph *G,int i){
 		for(Edge* w=tem.first;w;w=w-&gt;next){
 			distances[w-&gt;adjvex] = distances[i]+1;
 			visited[w-&gt;adjvex] = 1;
-			EnQueue(S,G-&gt;adjlist[w-&gt;adjvex]);
+			EnQueue(Q,G-&gt;adjlist[w-&gt;adjvex]);
 		}
 	}
 }
@@ -17178,14 +17178,14 @@ void dfs_norc(ALGraph *G, int i){
 }
 ```</pre>
 </div>
-<div created="20181002032814434" creator="CJ" modified="20181004090446626" modifier="CJ" tags="图 数据结构" title="DFS判断是否有i到j的路径">
+<div created="20181002032814434" creator="CJ" modified="20181009071605055" modifier="CJ" tags="图 数据结构" title="DFS判断是否有i到j的路径">
 <pre>```cpp
 bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
     if(i==j) return 1;
     else{
         visited[i] = 1;
         for(Edge* w=G-&gt;adjlist[i];w;w=w-&gt;next){
-            if(!visited[w-&gt;adjvex] &amp;&amp; exist_path_form_i_to_j(G,w-&gt;adjvex,i)){
+            if(!visited[w-&gt;adjvex] &amp;&amp; exist_path_form_i_to_j(G,w-&gt;adjvex,j)){
                 return 1;
             }
         }
