@@ -15023,7 +15023,7 @@ void adjust_up(ElemType A[],int k){
 }
 ```</pre>
 </div>
-<div created="20181004081721748" creator="CJ" modified="20181009075735359" modifier="CJ" tags="数据结构 排序" title="堆排序">
+<div created="20181004081721748" creator="CJ" modified="20181012090901330" modifier="CJ" tags="数据结构 排序" title="堆排序">
 <pre>```cpp
 void adjust_down(ElemType A[], int k, int n){
     ElemType temp = A[k];
@@ -15040,7 +15040,7 @@ void adjust_down(ElemType A[], int k, int n){
 }
 
 void build_max_heap(ElemType A[],int n){
-    for(int i = 0;i&lt;n;i++)
+    for(int i = n/2;i&gt;=0;i--)
         adjust_down(A,i,n);
 }
 
