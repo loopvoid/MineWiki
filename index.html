@@ -13900,7 +13900,7 @@ Error message and password prompt
 <div created="20180819072223515" creator="c" modified="20180819072424192" modifier="CJ " title="$:/status/UserName">
 <pre>CJ</pre>
 </div>
-<div list="Home 排序" title="$:/StoryList">
+<div list="Home" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20181005142449281" creator="CJ" modified="20181005142452384" modifier="CJ" title="$:/temp/advancedsearch">
@@ -15579,7 +15579,7 @@ void bubble_sort(ElemType A[],int n){
 {{2路归并排序}}
 </pre>
 </div>
-<div created="20181002031329282" creator="CJ" modified="20181004090252325" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
+<div created="20181002031329282" creator="CJ" modified="20181012083658653" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
 <pre>无向图G为一棵树的条件：
  
 
@@ -15595,7 +15595,7 @@ bool is_tree_or_not(ALGrah *G){
         visited[i] = false;
     }
     dfs(G,0,vex_num,edge_num,visited);
-    if(vex_num==G-&gt;vex_num &amp;&amp; edge_num = 2*(G-&gt;edge_num-1))
+    if(vex_num==G-&gt;vex_num &amp;&amp; edge_num= 2*(G-&gt;vex_num -1))
         return true;
     else return false;
 }
@@ -17087,7 +17087,7 @@ bool exist_path_form_i_to_j(ALGraph *G,int i,int j){
 }
 ```</pre>
 </div>
-<div created="20181002032745321" creator="CJ" modified="20181009071639454" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
+<div created="20181002032745321" creator="CJ" modified="20181012072430527" modifier="CJ" tags="数据结构 图" title="BFS求最短路径">
 <pre>```cpp
 int distances[MAX_VEX_NUM] = {100};
 void bfs_min_distance(ALGraph *G,int i){
@@ -17099,9 +17099,11 @@ void bfs_min_distance(ALGraph *G,int i){
 		Vertex temp;
 		DeQueue(Q,temp);
 		for(Edge* w=tem.first;w;w=w-&gt;next){
-			distances[w-&gt;adjvex] = distances[i]+1;
-			visited[w-&gt;adjvex] = 1;
-			EnQueue(Q,G-&gt;adjlist[w-&gt;adjvex]);
+			if(!visited[w-&gt;adjvex]){
+				distances[w-&gt;adjvex] = distances[i]+1;
+				visited[w-&gt;adjvex] = 1;
+				EnQueue(Q,G-&gt;adjlist[w-&gt;adjvex]);
+			}
 		}
 	}
 }
