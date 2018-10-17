@@ -529,6 +529,8 @@ Error message and password prompt
 
 <li>线索二叉树的构造</li>
 
+<li>线性表</li>
+
 <li>折半插入排序</li>
 
 <li>正则表达式30分钟入门教程</li>
@@ -15579,7 +15581,7 @@ void bubble_sort(ElemType A[],int n){
 {{2路归并排序}}
 </pre>
 </div>
-<div created="20181002031329282" creator="CJ" modified="20181012083658653" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
+<div created="20181002031329282" creator="CJ" modified="20181017152201253" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
 <pre>无向图G为一棵树的条件：
  
 
@@ -15600,6 +15602,7 @@ bool is_tree_or_not(ALGrah *G){
     else return false;
 }
 
+O(E+V) 
 void dfs(ALGraph *G,int i,int vex_num,int edge_num,int visited[]){
     vex_num++;
     visited[i] = 1;
@@ -16043,6 +16046,36 @@ void in_thread(ThreadTree *p,ThreadTree *pre){
 		pre = p;
 		in_thread(p-&gt;rchild,pre);
 	}
+}
+```</pre>
+</div>
+<div created="20181017150053172" creator="CJ" modified="20181017151635623" modifier="CJ" tags="线性表 数据结构" title="线性表">
+<pre># 设A和B是两个单链表(带头节点)，元素有序递增，从A与B的公共元素产生单链表C，不破坏A和B
+```cpp
+思想：A和B都有序，可从第一个元素依次比较A、B两表元素，
+若不等，则小元素的指针往后移动；
+若相等，以该元素创建新节点，尾插法插入链表C中，两个指针都往后移一位，
+直到其中一个到链尾
+LinkNode *get_common(LinkNode *A,LinkNode *B){
+	LinkNode *p=A-&gt;next;
+	LinkNode *q=B-&gt;next;
+	LinkNode *C=new LinkNode;
+	LinkNode *s;
+	while(p!=NULL&amp;&amp;q!=NULL){
+		if(p-&gt;data&lt;q-&gt;data)
+			p=p-&gt;next;
+		else if(p-&gt;data&gt;q-&gt;data)
+			q=q-&gt;next;
+		else{
+			s = new LinkNode;
+			s-&gt;data = p-&gt;data;
+			C-&gt;next=s;
+			C=s;
+			p=p-&gt;next;
+			q=q-&gt;next;
+		}
+	}
+	C-&gt;next=NULL;
 }
 ```</pre>
 </div>
@@ -17497,7 +17530,7 @@ Domain Adaptive Faster R-CNN for Object Detection in the Wild
 <div created="20181001084912071" creator="CJ" modified="20181001085205322" modifier="CJ" tags="" title="Git" type="text/vnd.tiddlywiki">
 <pre> * [[Git - 简易指南|http://www.bootcss.com/p/git-guide/]]</pre>
 </div>
-<div created="20180819072600938" creator="CJ" modified="20181005133725094" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
+<div created="20180819072600938" creator="CJ" modified="20181017150045863" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
 <pre>[[TiddlyWiki]]
 
 [[MarkDown]] 笔记
@@ -17510,6 +17543,8 @@ Domain Adaptive Faster R-CNN for Object Detection in the Wild
 
 ---
 ! ''CS''
+ * [[线性表]]
+ * [[栈和队列]]
  * [[二叉树]]
  * [[图]]
  * [[排序]]
