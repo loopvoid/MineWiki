@@ -16049,8 +16049,211 @@ void in_thread(ThreadTree *p,ThreadTree *pre){
 }
 ```</pre>
 </div>
-<div created="20181017150053172" creator="CJ" modified="20181017151635623" modifier="CJ" tags="线性表 数据结构" title="线性表">
-<pre># 设A和B是两个单链表(带头节点)，元素有序递增，从A与B的公共元素产生单链表C，不破坏A和B
+<div created="20181017150053172" creator="CJ" modified="20181021121859936" modifier="CJ" tags="线性表 数据结构" title="线性表">
+<pre>* ''删除__顺序表__中X的元素''
+```cpp
+思想：用k记录顺序表中不等于x的元素个数，边扫描边统计，并将不等于x的元素向前放到k的位置
+复杂度：时间O(n)，空间O(1)
+void delete_x(SqList &amp;L,ElemType x){
+    int k =0;
+    for(int i = 0; i&lt;n; i++){
+        if(L.data[i]!=x){
+            L.data[k]=L.data[i];
+            k++;
+        }
+    }
+    L.length = k;
+}
+```
+
+* ''顺序表置逆''
+```cpp
+思想：扫描表前一半，交换L.data[i]与L.data[L.length-i-1]
+复杂度：时间O(n)，空间O(1)
+void reverse(SqList &amp;L){
+    ElemType temp;
+    for(int i=0; i&lt;L.length; i++){
+        swap(L.data[i], L.data[n-i-1]);
+    }
+}
+```
+
+* ''删除`有序`顺序表指定值s到t区间的元素''
+```cpp
+思想：有序表，找到上下界，然后上下界一起移动，前移
+复杂度：时间O(n)，空间O(1)
+bool delete_s_2_t(SqList &amp;L,int s,int t){
+    if(s&gt;t||L.length==0) return false;
+    int i,j;
+    for(i=0; i&lt;L.length&amp;&amp;L.data[i]&lt;s; i++);
+    if(i&gt;=L.length) return false;
+    for(j=i; j&lt;L.length&amp;&amp;L.data[j]&lt;t; j++);
+    if(j&gt;L.length) return false;
+    for(; j&lt;L.length; j++,i++)
+        L.data[i]=L.data[j];
+    L.length = i+1;
+    return true;
+}
+```
+
+* ''删除顺序表指定值s到t区间的元素''
+```cpp
+思想：标记前移法
+复杂度：时间O(n)，空间O(1)
+bool delete_zoom(SqList &amp;L,ElemType s,ElemType t){
+    if(s&gt;t||L.length==0) return false;
+    int k = 0;
+    for(int i=0; i&lt;L.length; i++){
+        L.data[k] = L.data[i];
+        k++;
+    }
+    L.length = k;
+    return true;
+}
+```
+
+* ''删除顺序表最小值，并用最后元素补上，返回最小值''
+```cpp
+思想：顺序扫描，查找最小元素赋值，并记录下标，搜索结束用最后元素补到记录下标处，长度再减一
+复杂度：时间O(n)，空间O(1)
+bool delete_min(SqList &amp;L,ElemType &amp;value){
+	if(L.length==0) return false;
+	value = L.data[0];
+	int pos = 0;
+	for (int i = 1; i &lt; L.length; ++i)
+	{
+		if(L.data[i]&lt;value){
+			value = L.data[i];
+			pos = i;
+		}
+	}
+	L.data[pos] = L.data[L.length-1];
+	L.length--;
+	return true;
+}
+```
+* ''`有序`表去重''
+```cpp
+思想：双指针移动的思想
+复杂度：时间O(n)，空间O(1)
+void delete_repet(SqList &amp;L){
+	if(L.length==0) return false;
+	int i,j;
+	for (i=0,j=1; j &lt; L.length; j++)
+	{
+		if(L.data[i]!=L.data[j])
+			L.data[++i]=L.data[j];
+	}
+	L.length = i+1;
+	return true;
+}
+```
+
+* ''两有序表合并为一新有序表''
+```cpp
+思想：按顺序取下两表中较小元素放入新表，将其中一表剩余部分直接插入新表尾部
+复杂度：时间O(n)，空间O(1)
+bool merge_ordered_tables(SqList A,SqList B,SqList &amp;C){
+	if(A.length+B.length&gt;C.length) return false;
+	int i=0,j=0,k=0;
+	while(i&lt;A.length&amp;&amp;j&lt;B.length){
+		A.data[i]&lt;B.data[j]?C.data[k++]=A.data[i++]:C.data[k++]=B.data[j++];
+	}
+	while(i&lt;A.length) C.data[k++]=A.data[i++];
+	while(i&lt;B.length) C.data[k++]=A.data[j++];
+	C.length = k+1;
+	return true;
+}
+```
+
+* ''调换前后序列的顺序''
+```cpp
+思想：(A1,A2,B1,B2)，先A[m+n]全部置逆(B2,B1,A2,A1)，再置逆前n个和后m个元素，就实现了前后位置互换
+复杂度：时间O(n)，空间O(1)
+void exchange(ElemType A[],int m,int n,int arraySize){
+	reverse(A,0,m+n-1,arraySize);
+	reverse(A,0,n-1,arraySize);
+	reverse(A,n,m+n-1,arraySize);
+}
+void reverse(ElemType A[],int left,int right,int n){
+	if(left&gt;=right||right&gt;=n) return;
+	int min = (left+right)/2;
+	for (int i = 0; i &lt; mid-left; i++)
+		swap(A[left+i],A[right-i]);
+}
+```
+
+* ''有序表查找x值的下标，找到与其后继交换，找不到这插入，且有序''
+```cpp
+bool find_x(SqList &amp;L,ElemType x){
+	if(L.length==0){
+		L.data[0] = x;
+		L.length++;
+	}
+	int low=0,high=L.length;
+	int mid;
+	while(low&lt;=high){
+		mid = (low+high)/2;
+		if(x==L.data[mid]) break;
+		else if(x&lt;L.data[mid]) high=mid-1;
+		else low =mid+1;
+	}
+	if(x==L.data[mid]&amp;&amp;mid!=n-1)
+		swap(L.data[mid+1],L.data[mid]);
+	if(low&gt;high){
+		for(int i=L.length-1;i&gt;high;i--) L.data[i+1] = L.data[i];
+		L.data[i+1] = x;
+	}
+	L.length+=1;
+	return false;
+}
+```
+
+* ''循环左移''
+```cpp
+void reverse(int R[],int from,int to){
+	int temp;
+	for (int i = 0; i &lt; (to-from+1)/2; i++)
+	{
+		temp = R[from+i];
+		R[from+i] = R[to-i];
+		R[to-i] = temp;
+	}
+}
+void converse(int R[],int n,int p){
+	reverse(R,0,p-1);
+	reverse(R,p,n-1);
+	reverse(R,0,n-1);
+}
+```
+
+* ''寻找主元素''
+```cpp
+bool majority(int A[],int n){
+	int count = 1;
+	int c = A[0];
+	for (int i = 1; i &lt; n; i++)
+	{
+		if(A[i]==c) count++;
+		else{
+			if(count&gt;0) count--;
+			else{
+				c = A[i];
+				count=1;
+			}
+		}
+	}
+	if(count&gt;0){
+		count=0;
+		for (int i = 0; i &lt; n; i++)
+			if(A[i]==c) count++;
+		if(count&gt;n/2) return true;
+		else return false;
+	}
+}
+```
+
+* ''设A和B是两个单链表(带头节点)，元素有序递增，从A与B的公共元素产生单链表C，不破坏A和B''
 ```cpp
 思想：A和B都有序，可从第一个元素依次比较A、B两表元素，
 若不等，则小元素的指针往后移动；
@@ -16077,7 +16280,10 @@ LinkNode *get_common(LinkNode *A,LinkNode *B){
 	}
 	C-&gt;next=NULL;
 }
-```</pre>
+```
+
+
+</pre>
 </div>
 <div created="20181003150550378" creator="CJ" modified="20181004072446299" modifier="CJ" tags="排序 数据结构" title="折半插入排序">
 <pre>`通过折半查找的方式找到插入点，然后统一移动，最后再插入即可`
