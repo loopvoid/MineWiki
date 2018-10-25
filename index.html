@@ -187,9 +187,13 @@ Error message and password prompt
 
 <li>$:/SiteTitle</li>
 
+<li>$:/state/editpreviewtype</li>
+
 <li>$:/state/encrypt</li>
 
 <li>$:/state/image-picker/system--721099824</li>
+
+<li>$:/state/image-picker/system-1229152441</li>
 
 <li>$:/state/Link/--1376396693/search</li>
 
@@ -479,9 +483,13 @@ Error message and password prompt
 
 <li>非递归求二叉树最大深度(高度)、最小深度(高度)</li>
 
+<li>分页、分段系统</li>
+
 <li>各排序算法性质表</li>
 
 <li>工厂模式</li>
+
+<li>共享内存</li>
 
 <li>简单选择排序</li>
 
@@ -494,6 +502,8 @@ Error message and password prompt
 <li>邻接表转换为邻接矩阵表示</li>
 
 <li>冒泡排序</li>
+
+<li>内存保护</li>
 
 <li>排序</li>
 
@@ -578,6 +588,8 @@ Error message and password prompt
 <li>Motovun Jack.jpg</li>
 
 <li>Object Detection</li>
+
+<li>OS</li>
 
 <li>R-CNN</li>
 
@@ -13840,10 +13852,16 @@ Error message and password prompt
 <div created="20180819070314909" creator="CJ" modified="20181004123317345" modifier="CJ" title="$:/SiteTitle">
 <pre>mineWiki</pre>
 </div>
+<div created="20181025121442342" creator="CJ" modified="20181025121443597" modifier="CJ" title="$:/state/editpreviewtype">
+<pre>$:/core/ui/EditTemplate/body/preview/output</pre>
+</div>
 <div created="20180819083821199" creator="CJ" modified="20181004083137680" modifier="CJ" title="$:/state/encrypt">
 <pre>判断序列是否构成最小堆</pre>
 </div>
 <div created="20181005135341362" creator="CJ" modified="20181005135354970" modifier="CJ" title="$:/state/image-picker/system--721099824">
+<pre>hide</pre>
+</div>
+<div created="20181025121405982" creator="CJ" modified="20181025121409221" modifier="CJ" title="$:/state/image-picker/system-1229152441">
 <pre>hide</pre>
 </div>
 <div created="20180819072953519" creator="CJ" modified="20180819072955564" modifier="CJ" title="$:/state/Link/--1376396693/search">
@@ -13888,8 +13906,8 @@ Error message and password prompt
 <div created="20180819070410656" creator="CJ" modified="20181021131356789" modifier="CJ" title="$:/state/tab/moresidebar-401116514">
 <pre>$:/core/ui/MoreSideBar/All</pre>
 </div>
-<div created="20180819070408744" creator="CJ" modified="20181021131358677" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
-<pre>$:/core/ui/SideBar/Recent</pre>
+<div created="20180819070408744" creator="CJ" modified="20181025130200334" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
+<pre>$:/core/ui/SideBar/Open</pre>
 </div>
 <div created="20180819070337784" creator="CJ" modified="20181004123258093" modifier="CJ" title="$:/state/tabs/controlpanel/toolbars-1345989671">
 <pre>$:/core/ui/ControlPanel/Toolbars/EditToolbar</pre>
@@ -15307,6 +15325,21 @@ int min_depth_with_level_traverse(BTree *T){
 }
 ```</pre>
 </div>
+<div created="20181025120324413" creator="CJ" modified="20181025121031973" modifier="CJ" tags="内存管理 OS" title="分页、分段系统">
+<pre>`分页`就是将进程的逻辑地址空间分成若干大小相等的片（即页），然后装入内存。
+
+`分段`就是用户可以把自己的作业按逻辑关系划分为若干个段，每个段都是从0开始编址，并有自己的名字和长度。这就相当于程序里边的主函数段、各个子函数段、数据段、栈段等等。
+
+页是信息的__物理单位__，段是信息的__逻辑单位__。
+
+分页的作业地址空间是一维的，线性的，程序员只需利用一个记忆符表示一个地址
+
+分段的作业地址空间是二维的，程序员在表示一个地址的时候既要给出段名，又需要给出段内地址。其中，段名可以理解为函数名等，段内地址可以理解程变量等的地址。
+
+页的大小要和物理块或者页框一样，而物理块是操作系统定好了的。也就是说你的操作系统装完之后，物理块的大小是定了的，从而页的大小也是定了的。而段的长度是不定的。
+
+引入分页存储管理方式的目的是提高内存利用率，而引入分段存储是为了满足用户（程序员）在编程和使用上多方面上的要求。还有将两者结合一起的段页式系统。</pre>
+</div>
 <div created="20181003135733790" creator="CJ" modified="20181005032904367" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
 <pre>| 分类 | 算法种类 |&gt;| 时间复杂度 |&lt;|空间复杂度|是否稳定|&lt;|h
 |~|~| 最好情况 | 平均情况 | 最坏情况 |~|~|~|h
@@ -15323,6 +15356,9 @@ int min_depth_with_level_traverse(BTree *T){
 </div>
 <div created="20181005134339835" creator="CJ" modified="20181005134357012" modifier="CJ" tags="设计模式" title="工厂模式">
 <pre>工厂模式</pre>
+</div>
+<div created="20181025122557773" creator="CJ" modified="20181025122846966" modifier="CJ" tags="内存管理 OS" title="共享内存">
+<pre>共享内存是由IPC为一个进程所创建并且出现在这个进程的地址空间中的一段特殊的地址序列。其他的进程都可以同样的同行这段内存地址。若一个进程写入共享内存，这些改变立即就可以被访问相同共享内存的其他进程所间。</pre>
 </div>
 <div created="20181004075532990" creator="CJ" modified="20181005034341779" modifier="CJ" tags="数据结构 排序" title="简单选择排序">
 <pre>```cpp
@@ -15515,6 +15551,26 @@ void bubble_sort(ElemType A[],int n){
 	}
 }
 ```</pre>
+</div>
+<div created="20181025121142862" creator="CJ" modified="20181025121604102" modifier="CJ" tags="内存管理 OS" title="内存保护">
+<pre>内存分配前，需要保护操作系统不受用户进程的影响，同时保护用户进程不受其他用户进程的影响。
+
+操作系统通过釆用''重定位寄存器''和''界地址寄存器''来实现这种保护。
+
+重定位寄存器含最小的物理地址值，界地址寄存器含逻辑地址值。每个逻辑地址值必须小于界地址寄存器。
+
+内存管理机构动态地将逻辑地址与界地址寄存器进行比较，如果未发生地址越界，则加上重定位寄存器的值后映射成物理地址，再送交内存单元。每一个逻辑地址都需要与这两个寄存器进行核对，以保证操作系统和其他用户程序及数据不被该进程的运行所影响。
+
+[img[http://c.biancheng.net/cpp/uploads/allimg/140630/1-1406301UQE16.jpg]]
+
+界地址寄存器（界限寄存器）
+
+方法：
+
+# 在CPU中设置一对下限寄存器和上限寄存器,存放用户作业在主存中的下限和上限地址
+# 可将一个寄存器作为基址寄存器，另一寄存器作为限长寄存器（指示存储区长度）
+
+每当CPU要访问主存，硬件自动将被访问的主存地址与界限寄存器的内容进行比较，以判断是否越界如果未越界，则按此地址访问主存，否则将产生程序中断——越界中断（存储保护中断）。</pre>
 </div>
 <div created="20181003143007946" creator="CJ" modified="20181004083820735" modifier="CJ" tags="排序 数据结构" title="排序">
 <pre>!! 插入排序
@@ -17597,7 +17653,7 @@ Domain Adaptive Faster R-CNN for Object Detection in the Wild
 <div created="20181001084912071" creator="CJ" modified="20181001085205322" modifier="CJ" tags="" title="Git" type="text/vnd.tiddlywiki">
 <pre> * [[Git - 简易指南|http://www.bootcss.com/p/git-guide/]]</pre>
 </div>
-<div created="20180819072600938" creator="CJ" modified="20181017150045863" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
+<div created="20180819072600938" creator="CJ" modified="20181025120022318" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
 <pre>[[TiddlyWiki]]
 
 [[MarkDown]] 笔记
@@ -17610,6 +17666,7 @@ Domain Adaptive Faster R-CNN for Object Detection in the Wild
 
 ---
 ! ''CS''
+ * [[OS]]
  * [[线性表]]
  * [[栈和队列]]
  * [[二叉树]]
@@ -18038,6 +18095,13 @@ Based on handong1587's github: https://handong1587.github.io/deep_learning/2015/
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
+</div>
+<div created="20181025120032405" creator="CJ" modified="20181025122552789" modifier="CJ" tags="OS" title="OS">
+<pre>[[分页、分段系统]]
+
+[[内存保护]]
+
+[[共享内存]]</pre>
 </div>
 <div created="20181004124241891" creator="CJ" modified="20181004124331068" modifier="CJ" tags="计算机视觉" title="R-CNN">
 <pre>Rich feature hierarchies for accurate object detection and semantic segmentation
