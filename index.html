@@ -15679,7 +15679,7 @@ void bubble_sort(ElemType A[],int n){
 {{2路归并排序}}
 </pre>
 </div>
-<div created="20181002031329282" creator="CJ" modified="20181017152201253" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
+<div created="20181002031329282" creator="CJ" modified="20181027084858109" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
 <pre>无向图G为一棵树的条件：
  
 
@@ -15705,8 +15705,8 @@ void dfs(ALGraph *G,int i,int vex_num,int edge_num,int visited[]){
     vex_num++;
     visited[i] = 1;
     for(Edge* w=G-&gt;adjlist[i].first;w;w=w-&gt;next){
-        edge_num++;
         if(!visited[w-&gt;adjvex]){
+            edge_num++;
             dfs(G,w-&gt;adjvex,vex_num,edge_num,visited)
         }
     }
