@@ -545,6 +545,8 @@ Error message and password prompt
 
 <li>线性表</li>
 
+<li>栈和队列</li>
+
 <li>折半插入排序</li>
 
 <li>正则表达式30分钟入门教程</li>
@@ -13910,7 +13912,7 @@ Error message and password prompt
 <div created="20180819070410656" creator="CJ" modified="20181021131356789" modifier="CJ" title="$:/state/tab/moresidebar-401116514">
 <pre>$:/core/ui/MoreSideBar/All</pre>
 </div>
-<div created="20180819070408744" creator="CJ" modified="20181025130200334" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
+<div created="20180819070408744" creator="CJ" modified="20181028082420096" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
 <pre>$:/core/ui/SideBar/Open</pre>
 </div>
 <div created="20180819070337784" creator="CJ" modified="20181004123258093" modifier="CJ" title="$:/state/tabs/controlpanel/toolbars-1345989671">
@@ -14643,7 +14645,7 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" creator="CJ" modified="20181005140413954" modifier="CJ" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20181005134329908" modifier="CJ" title="$:/temp/search">
+<div created="20180819074107419" creator="CJ" modified="20181028080239037" modifier="CJ" title="$:/temp/search">
 <pre></pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
@@ -15411,10 +15413,14 @@ void sample_select_sort(ElemType A[],int n){
 }
 ```</pre>
 </div>
-<div created="20181021130746282" creator="CJ" modified="20181021131419525" modifier="CJ" tags="数据结构" title="卡特兰数">
+<div created="20181021130746282" creator="CJ" modified="20181028081012419" modifier="CJ" tags="数据结构" title="卡特兰数">
 <pre>卡特兰数：n个不同元素依次进栈，能得到多少种不同的出栈顺序。
 
-$$\frac{1}{n+1}C^{n}_{2n}=\frac{2n!}{(n+1)*n!*n!}$$</pre>
+$$\frac{1}{n+1}C^{n}_{2n}=\frac{2n!}{(n+1)*n!*n!}$$
+
+排列组合公式：
+$$C_n^r=\frac{n!}{r!(n-r)!}$$
+$$A_n^r=\frac{n!}{(n-r)!}$$</pre>
 </div>
 <div created="20180930154308937" creator="CJ" modified="20180930160147118" modifier="CJ" tags="WikiText" title="块引用" type="text/vnd.tiddlywiki">
 <pre>在TiddlyWiki5中有两种方法可以生成HTML块引用，一种用于__跨多行__引用内容，另一种用于__单行__内容。
@@ -16146,7 +16152,7 @@ void in_thread(ThreadTree *p,ThreadTree *pre){
 }
 ```</pre>
 </div>
-<div created="20181017150053172" creator="CJ" modified="20181021121859936" modifier="CJ" tags="线性表 数据结构" title="线性表">
+<div created="20181017150053172" creator="CJ" modified="20181028062553654" modifier="CJ" tags="线性表 数据结构" title="线性表">
 <pre>* ''删除__顺序表__中X的元素''
 ```cpp
 思想：用k记录顺序表中不等于x的元素个数，边扫描边统计，并将不等于x的元素向前放到k的位置
@@ -16381,6 +16387,154 @@ LinkNode *get_common(LinkNode *A,LinkNode *B){
 
 
 </pre>
+</div>
+<div created="20181028062445270" creator="CJ" modified="20181028082007168" modifier="CJ" tags="栈和队列 数据结构" title="栈和队列">
+<pre>* ''判断全部字符是否中心对称''
+思想：用栈，链表前一半进栈，后一半一一与出栈元素对比
+
+```cpp
+bool centro_symmetric(List L,int n){
+	int i;
+	ElemType s[n/2];
+	p=L-&gt;next;
+	for(i=0;i&lt;n/2;i++){//链表前一半进栈
+		s[i]=p-&gt;data;
+		p=p-&gt;next;
+	}
+	i--;//恢复最后位置
+	while(p!=NULL&amp;&amp;s[i]==p-&gt;data){//检测是否中心对称
+		i--;
+		p=p-&gt;next;
+	}
+	if(i==-1) return true;
+	else return false;
+}
+```
+
+* ''用栈将队列元素置逆''
+```cpp
+void reverse(SqList &amp;Q){
+	InitStack(S);
+	while(!IsEmpty(Q)){
+		DeQueue(Q,e);
+		Push(S,e);
+	}
+	while(!IsEmpty(S)){
+		Pop(S,e);
+		EnQueue(Q,e);
+	}
+}
+```
+
+* ''tag循环队列''
+循环队列使用tag表示满或空，实现出队，入队
+初使Q时，设`tag=0,front=rear=0`
+
+队空：`Q.front==Q.rear且Q.tag=0;`
+
+队满：`Q.front==Q.rear且Q.tag=1;`
+
+进队：`Q.data[Q.rear]=x; Q.rear=(Q.rear+1)%MaxSize; Q.tag=1;`
+
+出队：`x=Q.data[Q.front]; Q.front=(Q.front+1)%MaxSize; Q.tag=0;`
+
+置tag循环队列出队算法：
+
+```cpp
+int EnQueue(SqQueue &amp;Q,ElemType n){
+	if(Q.front==Q.rear&amp;&amp;Q.tag==1) return 0;
+	Q.data[Q.rear]=x;
+	Q.rear=(Q.rear+1)%MaxSize;
+	Q.tag=1;//可能队满
+	return 1;
+}
+```
+置tag循环队列出队算法：
+
+```cpp
+int DeQueue(SqQueue &amp;Q,ElemType &amp;x){
+	if(Q.front==Q.rear&amp;&amp;Q.tag==0) return 0;
+	x = Q.data[Q.front];
+	Q.front = (Q.front+1)%MaxSize;
+	Q.tag=0;//可能队空
+	return 1;
+}
+```
+
+* ''判断左右括号是否匹配''
+```cpp
+bool balance(string str){
+	InitStack(S);
+	int i = 0;
+	char *e = NULL;
+	while(str[i]!='\0'){
+		switch(str[i]){
+			case '(': Push(S,str[i]);break;
+			case '[': Push(S,str[i]);break;
+			case '{': Push(S,str[i]);break;
+			case ')': Pop(S,e);if(e!='(') return false;break;
+			case ']': Pop(S,e);if(e!='[') return false;break;
+			case '}': Pop(S,e);if(e!='{') return false;break;
+			default: break;
+		}
+		i++;
+	}
+	if(!IsEmpty(S)){return false;}
+	else return true;
+}
+```
+
+* ''火车硬软坐车厢调整''
+```cpp
+字符串表示火车，S和H分别表示软坐和硬坐。
+void train_arrange(char *train){
+	char*p=train,*q=train,c;
+	InitStack(S);
+	while(*p){
+		if(*p=='H') Push(S,*p);//H入栈
+		else{*(q++)=*p};//S调整在前面
+		p++;
+	}
+	while(!IsEmpty(S)){
+		Pop(S,c);
+		*(q++)=c;//H接在S后面
+	}
+}
+```
+
+* ''递归式子的非递归展开''
+
+$$
+P_n(x)\left\{\begin{matrix}1 &amp; n=0\\ 2x &amp; n=1\\ 2xP_{n-1}(x)-2(n-1)P_{n-2}(x) &amp; n&gt;1 \end{matrix}\right.
+$$
+
+思想：用栈保存n和对应Pn(x)的值，栈中相邻元素的Pn(x)有题中关系，边出栈边计算，栈空即结果
+
+复杂度：时间O(n)，空间O(n)
+
+```cpp
+double func(int n,double x){
+	struct stack
+	{
+		int no;
+		double val;	
+	}S[MaxSize];
+	int top=-1;
+	double fv1=1,fv2=2*x;
+	for(int i=n;i&gt;=2;i--){
+		top++;
+		S[top].no=i;
+	}
+	while(top&gt;=0){
+		S[top].val=2*x*fv2-2*(S[top].no-1)*fv1;
+		fv1=fv2;
+		fv2=S[top].val;
+		top--;
+	}
+	if(n==0) return fv1;
+	return fv2;
+}
+```</pre>
 </div>
 <div created="20181003150550378" creator="CJ" modified="20181004072446299" modifier="CJ" tags="排序 数据结构" title="折半插入排序">
 <pre>`通过折半查找的方式找到插入点，然后统一移动，最后再插入即可`
