@@ -553,6 +553,8 @@ Error message and password prompt
 
 <li>直接插入排序</li>
 
+<li>最大公约数、最小公倍数</li>
+
 <li>BFS</li>
 
 <li>BFS判断是否有i到j的路径</li>
@@ -14645,7 +14647,7 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" creator="CJ" modified="20181005140413954" modifier="CJ" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20181028080239037" modifier="CJ" title="$:/temp/search">
+<div created="20180819074107419" creator="CJ" modified="20181029081941858" modifier="CJ" title="$:/temp/search">
 <pre></pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
@@ -16152,8 +16154,22 @@ void in_thread(ThreadTree *p,ThreadTree *pre){
 }
 ```</pre>
 </div>
-<div created="20181017150053172" creator="CJ" modified="20181028062553654" modifier="CJ" tags="线性表 数据结构" title="线性表">
-<pre>* ''删除__顺序表__中X的元素''
+<div created="20181017150053172" creator="CJ" modified="20181029082212696" modifier="CJ" tags="线性表 数据结构" title="线性表">
+<pre>```
+删除顺序表中X的元素
+顺序表置逆
+删除有序顺序表指定值s到t区间的元素
+删除顺序表指定值s到t区间的元素
+删除顺序表最小值，并用最后元素补上，返回最小值
+有序表去重
+两有序表合并为一新有序表
+调换前后序列的顺序
+有序表查找x值的下标，找到与其后继交换，找不到则插入，且有序
+循环左移
+寻找主元素
+设A和B是两个单链表(带头节点)，元素有序递增，从A与B的公共元素产生单链表C，不破坏A和B
+```
+* ''删除__顺序表__中X的元素''
 ```cpp
 思想：用k记录顺序表中不等于x的元素个数，边扫描边统计，并将不等于x的元素向前放到k的位置
 复杂度：时间O(n)，空间O(1)
@@ -16286,7 +16302,7 @@ void reverse(ElemType A[],int left,int right,int n){
 }
 ```
 
-* ''有序表查找x值的下标，找到与其后继交换，找不到这插入，且有序''
+* ''有序表查找x值的下标，找到与其后继交换，找不到则插入，且有序''
 ```cpp
 bool find_x(SqList &amp;L,ElemType x){
 	if(L.length==0){
@@ -16388,8 +16404,17 @@ LinkNode *get_common(LinkNode *A,LinkNode *B){
 
 </pre>
 </div>
-<div created="20181028062445270" creator="CJ" modified="20181028082007168" modifier="CJ" tags="栈和队列 数据结构" title="栈和队列">
-<pre>* ''判断全部字符是否中心对称''
+<div created="20181028062445270" creator="CJ" modified="20181029064751633" modifier="CJ" tags="栈和队列 数据结构" title="栈和队列">
+<pre>```
+判断全部字符是否中心对称
+用栈将队列元素置逆
+tag循环队列
+判断左右括号是否匹配
+火车硬软坐车厢调整
+递归式子的非递归展开
+```
+
+* ''判断全部字符是否中心对称''
 思想：用栈，链表前一半进栈，后一半一一与出栈元素对比
 
 ```cpp
@@ -17527,6 +17552,25 @@ void direct_insert_sort(ElemType A[],int n){
         for(int j = i; j&gt;0 &amp;&amp; A[j]&lt;A[j-1]; j--)
             swap(A[j],A[j-1]);
     }
+}
+```</pre>
+</div>
+<div created="20181029081442291" creator="CJ" modified="20181029081853144" modifier="CJ" tags="数据结构" title="最大公约数、最小公倍数">
+<pre>辗转相除法
+
+两数之积除以最小公约数即最小公倍数
+
+```cpp
+int fun(int a,int b){
+    int m,n,c;
+    m=a; n=b;
+    while(b!=0){
+        c=a%b;
+        a=b;
+        b=c;
+    }
+    cout &lt;&lt; &quot;最小公约数&quot; &lt;&lt; a &lt;&lt; std::endl;
+    cout &lt;&lt; “最小公倍数” &lt;&lt; m*n/a &lt;&lt;  std::endl;
 }
 ```</pre>
 </div>
