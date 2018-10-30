@@ -1,0 +1,1 @@
+rename tiddlywiki.html index.html
