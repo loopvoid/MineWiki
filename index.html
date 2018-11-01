@@ -17904,7 +17904,7 @@ void direct_insert_sort(ElemType A[],int n){
 }
 ```</pre>
 </div>
-<div created="20181030095006735" creator="CJ" modified="20181030120255058" modifier="CJ" tags="排序 线性表 数据结构" title="子集划分">
+<div created="20181030095006735" creator="CJ" modified="20181101091410815" modifier="CJ" tags="排序 线性表 数据结构" title="子集划分">
 <pre>题目：已知n个正整数构成集合A，将其划分为两个不相交的子集A1、A2，元素个数为n1、n2。A1和A2的元素之和分别为S1和S2，要求满足`|n1-n2|`最小并且`|S1-S2|`最大。
 
 思想：仿照快排，基于枢轴将n个整数划分为两个子集。根据划分后的枢轴所处位置i分别处理：
@@ -17918,7 +17918,7 @@ void direct_insert_sort(ElemType A[],int n){
 
 ```cpp
 int setPartion(int a[], int n){
-    int pivotkey=0,low=0,low0=0,high=n-1,high0=n-1;flag=1;k=n/2;
+    int pivotkey=0,low=0,low0=0,high=n-1,high0=n-1,flag=1,key=n/2;
     while(flag){
         pivotkey=a[low];
         while(low&lt;high &amp;&amp; a[high]&gt;pivotkey) --high;
