@@ -14714,7 +14714,7 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" creator="CJ" modified="20181005140413954" modifier="CJ" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20181030095348637" modifier="CJ" title="$:/temp/search">
+<div created="20180819074107419" creator="CJ" modified="20181104091015417" modifier="CJ" title="$:/temp/search">
 <pre></pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
@@ -15556,18 +15556,18 @@ int min_depth_with_level_traverse(BTree *T){
 
 引入分页存储管理方式的目的是提高内存利用率，而引入分段存储是为了满足用户（程序员）在编程和使用上多方面上的要求。还有将两者结合一起的段页式系统。</pre>
 </div>
-<div created="20181003135733790" creator="CJ" modified="20181031123556955" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
-<pre>| 分类 | 算法种类 |&gt;| 时间复杂度 |&lt;|空间复杂度|是否稳定|&lt;|h
-|~|~| 最好情况 | 平均情况 | 最坏情况 |~|~|~|h
-| 插入排序 | [[直接插入排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |
-|~| [[折半插入排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |
-|~| [[希尔排序]] | - | - | - | O(1) | 否 |
-|交换排序| [[冒泡排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |
-|~| [[快速排序]] | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(log,,2,,^^n^^) | 否 |
-|选择排序| [[简单选择排序]] | O(n^^2^^) | O(n^^2^^) | O(n^^2^^) | O(1) | 否 |
-|~| [[堆排序]] | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(1) | 否 |
-|归并排序| [[2路归并排序]] | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(n) | 是 |
-|基数排序| 基数排序 | O(d(n+r)) | O(d(n+r)) | O(d(n+r)) | O(r) | 是 |
+<div created="20181003135733790" creator="CJ" modified="20181104091838975" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
+<pre>| 分类 | 算法种类 |&gt;| 时间复杂度 |&lt;|空间复杂度|是否稳定|&lt;| 属性 |h
+|~|~| 最好情况 | 平均情况 | 最坏情况 |~|~|~|~|h
+| 插入排序 | [[直接插入排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |&lt;| 基本有序时效率高 |
+|~| [[折半插入排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |&lt;|  |
+|~| [[希尔排序]] | - | - | - | O(1) | 否 |&lt;|  |
+|交换排序| [[冒泡排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |&lt;| 基本有序时效率高 |
+|~| [[快速排序]] | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(log,,2,,^^n^^) | 否 |&lt;| 1.基本有序时效率低 2.`分治算法` |
+|选择排序| [[简单选择排序]] | O(n^^2^^) | O(n^^2^^) | O(n^^2^^) | O(1) | 否 |&lt;|  |
+|~| [[堆排序]] | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(1) | 否 |&lt;|  |
+|归并排序| [[2路归并排序]] | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(nlog,,2,,^^n^^) | O(n) | 是 |&lt;|  |
+|基数排序| 基数排序 | O(d(n+r)) | O(d(n+r)) | O(d(n+r)) | O(r) | 是 |&lt;|  |
 | ''排序算法性质表'' |c
 
 
@@ -15577,7 +15577,13 @@ int min_depth_with_level_traverse(BTree *T){
 
 `比较次数`与序列初始顺序无关：__选择排序__
 
-`时间复杂度`与序列初始顺序无关：__直接选择排序__、__堆排序__、__归并排序__、__基数排序__</pre>
+`时间复杂度`与序列初始顺序无关：__直接选择排序__、__堆排序__、__归并排序__、__基数排序__
+
+__插入排序__、__选择排序__的`排序趟数`始终为n-1，与序列初始状态无关
+
+__快速排序__无论初始序列状态如何，都要进行n次排序，不过对于不同的初始状态，每趟处理的时间效率不同，初始状态约有序，效率越低
+
+`基本有序`选择__直接插入__、__冒泡排序__效率较高。</pre>
 </div>
 <div created="20181005134339835" creator="CJ" modified="20181005134357012" modifier="CJ" tags="设计模式" title="工厂模式">
 <pre>工厂模式</pre>
