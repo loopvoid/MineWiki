@@ -133,6 +133,8 @@ Error message and password prompt
 
 <p>This <a class="tc-tiddlylink-external" href="https://tiddlywiki.com" rel="noopener noreferrer" target="_blank">TiddlyWiki</a> contains the following tiddlers:</p><p><ul>
 
+<li>$:/config/ColourPicker/Recent</li>
+
 <li>$:/config/DefaultSidebarTab</li>
 
 <li>$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/close-all</li>
@@ -154,8 +156,6 @@ Error message and password prompt
 <li>$:/core</li>
 
 <li>$:/DefaultTiddlers</li>
-
-<li>$:/Import</li>
 
 <li>$:/isEncrypted</li>
 
@@ -623,6 +623,10 @@ Error message and password prompt
 
 <li>DFS实现拓补排序</li>
 
+<li>Dijkstra-邻接矩阵</li>
+
+<li>Dijkstra-邻接矩阵-图</li>
+
 <li>Excel提取数据大全</li>
 
 <li>Fast R-CNN</li>
@@ -675,6 +679,9 @@ Error message and password prompt
 <!--~~ Ordinary tiddlers ~~-->
 
 <div id="storeArea" style="display:none;">
+<div created="20181105124020618" creator="CJ" list="White WhiteSmoke Black" modified="20181105124029681" modifier="CJ" title="$:/config/ColourPicker/Recent">
+<pre></pre>
+</div>
 <div created="20180819124942489" creator="CJ" modified="20180819124944049" modifier="CJ" title="$:/config/DefaultSidebarTab">
 <pre>$:/core/ui/SideBar/Open</pre>
 </div>
@@ -9239,17 +9246,6 @@ Error message and password prompt
 <div created="20180819070323016" creator="CJ" modified="20181004122552293" modifier="CJ" title="$:/DefaultTiddlers">
 <pre>[[Home]]</pre>
 </div>
-<div plugin-type="import" status="pending" title="$:/Import" type="application/json">
-<pre>{
-    &quot;tiddlers&quot;: {
-        &quot;Untitled&quot;: {
-            &quot;title&quot;: &quot;Untitled&quot;,
-            &quot;text&quot;: &quot;&lt;html&gt;\r\n&lt;body&gt;\r\n&lt;!--StartFragment--&gt;&lt;ul style=\&quot;box-sizing: border-box; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;\&quot;&gt;&lt;li style=\&quot;box-sizing: border-box;\&quot;&gt;&lt;strong style=\&quot;box-sizing: border-box; font-weight: bold;\&quot;&gt;顺序表置逆&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;&lt;!--EndFragment--&gt;\r\n&lt;/body&gt;\r\n&lt;/html&gt;&quot;,
-            &quot;type&quot;: &quot;text/html&quot;
-        }
-    }
-}</pre>
-</div>
 <div title="$:/isEncrypted">
 <pre>no</pre>
 </div>
@@ -13981,7 +13977,7 @@ Error message and password prompt
 <div created="20180819070410656" creator="CJ" modified="20181030080924327" modifier="CJ" title="$:/state/tab/moresidebar-401116514">
 <pre>$:/core/ui/MoreSideBar/Tags</pre>
 </div>
-<div created="20180819070408744" creator="CJ" modified="20181030095349756" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
+<div created="20180819070408744" creator="CJ" modified="20181105130009458" modifier="CJ" title="$:/state/tab/sidebar--1835078512">
 <pre>$:/core/ui/SideBar/Open</pre>
 </div>
 <div created="20180819070337784" creator="CJ" modified="20181004123258093" modifier="CJ" title="$:/state/tabs/controlpanel/toolbars-1345989671">
@@ -15556,7 +15552,7 @@ int min_depth_with_level_traverse(BTree *T){
 
 引入分页存储管理方式的目的是提高内存利用率，而引入分段存储是为了满足用户（程序员）在编程和使用上多方面上的要求。还有将两者结合一起的段页式系统。</pre>
 </div>
-<div created="20181003135733790" creator="CJ" modified="20181104091838975" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
+<div created="20181003135733790" creator="CJ" modified="20181105113932472" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
 <pre>| 分类 | 算法种类 |&gt;| 时间复杂度 |&lt;|空间复杂度|是否稳定|&lt;| 属性 |h
 |~|~| 最好情况 | 平均情况 | 最坏情况 |~|~|~|~|h
 | 插入排序 | [[直接插入排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |&lt;| 基本有序时效率高 |
@@ -15583,7 +15579,9 @@ __插入排序__、__选择排序__的`排序趟数`始终为n-1，与序列初�
 
 __快速排序__无论初始序列状态如何，都要进行n次排序，不过对于不同的初始状态，每趟处理的时间效率不同，初始状态约有序，效率越低
 
-`基本有序`选择__直接插入__、__冒泡排序__效率较高。</pre>
+`基本有序`选择__直接插入__、__冒泡排序__效率较高。
+
+`基本有序`选择__直接插入排序__比较次数最少。</pre>
 </div>
 <div created="20181005134339835" creator="CJ" modified="20181005134357012" modifier="CJ" tags="设计模式" title="工厂模式">
 <pre>工厂模式</pre>
@@ -16383,7 +16381,7 @@ bool toplogical_sort(ALGraph *G){
 }
 ```</pre>
 </div>
-<div created="20181002023444150" creator="CJ" modified="20181030075216091" modifier="CJ" tags="数据结构 图" title="图">
+<div created="20181002023444150" creator="CJ" modified="20181105114234111" modifier="CJ" tags="数据结构 图" title="图">
 <pre># [[图的结构体]]
 
 # [[图的创建]]
@@ -16410,6 +16408,9 @@ bool toplogical_sort(ALGraph *G){
 
 # [[DFS实现拓补排序]]
 
+# [[Dijkstra-邻接矩阵]]
+
+# [[Dijkstra-堆优化]]
 ---
 图的结构体
 
@@ -18175,6 +18176,60 @@ void dfs(ALGraph *G,int i){
 }
 
 ```</pre>
+</div>
+<div created="20181105114240223" creator="CJ" modified="20181105124208872" modifier="CJ" tags="图 数据结构" title="Dijkstra-邻接矩阵">
+<pre>图：
+
+[img[Dijkstra-邻接矩阵-图]]
+
+邻接矩阵：
+
+||0|1|2|3|4|
+|0|0|6|∞|1|∞|
+|1|6|0|5|2|2|
+|2|∞|5|0|∞|5|
+|3|1|2|∞|0|1|
+|4|∞|2|5|1|0|
+
+
+```cpp
+#define N 100
+#define MAX 10000
+
+int g[N][N];//图的矩阵
+int dist[N];//距离distance
+bool visited[N];
+
+void init(){
+    cin &gt;&gt; n;
+    for(int i=0; i&lt;N; i++)
+        for(int j=0; j&lt;N; j++)
+            cin &gt;&gt; g[i][j];
+}
+
+void dijkstra(){
+    memset(visited, 0, sizeof(visited));//初始化内存内容为0
+    for(int i=0;i&lt;N;i++) dist[i]=MAX;//初始化内存内容为MAX
+    dist[0] = 0;//该点到自己的距离为0
+    //循环处理每个顶点
+    for(int i=0; i&lt;N-1, i++){//为什么是n-1?因为前n-1个点都处理完了，最后一个点的路径也就必然了。
+        int k = 0, min=MAX;
+        for(int j=0; j&lt;N; j++){//找到当前路径最短（权值最小）作为起始点，贪心。下次更新后还是找更新后当前所有路径中最小的node，这样每步都是在寻找前面累计路径最短的路径继续往前走。
+            if(!visited[j] &amp;&amp; dist[j]&lt;min){
+                k = j;
+                min = dist[j];
+            }
+        visited[k] = true;//将该点设置为已访问
+        //矩阵行读取
+        for(int j=0; j&lt;n; j++)//更新一遍所有从源点通过该点能到达的点的累计距离
+            if(!visited[j] &amp;&amp; g[k][j]+disk[k]&lt;dist[j])//如果从该点走，能到达的，且未访问过的点，距离比原来记录的小，那么原来的路径比现在的路径长，更新之。
+                dist[j] = g[k][j]+dist[k];
+    }
+}
+```</pre>
+</div>
+<div created="20181105124135739" creator="CJ" modified="20181105125820556" modifier="CJ" tags="" title="Dijkstra-邻接矩阵-图" type="text/vnd.tiddlywiki">
+<pre>{{https://www.baidu.com/img/bd_logo1.png?where=super}}</pre>
 </div>
 <div created="20180914155137263" creator="CJ" modified="20180914160841899" modifier="CJ" tags="" title="Excel提取数据大全" type="text/x-markdown">
 <pre>## **提取出生日期**
