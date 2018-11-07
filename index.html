@@ -507,6 +507,8 @@ Error message and password prompt
 
 <li>共享内存</li>
 
+<li>荷兰旗问题</li>
+
 <li>简单选择排序</li>
 
 <li>卡特兰数</li>
@@ -15589,6 +15591,26 @@ __快速排序__无论初始序列状态如何，都要进行n次排序，不过
 <div created="20181025122557773" creator="CJ" modified="20181025122846966" modifier="CJ" tags="内存管理 OS" title="共享内存">
 <pre>共享内存是由IPC为一个进程所创建并且出现在这个进程的地址空间中的一段特殊的地址序列。其他的进程都可以同样的同行这段内存地址。若一个进程写入共享内存，这些改变立即就可以被访问相同共享内存的其他进程所间。</pre>
 </div>
+<div created="20181107060838836" creator="CJ" modified="20181107061402586" modifier="CJ" tags="排序 数据结构" title="荷兰旗问题">
+<pre>
+```cpp
+思想：顺序扫描顺序表，红色换到线性表最前面，蓝色换到线性表最后面，白色跳过，设置三个指针，j为扫描指针，i以前为红色，k以后为蓝色，根据j所指元素的颜色进行前或后的交换。
+复杂度：时间O(n)，空间O(1)
+
+typedef enum{RED,WHITE,BLUE} color;
+void flag_arrange(color A[],int n){
+    int i=j=0,k=n-1;
+    while(i&lt;=k){
+        switch(A[j]){
+            case RED: swap(A[i],A[j]);i++;j++;break;
+            case WHITE: j++;break;
+            case BLUE: swap(A[j],A[k]);k--;break;
+        }
+    }
+}
+```
+</pre>
+</div>
 <div created="20181004075532990" creator="CJ" modified="20181005034341779" modifier="CJ" tags="数据结构 排序" title="简单选择排序">
 <pre>```cpp
 void sample_select_sort(ElemType A[],int n){
@@ -15906,7 +15928,7 @@ void bubble_sort(ElemType A[],int n){
 
 每当CPU要访问主存，硬件自动将被访问的主存地址与界限寄存器的内容进行比较，以判断是否越界如果未越界，则按此地址访问主存，否则将产生程序中断——越界中断（存储保护中断）。</pre>
 </div>
-<div created="20181003143007946" creator="CJ" modified="20181004083820735" modifier="CJ" tags="排序 数据结构" title="排序">
+<div created="20181003143007946" creator="CJ" modified="20181107060831503" modifier="CJ" tags="排序 数据结构" title="排序">
 <pre>!! 插入排序
 * 1.[[直接插入排序]] 稳定 O(n^2) 顺序存储+链式存储
 
@@ -15931,6 +15953,9 @@ void bubble_sort(ElemType A[],int n){
 !! 归并排序
  * 10.[[2路归并排序]] 稳定 每趟O(n) 共log2n趟，O(nlog2n)
 
+
+!! 例题
+ * 11.[[荷兰旗问题]]
 ---
 
 直接插入排序
@@ -15972,6 +15997,10 @@ void bubble_sort(ElemType A[],int n){
 2路归并排序
 
 {{2路归并排序}}
+
+荷兰旗问题
+
+{{荷兰旗问题}}
 </pre>
 </div>
 <div created="20181002031329282" creator="CJ" modified="20181027084858109" modifier="CJ" tags="图 数据结构" title="判断无向图G是否为树">
