@@ -603,6 +603,8 @@ Error message and password prompt
 
 <li>指定节点路径非递归实现</li>
 
+<li>中断和DMA对比</li>
+
 <li>主机A下载ftp文件的服务器交互过程</li>
 
 <li>子集划分</li>
@@ -14716,8 +14718,8 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" creator="CJ" modified="20181005140413954" modifier="CJ" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20181104091015417" modifier="CJ" title="$:/temp/search">
-<pre></pre>
+<div created="20180819074107419" creator="CJ" modified="20181113085612327" modifier="CJ" title="$:/temp/search">
+<pre>wpl</pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
 <pre>loaded</pre>
@@ -17953,8 +17955,7 @@ void direct_insert_sort(ElemType A[],int n){
 ```</pre>
 </div>
 <div created="20181111073425590" creator="CJ" modified="20181111073821668" modifier="CJ" tags="二叉树 数据结构" title="指定节点路径递归实现">
-<pre>
-```cpp
+<pre>```cpp
 思想：递归入栈，反向输出
 复杂度：时间O(n)
 
@@ -17974,8 +17975,7 @@ bool findPath(TreeNode *root, TreeNode *p, TreeNode *arr[], int &amp;pos){
 ```</pre>
 </div>
 <div created="20181111075218431" creator="CJ" modified="20181111081206304" modifier="CJ" tags="二叉树 数据结构" title="指定节点路径非递归实现">
-<pre>
-```cpp
+<pre>```cpp
 后序遍历的非递归实现是三种遍历方式中最难的一种。因为在后序遍历中，要保证左孩子和右孩子都已被访问并且左孩子在右孩子前访问才能访问根结点，这就为流程的控制带来了难题。下面介绍两种思路。
 
       第一种思路：对于任一结点P，将其入栈，然后沿其左子树一直往下搜索，直到搜索到没有左孩子的结点，此时该结点出现在栈顶，但是此时不能将其出栈并访问， 因此其右孩子还为被访问。所以接下来按照相同的规则对其右子树进行相同的处理，当访问完其右孩子时，该结点又出现在栈顶，此时可以将其出栈并访问。这样就 保证了正确的访问顺序。可以看出，在这个过程中，每个结点都两次出现在栈顶，只有在第二次出现在栈顶时，才能访问它。因此需要多设置一个变量标识该结点是 否是第一次出现在栈顶。
@@ -18026,6 +18026,11 @@ void postOrder3(BinTree *root)     //非递归后序遍历
     }    
 }
 ```</pre>
+</div>
+<div created="20181113083620373" creator="CJ" modified="20181113084159723" modifier="CJ" tags="OS" title="中断和DMA对比">
+<pre>中断处理方式：在IO设备输入每个数据的过程中，由于无需CPU的干预，因而可使CPU与IO设备并行工作，仅当输入完一个数据时，才需CPU花费极短的时间去做些中断处理。因此中断申请使用的是CPU处理时间，发生的时间是在一条指令执行结束之后，数据是在软件的控制下完成传输的。
+
+DMA方式：数据传输的基本单位是块，既在CPU与IO设备之间每次至少传输一个数据块，DMA方式每次申请的是总线的使用权，所传输的数据是从设备直接送入内存的，或则相反。仅在传输一个或多个数据块的开始和结束的时候才需要CPU干预，整块数据块的传输是在控制器的控制下完成的。</pre>
 </div>
 <div created="20181102122409645" creator="CJ" modified="20181102122625405" modifier="CJ" tags="NET" title="主机A下载ftp文件的服务器交互过程">
 <pre># 主机建立一个TCP链接到服务器的21端口，然后发送登陆账号和密码
@@ -18925,12 +18930,14 @@ Based on handong1587's github: https://handong1587.github.io/deep_learning/2015/
   &lt;/tbody&gt;
 &lt;/table&gt;</pre>
 </div>
-<div created="20181025120032405" creator="CJ" modified="20181025122552789" modifier="CJ" tags="OS" title="OS">
+<div created="20181025120032405" creator="CJ" modified="20181113083611023" modifier="CJ" tags="OS" title="OS">
 <pre>[[分页、分段系统]]
 
 [[内存保护]]
 
-[[共享内存]]</pre>
+[[共享内存]]
+
+[[中断和DMA对比]]</pre>
 </div>
 <div created="20181029134536664" creator="CJ" modified="20181029140603020" modifier="CJ" tags="NET" title="PPP">
 <pre>PPP应用于直接连接两个节点的链路上，用于拨号/专线的点对点
