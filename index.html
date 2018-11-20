@@ -14718,8 +14718,8 @@ This plugin also requires the JSZip plugin ([[$:/plugins/tiddlywiki/jszip]]) to 
 <div created="20180819070430721" creator="CJ" modified="20181005140413954" modifier="CJ" title="$:/temp/RemoteAssetSearch/$:/config/OfficialPluginLibrary">
 <pre></pre>
 </div>
-<div created="20180819074107419" creator="CJ" modified="20181113085612327" modifier="CJ" title="$:/temp/search">
-<pre>wpl</pre>
+<div created="20180819074107419" creator="CJ" modified="20181120064854898" modifier="CJ" title="$:/temp/search">
+<pre></pre>
 </div>
 <div created="20180819070424343" modified="20180819070424343" tags="$:/tags/ServerConnection" title="$:/temp/ServerConnection/https://tiddlywiki.com/library/v5.1.17/index.html" url="https://tiddlywiki.com/library/v5.1.17/index.html">
 <pre>loaded</pre>
@@ -15562,7 +15562,7 @@ int min_depth_with_level_traverse(BTree *T){
 
 引入分页存储管理方式的目的是提高内存利用率，而引入分段存储是为了满足用户（程序员）在编程和使用上多方面上的要求。还有将两者结合一起的段页式系统。</pre>
 </div>
-<div created="20181003135733790" creator="CJ" modified="20181105113932472" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
+<div created="20181003135733790" creator="CJ" modified="20181120065030124" modifier="CJ" tags="排序 数据结构" title="各排序算法性质表">
 <pre>| 分类 | 算法种类 |&gt;| 时间复杂度 |&lt;|空间复杂度|是否稳定|&lt;| 属性 |h
 |~|~| 最好情况 | 平均情况 | 最坏情况 |~|~|~|~|h
 | 插入排序 | [[直接插入排序]] | O(n) | O(n^^2^^) | O(n^^2^^) | O(1) | 是 |&lt;| 基本有序时效率高 |
@@ -15578,6 +15578,7 @@ int min_depth_with_level_traverse(BTree *T){
 
 
 
+---
 
 `移动次数`与序列初始顺序无关：__基数排序__
 
@@ -15591,7 +15592,29 @@ __快速排序__无论初始序列状态如何，都要进行n次排序，不过
 
 `基本有序`选择__直接插入__、__冒泡排序__效率较高。
 
-`基本有序`选择__直接插入排序__比较次数最少。</pre>
+`基本有序`选择__直接插入排序__比较次数最少。
+
+---
+
+每一次排序之后都能确定至少一个元素位置的排序方法包括：
+
+`选择排序`：每次将最大的数放到最后。所以最大的数排一次序后位置就确定了。
+
+`冒泡排序`：同选择排序。每一次排序最大的值位置确定。
+
+`快排`：每一次排序pivot的位置确定。
+
+`堆排序`：每一次排序时，都是将堆顶的元素和最后一个节点互换，然后调整堆，再将堆大小减1。所以每一次排序堆顶元素确定。
+
+不能至少确定一个元素的位置的方法包括：
+
+`插入排序`：不到最后一步求的都是相对位置。
+
+`shell排序`：对简单插入排序的改进。不到最后一步，是无法确定每个元素位置的。
+
+`归并排序`：局部有序，并不能确定任一元素在全局的位置。
+
+`基数排序`，计数排序：利用桶排序的思路，不是基于比较的排序，也无法在一次排序中确定某个元素的位置。因为每一次排序都是整体处理。</pre>
 </div>
 <div created="20181005134339835" creator="CJ" modified="20181005134357012" modifier="CJ" tags="设计模式" title="工厂模式">
 <pre>工厂模式</pre>
