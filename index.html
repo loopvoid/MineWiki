@@ -13997,7 +13997,7 @@ Error message and password prompt
 <div created="20180819072223515" creator="c" modified="20180819072424192" modifier="CJ " title="$:/status/UserName">
 <pre>CJ</pre>
 </div>
-<div list="Home 二叉树" title="$:/StoryList">
+<div list="Home" title="$:/StoryList">
 <pre></pre>
 </div>
 <div created="20181005142449281" creator="CJ" modified="20181005142452384" modifier="CJ" title="$:/temp/advancedsearch">
@@ -15114,7 +15114,7 @@ int wpl(BTree *T,int deep){
 }
 ```</pre>
 </div>
-<div created="20181008074216909" creator="CJ" modified="20181008081104159" modifier="CJ" tags="二叉树 数据结构" title="带权路径长度非递归">
+<div created="20181008074216909" creator="CJ" modified="20181120084736662" modifier="CJ" tags="二叉树 数据结构" title="带权路径长度非递归">
 <pre>非递归求带权路径长度思想：使用队列进行层次遍历，当每层中有叶节点的时候，用层次乘以其权值，最后返回wpl。
 
 ```cpp
@@ -15130,10 +15130,12 @@ int wpl_norc(BTree *T){
 		int cnt = 0;
 		while(cnt &lt; curent_level_node_nums){
 			cnt++;
-			if(T-&gt;lchild==NULL&amp;&amp;T-&gt;rchild==NULL)
-				wpl += height * T-&gt;data;
-			if(T-&gt;lchild) EnQueue(Q,T-&gt;lchild);
-			if(T-&gt;rchild) EnQueue(Q,T-&gt;rchild);
+			BNode *p = new BNode;
+			DeQueue(Q,p);
+			if(p-&gt;lchild==NULL&amp;&amp;p-&gt;rchild==NULL)
+				wpl += height * p-&gt;data;
+			if(p-&gt;lchild) EnQueue(Q,p-&gt;lchild);
+			if(p-&gt;rchild) EnQueue(Q,p-&gt;rchild);
 		}	
 	}
 	return wpl;
