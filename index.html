@@ -561,6 +561,12 @@ Error message and password prompt
 
 <li>树的结构体</li>
 
+<li>树莓派</li>
+
+<li>树莓派安装 Aria2 和 Yaaw作为下载器</li>
+
+<li>树莓派安装shadowsocks实现socks代理并转为http代理过程</li>
+
 <li>顺序表置逆</li>
 
 <li>拓补排序(判断图是否有环)</li>
@@ -14019,19 +14025,19 @@ Error message and password prompt
         },
         &quot;$:/info/url/full&quot;: {
             &quot;title&quot;: &quot;$:/info/url/full&quot;,
-            &quot;text&quot;: &quot;https://loopvoid.github.io/minewiki/&quot;
+            &quot;text&quot;: &quot;file:///E:/Wiki/minewiki/index.html&quot;
         },
         &quot;$:/info/url/host&quot;: {
             &quot;title&quot;: &quot;$:/info/url/host&quot;,
-            &quot;text&quot;: &quot;loopvoid.github.io&quot;
+            &quot;text&quot;: &quot;&quot;
         },
         &quot;$:/info/url/hostname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/hostname&quot;,
-            &quot;text&quot;: &quot;loopvoid.github.io&quot;
+            &quot;text&quot;: &quot;&quot;
         },
         &quot;$:/info/url/protocol&quot;: {
             &quot;title&quot;: &quot;$:/info/url/protocol&quot;,
-            &quot;text&quot;: &quot;https:&quot;
+            &quot;text&quot;: &quot;file:&quot;
         },
         &quot;$:/info/url/port&quot;: {
             &quot;title&quot;: &quot;$:/info/url/port&quot;,
@@ -14039,7 +14045,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/pathname&quot;: {
             &quot;title&quot;: &quot;$:/info/url/pathname&quot;,
-            &quot;text&quot;: &quot;/minewiki/&quot;
+            &quot;text&quot;: &quot;/E:/Wiki/minewiki/index.html&quot;
         },
         &quot;$:/info/url/search&quot;: {
             &quot;title&quot;: &quot;$:/info/url/search&quot;,
@@ -14047,7 +14053,7 @@ Error message and password prompt
         },
         &quot;$:/info/url/origin&quot;: {
             &quot;title&quot;: &quot;$:/info/url/origin&quot;,
-            &quot;text&quot;: &quot;https://loopvoid.github.io&quot;
+            &quot;text&quot;: &quot;file://&quot;
         },
         &quot;$:/info/browser/screen/width&quot;: {
             &quot;title&quot;: &quot;$:/info/browser/screen/width&quot;,
@@ -16414,6 +16420,1623 @@ typedef struct BNode
 ```
 </pre>
 </div>
+<div created="20190721120708758" creator="CJ" modified="20190721120841223" modifier="CJ" title="树莓派" type="text/x-markdown">
+<pre># 开机密码
+
+```
+pi	
+
+raspberry
+```
+
+
+
+# 启动root用户
+
+```
+// 设置 root 账号的密码，会让你输入两次新密码
+sudo passwd root
+
+// 启用 root 账号登录
+sudo passwd --unlock root
+```
+
+
+
+# 启动wifi模块(自动连接WiFi)
+
+* sudo iwlist wlan0 scan
+
+* 编辑wifi模块的配置文件 
+  sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+  设置network中的参数
+
+  ```
+  country=CN
+  ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+  update_config=1
+   
+  network={
+  ssid=&quot;your ssid&quot;
+  psk=&quot;your password&quot;
+  key_mgmt=WPA-PSK
+  priority=1
+  }
+  ```
+
+* 重启网卡
+
+  /etc/init.d/networking restart 
+
+* shutdown -r now
+
+
+
+# 关闭Wifi省电模式
+
+ `sudo nano /etc/modprobe.d/8192cu.conf`
+加入以下内容，然后按Ctrl+x和y保存退出
+
+```shell
+# prevent power down of wireless when idle
+options 8192cu rtw_power_mgnt=0 rtw_enusbss=0
+```
+
+然后sudo reboot重启生效  
+
+
+
+# 扩展可用空间
+
+```
+通过 raspi-config 命令进入
+
+选择第一项 Expand Filesystem 扩展 SD 卡上可用的空间 
+
+扩展之后可以通过 df -h 命令看到效果
+```
+
+
+
+# 更换软件源
+
+* 备份
+
+```
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+```
+
+* 编辑文件
+
+```
+sudo nano /etc/apt/sources.list 
+```
+
+* 源如下
+
+```
+deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
+deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi
+
+
+
+deb http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main non-free contrib
+deb-src http://mirrors.aliyun.com/raspbian/raspbian/ wheezy main non-free contrib
+```
+
+* 编辑/etc/apt/sources.list.d/raspi.list
+
+  使用管理员权限（经由sudo），编辑`/etc/apt/sources.list.d/raspi.list`文件。参考命令行为：
+
+  ```
+  $ sudo nano /etc/apt/sources.list.d/raspi.list
+  ```
+
+  用`#`注释掉原文件内容，用以下内容取代：
+
+  ```
+  deb http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui
+  deb-src http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui
+  ```
+
+* 最后执行  更新系统，更新软件包
+
+``` 
+sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+```
+
+
+
+# 设置静态 IP 地址
+
+```
+sudo nano /etc/network/interfaces
+
+iface wlan0 inet static
+    wpa-ssid Your_Wifi_SSID
+    wpa-psk Your_Wifi_Password
+address 192.168.1.200 # 设定的静态IP地址
+netmask 255.255.255.0 # 网络掩码
+gateway 192.168.1.1   # 网关
+network 192.168.1.1   # 网络地址
+#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
+
+
+# update-rc.d的具体用法
+
+两种开机执行脚本的方法及相关的一个命令
+
+**第一种：**
+
+修改/etc/rc.local
+
+在/etc/rc.local的exit 0语句之间添加启动脚本。脚本必须具有可执行权限。
+
+**第二种：**用update-rc.d命令添加开机执行脚本
+
+创建要开机自动执行的脚本：`/home/test/blog/startBlog.sh`，并给予可执行权限：`chmod +x /home/test/blog/startBlog.sh`
+
+在/etc/init.d目录下创建链接文件到前面的脚本： `ln -s /home/test/blog/startBlog.sh /etc/init.d/startBlog`
+
+进入`/etc/init.d`目录，用 update-rc.d 命令将连接文件 startBlog 添加到启动脚本中去：`update-rc.d startBlog defaults 99`
+
+其中的99表示启动顺序，取值范围是0-99。序号越大的越晚执行
+
+
+
+移除启动的脚本：`update-rc.d -f startBlog remove`
+`-f`选项表示强制执行
+
+
+
+update-rc.d命令
+
+举例
+
+`update-rc.d startBlog defaults 99`：添加一个启动连接，执行序号是99。
+
+如果执行脚本B需要先执行脚本A，如下设置（A的启动顺序比B的小，结束顺序比B的大）：
+`update-rc.d script_for_A defaults 80 20`
+`update-rc.d script_for_B defaults 90 10`
+
+添加一个不被其他任何服务需要的服务：`update-rc.d script_name defaults 98 02，`
+
+添加一个需要 开始/结束 序号在20的服务的服务：`update-rc.d script_depends_on_service_20 default 21 19`
+
+移除一个脚本，假定/etc/init.d/目录下的脚本文件已先被删除：`update-rc.d script_name remove`
+
+移除一个脚本，不管/etc/init.d/目录下的脚本文件是否已删除：`update-rc.d -f script_name remove`
+
+
+探究Ubuntu下的update-rc.d命令：&lt;http://www.linuxdiyf.com/linux/13362.html&gt;
+
+Update-rc.d &amp;&amp; rc.local管理Ubuntu的开机启动：&lt;http://www.linuxdiyf.com/linux/1057.html&gt;
+
+通过update-rc.d来管理Ubuntu系统的自动启动程序：&lt;http://www.linuxdiyf.com/linux/1056.html&gt;
+
+Ubuntu系统Update-rc.d命令：&lt;http://www.linuxdiyf.com/linux/906.html&gt;
+
+openSUSE下开机自动运行脚本命令的方法：&lt;http://www.linuxdiyf.com/linux/1975.html&gt;
+
+---
+
+apache2、nginx、redis这些服务安装之后，会随开机启动，当这些服务并不需要时，就存在cpu和内存的浪费。
+
+利用 update-rc.d 命令 我们可以实现启动项的管理
+
+添加启动项：
+
+```shell
+sudo update-rc.d   apache2 defaults 
+sudo update-rc.d   nginx defaults 
+```
+
+删除启动项:
+
+```shell
+sudo update-rc.d -f apache2 remove
+sudo update-rc.d -f nginx remove
+```
+
+
+
+
+
+# 开机启动ftp服务
+
+update-rc.d vsftpd stop/start 
+
+# 开机启动SS
+
+`nano /etc/rc.local`#设置开机启动
+
+在注释文本下发加上`/usr/local/bin/ss-local -c /etc/shadowsocks.json &amp;`
+
+
+
+# systemd开机启动
+
+**1.服务权限**
+
+systemd有系统和用户区分；系统（`/user/lib/systemd/system/`）、用户（`/etc/lib/systemd/user/`）.一般系统管理员手工创建的单元文件建议存放在`/etc/systemd/system/`目录下面。
+
+**2.创建服务文件**
+
+```
+[Unit]
+Description=nginx - high performance web server
+Documentation=http://nginx.org/en/docs/
+After=network.target remote-fs.target nss-lookup.target
+  
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/sbin/nginx -t -c /etc/nginx/nginx.conf
+ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+  
+[Install]
+WantedBy=multi-user.target
+```
+
+解释如下：
+
+```
+[Unit]
+Description : 服务的简单描述
+Documentation ： 服务文档
+Before、After:定义启动顺序。Before=xxx.service,代表本服务在xxx.service启动之前启动。After=xxx.service,代表本服务在xxx.service之后启动。
+Requires：这个单元启动了，它需要的单元也会被启动；它需要的单元被停止了，这个单元也停止了。
+Wants：推荐使用。这个单元启动了，它需要的单元也会被启动；它需要的单元被停止了，对本单元没有影响。
+
+[Service]
+Type=simple（默认值）：systemd认为该服务将立即启动。服务进程不会fork。如果该服务要启动其他服务，不要使用此类型启动，除非该服务是socket激活型。
+Type=forking：systemd认为当该服务进程fork，且父进程退出后服务启动成功。对于常规的守护进程（daemon），除非你确定此启动方式无法满足需求，使用此类型启动即可。使用此启动类型应同时指定 PIDFile=，以便systemd能够跟踪服务的主进程。
+Type=oneshot：这一选项适用于只执行一项任务、随后立即退出的服务。可能需要同时设置 RemainAfterExit=yes 使得 systemd 在服务进程退出之后仍然认为服务处于激活状态。
+Type=notify：与 Type=simple 相同，但约定服务会在就绪后向 systemd 发送一个信号。这一通知的实现由 libsystemd-daemon.so 提供。
+Type=dbus：若以此方式启动，当指定的 BusName 出现在DBus系统总线上时，systemd认为服务就绪。
+Type=idle: systemd会等待所有任务(Jobs)处理完成后，才开始执行idle类型的单元。除此之外，其他行为和Type=simple 类似。
+PIDFile：pid文件路径
+ExecStart：指定启动单元的命令或者脚本，ExecStartPre和ExecStartPost节指定在ExecStart之前或者之后用户自定义执行的脚本。Type=oneshot允许指定多个希望顺序执行的用户自定义命令。
+ExecReload：指定单元停止时执行的命令或者脚本。
+ExecStop：指定单元停止时执行的命令或者脚本。
+PrivateTmp：True表示给服务分配独立的临时空间
+Restart：这个选项如果被允许，服务重启的时候进程会退出，会通过systemctl命令执行清除并重启的操作。
+RemainAfterExit：如果设置这个选择为真，服务会被认为是在激活状态，即使所以的进程已经退出，默认的值为假，这个选项只有在Type=oneshot时需要被配置。
+
+[Install]
+Alias：为单元提供一个空间分离的附加名字。
+RequiredBy：单元被允许运行需要的一系列依赖单元，RequiredBy列表从Require获得依赖信息。
+WantBy：单元被允许运行需要的弱依赖性单元，Wantby从Want列表获得依赖信息。
+Also：指出和单元一起安装或者被协助的单元。
+DefaultInstance：实例单元的限制，这个选项指定如果单元被允许运行默认的实例。
+```
+
+**3.重载服务**
+
+`systemctl enable nginx.service`（设置开机自启）
+
+就会在`/etc/systemd/system/multi-user.target.wants/`目录下新建一个`/usr/lib/systemd/system/nginx.service` 文件的链接。
+
+**4.操作服务**
+
+```
+#启动服务
+$ sudo systemctl start nginx.service
+#查看日志
+$ sudo journalctl -f -u nginx.service
+#重启
+$ sudo systemctl restart nginx.service
+#重载
+$ sudo systemctl reload nginx.service
+#停止
+$ sudo systemctl stop nginx.service
+
+
+重载服务:
+systemctl enable home-assistant@pi.service
+启动服务:
+sudo systemctl start home-assistant@pi.service
+查看日志:
+sudo journalctl -f -u home-assistant@pi.service
+重启:
+sudo systemctl restart home-assistant@pi.service
+重载:
+sudo systemctl reload home-assistant@pi.service
+停止:
+sudo systemctl stop home-assistant@pi.service
+
+
+启动一个服务：systemctl start nginx.service
+关闭一个服务：systemctl stop postfix.service
+重启一个服务：systemctl restart nginx.service
+显示一个服务的状态：systemctl status postfix.service
+在开机时启用一个服务：systemctl enable nginx.service
+在开机时禁用一个服务：systemctl disable nginx.service
+查看服务是否开机启动：systemctl is-enabled nginx.service
+查看已启动的服务列表：systemctl list-unit-files|grep enabled
+
+查看启动失败的服务列表：systemctl --failed
+```
+
+
+
+PS：使用命令 systemctl is-enabled postfix.service 得到的值可以是**enable、disable或static**，这里的 static 它是指对应的 Unit 文件中没有定义[Install]区域，因此无法配置为开机启动服务。 
+
+刚刚配置的服务需要让systemctl能识别，就必须刷新配置
+
+```shell
+sudo systemctl daemon-reload
+```
+
+
+
+
+
+
+
+
+# 添加服务(开机启动)
+
+1.首先编写一个service脚本（建议需要复制的同学将汉字备注部分去掉）
+
+app_run.sh  :
+
+```bash
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          app_run
+# Required-Start:    $local_fs $remote_fs $network $syslog $named  #此处为依赖服务，即该服务脚本会在这些服务启动后运行
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: app_run service
+# Description:       Start the app_run service and associated helpers
+### END INIT INFO
+do_start()
+{
+	nohup python /var/www/python/run.py &gt; /tmp/app_run.log 2&gt;&amp;1 &amp;  #这里是你要在服务启动时执行的动作
+}
+ 
+do_stop()
+{
+	pkill -f /var/www/python/run.py   #这里是你要在关闭服务时执行的动作
+ 
+}
+ 
+ 
+#
+# Function that sends a SIGHUP to the daemon/service
+#
+do_restart() {
+	do_stop
+	sleep 1
+	do_start
+}
+ 
+case &quot;$1&quot; in
+  start)
+	do_start
+	;;
+  stop)
+	do_stop
+	;;
+  status)
+	exit $?
+	;;
+  reload)
+	echo &quot;reload&quot;
+	;;
+  restart)
+	do_restart
+	;;
+  *)
+	echo &quot;Usage: {start|stop|restart|reload}&quot; &gt;&amp;2
+	exit 3
+	;;
+esac
+ 
+exit 0
+
+```
+
+sudo nano /etc/init.d/aria2c
+
+```shell
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          aria2
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Aria2 Downloader
+### END INIT INFO
+  
+case &quot;$1&quot; in
+start)
+ 
+    echo  &quot;Starting aria2c ...&quot;
+    sudo -u pi aria2c --conf-path=/etc/aria2/aria2.conf -D
+#sudo -u后面的是你正在使用的用户名，用debian的是pi（没改用户的话）
+;;
+stop)
+ 
+    echo  &quot;Shutting down aria2c ...&quot;
+    killall aria2c
+;;
+restart)
+     killall aria2c
+    sleep 3
+    sudo -u pi aria2c --conf-path=/etc/aria2/aria2.conf -D
+#同上面的一样，根据自己的用户名改pi。
+;;
+esac
+exit
+```
+
+
+
+# 查看各文件夹大小
+
+**du -h --max-depth=1** 
+
+# 查看命令的安装路径
+
+`whereis  ipconfig`
+
+
+
+# 格式化U盘(解决无法写入问题)
+
+在没有插U盘之前，用fdisk -l查看一下
+
+然后再插上你的U盘，再用fdisk -l查看新增了什么分区。为了慎重起见，挂载看看那个分区是不是你的U盘。
+
+卸载U盘，再将之格式化
+
+mkfs -t vfat /dev/sdb1  
+
+
+
+
+
+# 挂载U盘
+
+将树莓派连接U盘后，查看是否被树莓派识别，命令行执行：
+
+ `sudo fdisk -l`
+
+U盘正确识别后，便创建目录来挂载U盘，命令行执行：
+
+ ```shell
+sudo mkdir /mnt/udisk
+sudo chmod 777 /mnt/udisk
+sudo mount -rw -o uid=pi,gid=pi /dev/sda1 /home/pi/udisk
+ ```
+
+# 弹出U盘
+
+挂载U盘后，如果想要拔出U盘，也需要手动取消挂载，命令行执行：
+
+ `sudo umount /media/pi/st`
+
+如果提示设备在忙（`umount: /mnt/udisk: device is busy`），可以通过结束占用目录的进程来解决，命令行如下：
+
+ 获取占有目录进程
+
+ `ps -ef | grep /mnt/udisk `
+
+之后结束相应进程
+
+` sudo kill -9 xxx`
+
+  其中 xxx 为任务的 pid，即`pi 2167 2042 0 07:29 pts/0 00:00:00 ps -ef`中的 2167。
+
+ 
+
+# Samba文件共享
+
+安装samba
+
+```shell
+sudo apt-get install samba
+sudo apt-get install samba-common-bin
+```
+
+修改配置文件`smb.conf`
+
+```shell
+sudo vim /etc/samba/smb.conf
+```
+
+在文件最下面加上以下内容，这里设置/home/pi/udisk为共享文件夹
+
+```
+[Public]
+   comment = Public Storage  # 共享文件夹说明
+   path = /home/pi/Public # 共享文件夹目录
+   read only = no # 不只读
+   create mask = 0777 # 创建文件的权限
+   directory mask = 0777 # 创建文件夹的权限
+   guest ok = yes # guest访问，无需密码
+   browseable = yes # 可见
+```
+
+重启Samba服务
+
+```shell
+sudo samba restart
+```
+
+设置文件夹权限
+
+在Samba配置文件设置过权限后，还需要在系统中将共享文件夹的权限设置为同配置文件中相同的权限，这样才能确保其他用户正常访问及修改文件夹内容
+
+```shell
+sudo chmod -R 777 /home/pi/movie/
+```
+
+配置完成后即可从局域网内其他电脑访问共享文件夹，Windows下访问目录为\\IP\Folder，例如：
+
+```shell
+\\192.168.31.134\Public
+```
+
+
+
+# 防火墙设置
+
+ufw是一个主机端的iptables类防火墙配置工具，比较容易上手。如果你有一台暴露在外网的树莓派，则可通过这个简单的配置提升安全性。
+
+**安装方法**
+`sudo apt-get install ufw`
+
+**使用方法1.启用sudo ufw enablesudo ufw default deny**
+作用：开启了防火墙并随系统启动同时关闭所有外部对本机的访问（本机访问外部正常）。
+
+**2.关闭**
+`sudo ufw disable`
+
+**3.查看防火墙状态**
+`sudo ufw status`
+
+**4.开启/禁用相应端口**
+`sudo ufw allow 80` 允许外部访问80端口
+`sudo ufw delete allow 80` 禁止外部访问80 端口
+`sudo ufw allow from 192.168.1.1` 允许此IP访问所有的本机端口
+`sudo ufw deny smtp` 禁止外部访问smtp服务
+`sudo ufw delete allow smtp` 删除上面建立的某条规则
+`ufw deny proto tcp from 10.0.0.0/8 to 192.168.0.1 port`要拒绝所有的流量从TCP的10.0.0.0/8 到端口22的地址192.168.0.1
+可以允许所有RFC1918网络（局域网/无线局域网的）访问这个主机（/8,/16,/12是一种网络分级）：
+`sudo ufw allow from 10.0.0.0/8`
+
+`sudo ufw allow from 172.16.0.0/12`
+
+`sudo ufw allow from 192.168.0.0/16`
+
+**推荐设置**
+`sudo apt-get install ufw`
+
+`sudo ufw enable`
+
+`sudo ufw default deny`
+这样设置已经很安全，如果有特殊需要，可以使用sudo ufw allow开启相应服务
+
+
+
+# VNC远程登录
+
+sudo apt-get install tightvncserver
+
+vncpasswd
+
+tightvncserver
+
+
+
+
+# 安装Apache
+
+sudo apt-get install apache2 -y
+
+* 关闭Apache服务apache2的命令：service apache2 stop
+* 开启Apache服务apache2的命令：service apache2 start
+* 重启Apache服务apache2的命令：service apache2 restart
+
+apache2权限：
+
+https://blog.csdn.net/ddv1999/article/details/78434324/
+
+https://blog.csdn.net/ddaas122/article/details/78300128?locationNum=1&amp;fps=1
+
+https://www.aliyun.com/jiaocheng/154289.html
+
+
+
+修改 根目录
+
+/etc/apache2/sites-available/000-default.conf
+
+修改权限
+
+sudo nano /etc/apache2/apache2.conf
+
+sudo chmod  755 /home/pi/movie/*
+
+
+
+日志：
+
+/var/log/apache2/
+
+
+
+# Tmux
+
+列出当前存在的会话
+
+```shell
+tmux ls
+```
+
+新建会话
+
+```shell
+tmux new -s session_name
+```
+
+连接之前的会话
+
+```shell
+tmux a -t session_name
+tmux attach -t session_name
+```
+
+快捷键
+
+```
+ctrl+b  d   //detach会话
+ctrl+b  s   //show会话
+```
+
+
+
+# Shadowsocks
+
+官网文档&lt;http://shadowsocks.org/en/config/quick-guide.html&gt;
+
+Wiki&lt;https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/6-linux-setup-guide-cn.md&gt;
+
+命令行启动ss
+
+```shell
+ss-local -c ./config_file.json
+```
+
+配置文件格式
+
+```
+{
+    &quot;server&quot;:&quot;my_server_ip&quot;,
+    &quot;server_port&quot;:8388,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;barfoo!&quot;,
+    &quot;timeout&quot;:600,
+    &quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;
+}
+```
+
+
+
+
+
+# Screen命令
+
+* 启动一个 screen 会话
+
+`screen -S name`
+
+* 从 screen 会话中分离
+
+要从当前的 screen 会话中分离，你可以按下`Ctrl-A` 和` d`。所有的 screen 会话仍将是活跃的，你之后可以随时重新连接。
+
+* 重新连接到 screen 会话
+
+  `screen -r temp`或则 `screen -r 7934`
+
+  `screen -ls`
+
+* 中止 screen 会话
+
+  `Ctrl+d`
+
+
+
+# MQTT通信
+
+启动broker
+
+```html
+mosquitto -c /etc/mosquitto/mosquitto.conf -d  
+```
+
+```html
+mosquitto
+```
+
+订阅主题
+
+```html
+mosquitto_sub -t hello  
+```
+
+发布消息
+
+```html
+mosquitto_pub -t hello -h localhost -m &quot;hello world!&quot;  
+```
+
+# 安装魔镜项目
+
+```
+先更换npm源
+1.临时使用
+npm --registry https://registry.npm.taobao.org install express
+
+2.持久使用
+npm config set registry https://registry.npm.taobao.org
+// 配置后可通过下面方式来验证是否成功
+npm config get registry
+// 或npm info express
+
+
+自动安装
+bash -c &quot;$(curl -sL https://raw.githubusercontent.com/MichMich/MagicMirror/master/installers/raspberry.sh)&quot;
+
+
+手动安装
+Download and install the latest Node.js version.
+Clone the repository and check out the master branch: git clone https://github.com/MichMich/MagicMirror
+Enter the repository: cd ~/MagicMirror
+Install and run the app: npm install &amp;&amp; npm start
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ! 显示 fetch Metadata: sill map to registry 长时间无响应
+
+E:\PHPCMS\NodeJS\quickstart&gt;npm config get registry
+https://registry.npmjs.org/
+
+报错:fetchMetadata: sill mapToRegistry uri http://registry.npmjs.org/whatwg-fetch
+
+解决方法：更换成淘宝的源
+
+npm config set registry https://registry.npm.taobao.org 
+– 配置后可通过下面方式来验证是否成功 
+npm config get registry 
+– 或npm info express
+
+
+
+# crontab 计划任务
+
+&lt;https://blog.csdn.net/errors_in_life/article/details/72778816&gt;
+
+&gt; crontab [-u user] file crontab [-u user] [ -e | -l | -r ]
+
+-u user：用来设定某个用户的crontab服务；
+file：file是命令文件的名字,表示将file做为crontab的任务列表文件并载入crontab。如果在命令行中没有指定这个文件，crontab命令将接受标准输入（键盘）上键入的命令，并将它们载入crontab。
+-e：编辑某个用户的crontab文件内容。如果不指定用户，则表示编辑当前用户的crontab文件。
+-l：显示某个用户的crontab文件内容，如果不指定用户，则表示显示当前用户的crontab文件内容。
+-r：从/var/spool/cron目录中删除某个用户的crontab文件，如果不指定用户，则默认删除当前用户的crontab文件。
+-i：在删除用户的crontab文件时给确认提示。
+
+
+
+```
+$ crontab -e
+按自己需要，比如我需要每两分钟执行一次，在后面输入：
+
+*/2 * * * *sh /home/sy/log_file/hello.sh2&gt;&gt;/home/sy/log_file/note.log
+
+红色部分：定时；蓝色部分：需要执行的Python脚本位置；紫色部分：把错误log信息打印在文件note.log里面。
+
+
+
+$ crontab -l
+可以查看自己输入的Crontab是否存在；
+
+$ sudo service cron start
+如果重新多次输入，会告诉你已经开启了
+如果不成功，可以选择命令行输入：
+$ sudo service cron restart
+
+```
+
+
+
+# 查看系统日志
+
+```
+tail -f /var/log/syslog
+```
+
+# ZeroTier
+
+```
+安装：
+curl -s https://install.zerotier.com | sudo bash
+启动服务：
+sudo zerotier-one -d
+链接网络
+sudo zerotier-cli join e4da7455b20f48e3
+```
+
+
+
+</pre>
+</div>
+<div created="20190721120934654" creator="CJ" modified="20190721120949575" modifier="CJ" title="树莓派安装 Aria2 和 Yaaw作为下载器" type="text/x-markdown">
+<pre># 树莓派安装 Aria2 和 Yaaw作为下载器
+
+## Aria2装配
+
+### 安装Aria2
+
+```shell
+sudo apt-get update
+sudo apt-get install aria2
+```
+
+### 配置aria2
+
+在/etc目录下创建aria2目录用来存放配置文件：
+
+```shell
+sudo mkdir /etc/aria2
+```
+
+创建空白的aria2.session文件：
+
+```shell
+sudo touch /etc/aria2/aria2.session
+```
+
+创建配置文件:
+
+```shell
+sudo vim /etc/aria2/aria2.conf
+```
+
+配置文件内容如下：
+
+```shell
+#＝＝＝＝＝＝＝＝＝文件保存目录自行修改
+# dir=/data/download
+#下载文件保存目录,建议挂载移动硬盘，SD卡经不住这么玩儿
+
+#因为我们是以 pi 用户执行的aria2c 进程，所以这里此目录的读写权限
+# sudo chown -R pi:pi /data/download
+
+#打开rpc的目的是为了给web管理端用
+#configuration file for aria2c
+enable-rpc=true
+rpc-allow-origin-all=true
+rpc-listen-all=true
+
+# 断点续传
+continue=true
+
+enable-dht=true
+bt-enable-lpd=true
+enable-peer-exchange=true
+
+#rpc-listen-port=6800
+file-allocation=none
+disable-ipv6=true
+disk-cache=32M
+split=3
+max-concurrent-downloads=3
+max-connection-per-server=3
+max-file-not-found=3
+max-tries=5
+retry-wait=3
+continue=true
+check-integrity=true
+log-level=error
+#log=/var/log/aria2.log
+log=/home/pi/aria2/aria2.log
+
+input-file=/etc/aria2/aria2.session
+save-session=/etc/aria2/aria2.session
+
+bt-tracker=udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.open-internet.nl:6969/announce,udp://tracker.leechers-paradise.org:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://tracker.internetwarriors.net:1337/announce,udp://9.rarbg.to:2710/announce,udp://9.rarbg.me:2710/announce,udp://tracker.openbittorrent.com:80/announce,http://tracker3.itzmx.com:6961/announce,http://tracker1.itzmx.com:8080/announce,udp://exodus.desync.com:6969/announce,udp://tracker.torrent.eu.org:451/announce,udp://tracker.cyberia.is:6969/announce,udp://retracker.lanta-net.ru:2710/announce,udp://bt.xxx-tracker.com:2710/announce,udp://tracker2.itzmx.com:6961/announce,udp://tracker.tiny-vps.com:6969/announce,udp://open.stealth.si:80/announce,udp://open.demonii.si:1337/announce,udp://explodie.org:6969/announce
+
+dir=/home/pi/aria2/
+#dir=/home/pi/udisk/download/
+
+```
+
+### 启动Aria2
+
+```shell
+sudo aria2c --conf-path=/etc/aria2/aria2.conf
+aria2c --enable-rpc --rpc-listen-all=true --rpc-allow-origin-all -c
+```
+
+如果没有提示任何错误信息，那就按ctrl+c停止上面的语句，以Daemon的形式，转为后台运行：
+
+```shell
+sudo aria2c --conf-path=/etc/aria2/aria2.conf -D
+```
+
+### 把Aria2做成系统服务
+
+```shell
+sudo vim /etc/init.d/aria2c
+```
+
+启动服务内容如下：
+
+```shell
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          aria2
+# Required-Start:    $remote_fs $network
+# Required-Stop:     $remote_fs $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Aria2 Downloader
+### END INIT INFO
+  
+case &quot;$1&quot; in
+start)
+ 
+    echo  &quot;Starting aria2c ...&quot;
+    sudo -u pi aria2c --conf-path=/etc/aria2/aria2.conf -D
+#sudo -u后面的是你正在使用的用户名，用debian的是pi（没改用户的话）
+;;
+stop)
+ 
+    echo  &quot;Shutting down aria2c ...&quot;
+    killall aria2c
+;;
+restart)
+     killall aria2c
+    sleep 3
+    sudo -u pi aria2c --conf-path=/etc/aria2/aria2.conf -D
+#同上面的一样，根据自己的用户名改pi。
+;;
+esac
+exit
+```
+
+然后设置该文件的权限
+
+```shell
+sudo chmod 755 /etc/init.d/aria2c
+```
+
+测试服务是否可以启动：
+
+```shell
+sudo service aria2c start
+```
+
+添加aria2c服务自动运行：
+
+```shell
+sudo update-rc.d aria2c defaults
+```
+
+
+
+###  Aria2的使用
+
+[谁知道aria2 下载BT文件时怎么选择文件下载啊？](https://forum.ubuntu.org.cn/viewtopic.php?f=73&amp;t=356367&amp;sid=3d6859db1f8caa657319c7bc423e04bc)
+
+```shell
+aria2c -S target.torrent #列出种子内容
+aria2c --select-file=1,4-7 target.torrent #下载种子内编号为 1、4、5、6、7 的文件
+```
+
+
+
+
+
+## 安装Yaaw实现web管理
+
+需要安装 nginx, 并下载 yaaw 页面
+
+```shell
+sudo apt-get update 
+sudo apt-get install nginx
+```
+
+接下来配置Nginx，首先打开配置文件，/etc/nginx/nginx.conf ，按照下面的配置进行修改:
+
+```
+worker_processes 1; #只有一个CPU，单进程即可
+worker_connections 256; #一般支持100在线连接就达到raspberry pi的极限了
+gzip on;     #gzip开启取消前面的#让默认设置生效即可
+gzip_disable &quot;msie6&quot;;
+gzip_vary on;
+gzip_proxied any;
+gzip_comp_level 6;
+gzip_buffers 16 8k;
+gzip_http_version 1.1;
+gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+```
+
+配置站点属性
+
+```shell
+sudo vim /etc/nginx/sites-availiable/default
+
+
+server {
+listen 80;
+#listen [::]:80 default_server;        # 一定要注释掉，ipv6
+server_name pi.com;
+root /var/www/html; #站点存储位置
+ 
+access_log /var/log/nginx/localhost.access.log;
+#error_page 404 /404.html;
+ 
+ 
+location / {
+index index.html index.htm ; 
+}
+}
+ 
+### 
+sudo nginx -t
+sudo service nginx start
+sudo service nginx restart
+sudo service nginx stop
+ 
+sudo update-rc.d nginx defaults
+```
+
+### 下载 Yaaw
+
+```shell
+cd /var/www/html
+git clone https://github.com/binux/yaaw
+```
+
+
+
+
+
+## 彻底卸载掉Nginx
+
+##### 1.删除nginx，–purge包括配置文件
+
+```
+sudo apt-get --purge remove nginx1
+```
+
+##### 2.自动移除全部不使用的软件包
+
+```
+sudo apt-get autoremove1
+```
+
+##### 3.罗列出与nginx相关的软件
+
+```
+dpkg --get-selections|grep nginx1
+```
+
+执行结果:
+
+```
+stephen@stephen-OptiPlex-390:~$ dpkg --get-selections|grep nginx
+
+nginx                       install
+nginx-common                install
+nginx-core                  install12345
+```
+
+##### 4.删除3.查询出与nginx有关的软件
+
+```
+sudo apt-get --purge remove nginx
+sudo apt-get --purge remove nginx-common
+sudo apt-get --purge remove nginx-core123
+```
+
+这样就可以完全卸载掉nginx包括配置文件
+
+------
+
+##### 5.查看nginx正在运行的进程，如果有就kill掉
+
+```
+ps -ef |grep nginx1
+```
+
+看下nginx还有没有启动,一般执行完1后，nginx还是启动着的，如下：
+
+```
+stephen@stephen-OptiPlex-390:~$ ps -ef |grep nginx
+root      7875  2317  0 15:02 ?        00:00:00 nginx: master process /usr/sbin/nginx
+www-data  7876  7875  0 15:02 ?        00:00:00 nginx: worker process
+www-data  7877  7875  0 15:02 ?        00:00:00 nginx: worker process
+www-data  7878  7875  0 15:02 ?        00:00:00 nginx: worker process
+www-data  7879  7875  0 15:02 ?        00:00:00 nginx: worker process
+stephen   8321  3510  0 15:20 pts/0    00:00:00 grep --color=auto nginx1234567
+```
+
+##### 6.kill nginx进程
+
+```
+sudo kill  -9  7875 7876 7877 78791
+```
+
+##### 7.全局查找与nginx相关的文件
+
+```
+sudo  find  /  -name  nginx*1
+```
+
+##### 8.依依删除4列出的所有文件
+
+```
+sudo rm -rf file1
+```
+
+这样就彻底删除nginx了
+
+
+
+
+
+
+
+## trouble shoot
+
+使用`systemctl status nginx.service -l `查看详情
+
+从错误中可以看出失败的原因是80端口被占用，所以造成nginx http和反向代理服务没法重启	
+
+先使用，`ps- ef |grep 80`
+
+然后找到端口号，使有kill命令杀死进程。kill -p 
+
+`sudo fuser -k 80/tcp `杀掉占用80端口的进程
+
+`sudo netstat -tulpn`查看端口状态</pre>
+</div>
+<div created="20190721120852462" creator="CJ" modified="20190721120917640" modifier="CJ" title="树莓派安装shadowsocks实现socks代理并转为http代理过程" type="text/x-markdown">
+<pre># 树莓派安装shadowsocks实现socks代理并使用privoxy转socks5为http代理
+
+## Socks5代理设置
+
+**安装shadowsocks**
+
+`sudo apt install shadowsocks-libev`
+
+**编辑配置文件**
+
+`sudo vim /home/pi/shadowsocksr/Shadowrocket.json`
+
+**配置文件格式**
+
+```json
+{
+	&quot;server&quot; : &quot;23.160.193.75&quot;,
+    &quot;server_port&quot; : 2133,
+    &quot;local_port&quot; : 1080,
+    &quot;password&quot; : &quot;www.eieee.cn&quot;,
+    &quot;timeout&quot; : 300,
+    &quot;method&quot; : &quot;aes-256-cfb&quot;
+}
+```
+
+**启动代理**
+
+```shell
+ss-local -c /home/pi/shadowsocksr/Shadowrocket.json
+
+nohup ss-local -c /etc/ss-local.json &lt;/dev/null &amp;&gt;&gt;/var/log/ss-local.log &amp;
+
+nohup ss-local -c /home/pi/shadowsocksr/Shadowrocket.json &amp;
+```
+
+**开机启动设置**
+
+```shell
+sudo vim /etc/rc.local
+添加:（需添加在exit 0 前面）
+/usr/local/bin/ss-local -c /home/pi/shadowsocksr/Shadowrocket.json
+```
+
+如果不知道ss-local的安装位置：
+
+```shell
+whereis ss-lcoal
+```
+
+
+
+
+
+
+
+
+## Privoxy将Socks5代理转化为Http代理
+
+socks5 代理转换成 http 代理需要借助第三方软件完成，这里使用 **privoxy**，Ubuntu 下使用如下命令安装 **privoxy**
+
+```shell
+sudo apt-get install privoxy -y
+```
+
+**编辑配置文件**
+
+```shell
+# 备份配置文件
+sudo cp /etc/privoxy/config /etc/privoxy/config.bak
+# 编辑配置文件
+sudo vim /etc/privoxy/config
+```
+
+**privoxy 配置样例如下**
+
+```
+# 转发地址
+forward-socks5   /     127.0.0.1:1080 .
+# 监听地址
+listen-address  0.0.0.0:8118 #(可监听局域网发来的请求)
+#listen-address  127.0.0.1:8118 #(监听本地)
+#listen-address  [::1]:8118
+
+# local network do not use proxy
+forward         192.168.*.*/     .
+forward            10.*.*.*/     .
+forward           127.*.*.*/     .
+```
+
+**调整PAC策略**
+
+```shell
+# 创建pac.action文件
+sudo vim /etc/privoxy/pac.action
+```
+写入pac.action内容示例
+```
+{{alias}}
+direct   = +forward-override{forward .}
+socks    = +forward-override{forward-socks5 127.0.0.1:1080 .}
+#httproxy = +forward-override{forward localhost:8000 .}
+ 
+#default
+{direct}
+/
+# 在这里设一个/, direct了所有的流量
+
+
+
+#shadowsocks
+{socks}
+.youtube.com
+.google.com
+.twitter.com
+
+
+#{httproxy}
+#.twitter.com
+#.blogspot.com
+#feedproxy.google.com
+```
+
+
+```shell
+# 在config文件中添加该action文件
+sudo vim /etc/privoxy/config
+# 找到action文件配置位置
+/actionsfile   (n下一个、N上一个)
+# 添加pac.action
+actionsfile pac.action
+# 注释掉其他的action文件，只让自己定义的pac.action生效
+#actionsfile match-all.action
+#actionsfile default.action
+#actionsfile user.action
+```
+
+
+
+**启动privoxy**
+
+```shell
+# 启动
+systemctl start privoxy
+# 查看状态
+systemctl status privoxy
+```
+
+**开机启动privoxy**
+
+```shell
+sudo systemctl enable privoxy.service
+```
+
+
+
+## 验证端口
+
+```shell
+# 验证Shadowsocks
+netstat -an | grep 1080
+# 1080是Shadowsocks服务的端口号
+# 如果出现以下，则说明服务正常
+tcp        0      0 127.0.0.1:1080          0.0.0.0:*               LISTEN     
+udp        0      0 127.0.0.1:1080          0.0.0.0:* 
+
+# 验证Privoxy
+netstat -an | grep 8118
+# 8118是Privoxy服务的端口号
+# 如果出现以下，则说明服务正常
+tcp        0      0 192.168.1.163:8118      0.0.0.0:*               LISTEN 
+```
+
+
+
+**proxychains测试socks5代理是否能够使用**
+
+```shell
+# 启动socks5代理
+ss-local -c  /home/pi/shadowsocksr/Shadowrocket.json
+# 安装proxychains
+sudo apt-get install proxychains
+# 配置proxychains
+sudo vim /etc/proxychains.conf
+
+# 最后一行添加
+socks5 127.0.0.1 1080
+
+# 测试
+proxychains curl http://google.com
+```
+
+**测试privoxy管理页面**
+
+在浏览器中设置代理`127.0.0.1:8118`
+
+然后进入`http://p.p/`会显示privoxy的管理页面
+
+
+
+## 开启**树莓派的**防火墙
+
+完成了上述的操作，只能保证树莓派本身能够科学上网，但如果同一个局域网发送代理，并不能成功，因为树莓派有一个内置的防火墙。
+
+```
+# 查看防火墙状态
+sudo ufw status
+# 如果未出现服务，则说明没有安装，可以不用看后面的操作
+
+# 允许外部访问8118端口
+sudo ufw allow 8118
+# 建议：开启允许所有来自局域网的请求
+sudo ufw allow from 192.168.0.0/16
+```
+
+至此，应该能够通过8118端口进行访问了。
+
+你可以在safari或者chrome的代理中加入
+
+- 地址：192.168.2.3
+- 端口：8118
+
+
+
+
+
+## 问题解决
+
+### 一、systemctl无法开机启动privoxy
+
+ref:&lt;https://www.cnblogs.com/liuxuzzz/p/5329536.html&gt;
+
+
+
+系统环境：ubuntu15.10 64bit , privoxy 3.0.24
+
+代理环境：http://www.cnblogs.com/liuxuzzz/p/5324749.html
+
+
+
+1. **重现失败环境**
+
+不知道是什么原因，privoxy无法开机启动。于是，我手动使用systemctl开启。
+
+```
+$ sudo systemctl start privoxy.service
+```
+
+结果失败，提示使用 systemctl status privoxy.service 和 journalctl -xe察看原因。
+
+```
+$ sudo systemctl status privoxy.serivce
+$ journalctl -xe
+```
+
+输出信息并没有什么，仅仅一个failed ......status = 1.
+
+ 
+
+2.**尝试手动运行privoxy.service中的命令**
+
+```
+$ cat /lib/systemd/system/privoxy.service
+```
+
+输出：
+
+```
+[Unit]
+Description=Privacy enhancing HTTP Proxy
+
+[Service]
+Environment=PIDFILE=/var/run/privoxy.pid
+Environment=OWNER=privoxy
+Environment=CONFIGFILE=/etc/privoxy/config
+Type=forking
+PIDFile=/var/run/privoxy.pid
+ExecStart=/usr/sbin/privoxy  --pidfile $PIDFILE --user $OWNER $CONFIGFILE 
+ExecStopPost=/bin/rm -f $PIDFILE
+SuccessExitStatus=15
+
+[Install]
+WantedBy=multi-user.target
+```
+
+“ExecStart=”后面的就是会执行的命令，注意将$PIDFILE等变量换掉。
+
+```
+$ sudo /usr/sbin/privoxy  --pidfile/var/run/privoxy.pid --user privoxy /var/run/privoxy.pid
+```
+
+发现并不能启动privoxy，查了下privoxy的帮助，加了下--no-daemon参数，就是不把privoxy作为后台daemon运行。
+
+```
+$ sudo /usr/sbin/privoxy  --no-daemon --pidfile/var/run/privoxy.pid --user privoxy /var/run/privoxy.pid
+```
+
+结果成功了！ 
+
+ 
+
+3.**将正确的命令替换到privoxy.service中**
+
+于是把--no-daemon添加到privoxy.service的“ExeStart=”里面。
+
+```
+$ sudo vim /lib/systemd/system/privoxy.service
+```
+
+将：
+
+```
+ExecStart=/usr/sbin/privoxy  --pidfile $PIDFILE --user $OWNER $CONFIGFILE
+```
+
+换成：
+
+```
+ExecStart=/usr/sbin/privoxy  --no-daemon --pidfile $PIDFILE --user $OWNER $CONFIGFILE
+```
+
+重新启动privoxy。
+
+```
+$ sudo systemctl daemon-reload
+$ sudo systemctl start privoxy.service
+```
+
+结果一直不退出，但是用netstat -lnpt查看，发现privoxy启动成功了。
+
+```
+$ netstat -lnpt | grep 8118
+
+tcp        0      127.0.0.1:8118            0.0.0.0:*               LISTEN 
+```
+
+ 然后我想了一下，可能是systemd启动类型有问题，可是我改了下privoxy.service的启动类别。
+
+```
+$ sudo vim /lib/systemd/system/privoxy.service
+```
+
+将：
+
+```
+[Unit]
+Description=Privacy enhancing HTTP Proxy
+
+[Service]
+Environment=PIDFILE=/var/run/privoxy.pid
+Environment=OWNER=privoxy
+Environment=CONFIGFILE=/etc/privoxy/config
+Type=forking
+PIDFile=/var/run/privoxy.pid
+ExecStart=/usr/sbin/privoxy --no-daemon --pidfile $PIDFILE --user $OWNER $CONFIGFILE 
+ExecStopPost=/bin/rm -f $PIDFILE
+SuccessExitStatus=15
+```
+
+改为：
+
+```
+[Unit]
+Description=Privacy enhancing HTTP Proxy
+
+[Service]
+Environment=PIDFILE=/var/run/privoxy.pid
+Environment=OWNER=privoxy
+Environment=CONFIGFILE=/etc/privoxy/config
+Type=simple
+PIDFile=/var/run/privoxy.pid
+ExecStart=/usr/sbin/privoxy --no-daemon --pidfile $PIDFILE --user $OWNER $CONFIGFILE 
+ExecStopPost=/bin/rm -f $PIDFILE
+SuccessExitStatus=15
+```
+
+重新启动privoxy，结果成功启动privoxy，privoxy.service也成功退出。
+
+```
+$ sudo systemctl daemon-reload
+$ sudo systemctl start privoxy.service
+```
+
+4.**最后重启系统，privoxy也成功开机启动**
+
+ 
+
+
+
+## 参考
+
+* [Shadowsocks-libev-Github](&lt;https://github.com/shadowsocks/shadowsocks-libev&gt;)
+* [Shadowsocks-HomePage](&lt;https://shadowsocks.org/en/index.html&gt;)
+* [Linux 命令行下使用 Shadowsocks 代理](&lt;https://mritd.me/2016/07/22/Linux-%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8B%E4%BD%BF%E7%94%A8-Shadowsocks-%E4%BB%A3%E7%90%86/&gt;)
+* [Privoxy教程](https://www.cnblogs.com/hongdada/p/10787924.html)
+* [使用Privoxy将socks5代理转为http代理](https://blog.phpgao.com/privoxy-shadowsocks.html)
+* [使用Privoxy将socks5代理转为http代理](&lt;https://blog.csdn.net/li740207611/article/details/52045471&gt;)
+* [树莓派利用Privoxy,Shadowsocks,Kcptun做http代理排坑记录](&lt;https://blog.csdn.net/weixin_33831673/article/details/86993066&gt;)
+* [用SS+Privoxy+树莓派让Node爬虫科学上网](&lt;http://cache.baiducontent.com/c?m=9d78d513d9d430d84f9be3697d13c015134381132ba6d3020ca58438e5732d40506793ac56510770d6d20a1116dc3e4beb802103301451bc8cc9f85dadbc8559299f2644325cdd054f9952bb8c067bce7ad61cabee0ee6c9ed2fd2f9878c8808159e004224c6e78b2d51499572a30932e0ad9b4a175d12b8e63062fc5c7c23882234f101a6f7351a46dcb19d0d1bd42ba62756ccfe68ed6005b517e359443343d413e65e0a616ff74e51bf136953d2ab0eb9&amp;p=92769a47c0df16ec34bd9b7c4b&amp;newp=83769a4783961af808e296225753d8254207dc357b9687787cc0c513fe200c01063dbee728261506d9c0776000ab4e5fe9f33776300721b68f8ee50b8af99d7f73de72612b4b&amp;user=baidu&amp;fm=sc&amp;query=%CE%DE%B7%A8%C1%AC%BD%D3%CA%F7%DD%AE%C5%C9%B5%C4privoxy&amp;qid=f84774ab00077b8d&amp;p1=4&gt;)
+* [shadowsocks+privoxy以调用国外站点的接口](&lt;https://blog.51cto.com/firemelon/2092158&gt;)
+* [Privoxy的配置](&lt;https://www.jianshu.com/p/d6e15dee7680&gt;)
+* [ss-local 终端代理（gfwlist）](&lt;https://www.zfl9.com/ss-local.html&gt;)
+* [gfwlist2privoxy](&lt;https://github.com/zfl9/gfwlist2privoxy&gt;)
+* [systemd 开机无法启动privoxy](https://www.cnblogs.com/liuxuzzz/p/5329536.html)
+* 
+
+</pre>
+</div>
 <div created="20181030072318622" creator="CJ" modified="20181030073427134" modifier="CJ" tags="线性表 数据结构" title="顺序表置逆">
 <pre>思想：扫描表前一半，交换L.data[i]与L.data[L.length-i-1]
 
@@ -18512,7 +20135,7 @@ Domain Adaptive Faster R-CNN for Object Detection in the Wild
 <div created="20181001084912071" creator="CJ" modified="20181001085205322" modifier="CJ" tags="" title="Git" type="text/vnd.tiddlywiki">
 <pre> * [[Git - 简易指南|http://www.bootcss.com/p/git-guide/]]</pre>
 </div>
-<div created="20180819072600938" creator="CJ" modified="20181030094053209" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
+<div created="20180819072600938" creator="CJ" modified="20190721120438912" modifier="CJ" title="Home" type="text/vnd.tiddlywiki">
 <pre>[[TiddlyWiki]]
 
 [[MarkDown]] 笔记
@@ -18545,6 +20168,11 @@ Domain Adaptive Faster R-CNN for Object Detection in the Wild
 
  * [[安卓反编译工具]]
 
+---
+! ''树莓派''
+* [[树莓派]]
+* [[树莓派安装shadowsocks实现socks代理并转为http代理过程]]
+* [[树莓派安装 Aria2 和 Yaaw作为下载器]]
 ---
 
 ! ToDo [img[https://www.easyicon.net/api/resizeApi.php?id=3888&amp;size=16]] 
